@@ -18,8 +18,14 @@ echo "		});\n";
 echo "	}\n";
 echo "	function doUpdate() {\n";
 echo "		var boxes = document.forms['personinfo'].getElementsByTagName(\"input\");\n";
+echo "		var sboxes = document.forms['personinfo'].getElementsByTagName(\"select\");\n";
 echo "		var update = '';\n";
 echo "		Array.forEach(boxes, function(box) {\n";
+echo "			if ( '' != box.style.backgroundColor) {;\n";
+echo "				update += box.id + ':' + box.value + ',';\n";
+echo "			}\n";
+echo "		});\n";
+echo "		Array.forEach(sboxes, function(box) {\n";
 echo "			if ( '' != box.style.backgroundColor) {;\n";
 echo "				update += box.id + ':' + box.value + ',';\n";
 echo "			}\n";
@@ -40,6 +46,17 @@ if ( isset($_GET["id"]) ) {
 // ------- Re-dispplay the person's info, for confirmation that we're looking at
 // the right person
 
+// Pre-load the enumerated data value sets for display
+$q_enum = "SELECT * FROM enumtypes";
+$r_enum = query($q_enum);
+
+foreach( $r_enum as $k => $v ) {
+	$dt = $v["datatype"];
+	$val = $v["value"];
+	$eid = $v["id"];
+	$enums[$dt][$eid] = $val;
+} // end foreach
+
 $theBigArray = array();
 
 // Header
@@ -57,6 +74,8 @@ foreach ( $theBigArray as $fieldName ) {
 	$theQuery .= ", " . $fieldName . " varchar ";
 } // end foreach
 $theQuery .= ")";
+
+// echo "<pre> $theQuery </pre>\n";
 
 // Get results
 $r = query( $theQuery );
@@ -93,6 +112,16 @@ echo "</form>";
 
 echo "<form name=\"personinfo\" id=\"personinfo\" action=\"javascript:;\" method=GET>\n";
 
+// Fetch the enum-ness of all the datatypes
+$r_dts = query("SELECT typeid, name, enum FROM datatypes");
+foreach($r_dts as $dt) {
+	$_name = $dt["name"];
+	$_id = $dt["typeid"];
+	$_en = $dt["enum"];
+	$dts[$_name]["id"] = $_id;
+	$dts[$_name]["enum"] = $_en;
+} // end foreach
+
 echo "<table>\n";
 echo "<tr>";
 echo "<th>PersonID</th>";
@@ -117,6 +146,18 @@ foreach ( $r as $key => $row ) {
 			if ( $id == $val ) {
 				// is there a better way to check for this?
 				echo "\t$row[$k]\n";
+			} else if ( isset($dts[$k]["enum"]) && ( "t" == $dts[$k]["enum"] ) ) {
+				// This is an enumerated data type; reference the table and show it as a dropdown
+				echo "<select name=\"$k\" id=\"$k\" onChange=\"doChange(this.id)\" >\n";
+				$_id = $dts[$k]["id"];
+				foreach ( $enums[$_id] as $en_k => $en_v ) {
+					if ( $en_k == $val ) {
+						echo "<option selected value=\"$en_k\">$en_v\n";
+					} else {
+						echo "<option value=\"$en_k\">$en_v\n";
+					} // end if
+				} // end foreach
+				echo "</select>\n";
 			} else {
 					$mylen = 2 + strlen($val);
 					$l += $mylen;
