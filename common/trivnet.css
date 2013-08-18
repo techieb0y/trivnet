@@ -1,0 +1,36 @@
+table.menu { text-align:center; width: 100%; background-color: black; }
+.menu { color: white; font-size:16pt; text-align:center; font-weight:bold }
+.header { text-align: center; }
+a.menu:link { color: white; }
+a.menu:active { color: white; }
+a.menu:visited { color: white; }
+a.menu:hover { color: white; }
+a:link { color: blue; }
+a:active { color: blue; }
+a:visited { color: blue; }
+a:hover { color: blue; }
+input[disabled="disabled"] { text-color: #000000; }
+.topRight { top: 1px; right: 0px; position: absolute; }
+.tome { background-color: yellow; }
+img { border: 0px; }
+.messages {
+	position: relative;
+	border: 1px solid #000000;
+	width: 66%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 2px;
+	text-align: left;
+	height: 96px;
+	font-family: monospace;
+	overflow: auto;
+}
+.messagesBig {
+	height: 384px;
+}
+.whoami { text-align: right; }
+.msgItem { height: 16px; }
+.msgSymbol { position: absolute; left: 0px; text-align: left; }
+.msgLeft { position: absolute; left: 18px; text-align: left; }
+.msgRight { position: absolute; right: 24px; text-align: right; }
+.msgCenter { position: absolute; left: 160px; text-align: center; }
