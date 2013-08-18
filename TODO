@@ -1,0 +1,13 @@
+TrivNet improvements list
+2010 Apr 23 - KD8GBL
+
+* merge bulk-person-import, batch edits, and async jobs
+
+* canned message add/del/use from the CLI
+* pager for search results?
+
+* streaming status update
+* network toplogy awareness
+
+* AJAX and/or XSL based UI work
+* Use a proper session handler, drop HTTP Basic Auth stuff
