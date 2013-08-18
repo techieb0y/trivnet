@@ -7,18 +7,42 @@ require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
 
+// Pre-load the enumerated data value sets for display
+$q_enum = "SELECT * FROM enumtypes order by datatype, id";
+$r_enum = query($q_enum);
+
+foreach( $r_enum as $k => $v ) {
+	$dt = $v["datatype"];
+	$val = $v["value"];
+	$eid = $v["id"];
+	$enums[$dt][$eid] = $val;
+} // end foreach
+
 function showFields() {
 	// Display the search field stuff
 	$db = connect();
-	$q = "SELECT * FROM datatypes WHERE typeid > 0 ORDER BY typeid";
+	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid > 0 ORDER BY typeid";
 	$r = query($q);
 	echo "<form action=\"query.php\" method=POST>\n";
 	echo "<table>\n";
 	if ( count($r) > 0 ) {
 		foreach ( $r as $row ) {
 			$label = $row["label"];
-			$name = $row["typeid"];
-			echo "<tr><td>$label:</td><td><input name=\"$name\"></td></tr>\n";
+			$tid = $row["typeid"];
+			$name = $row["name"];
+			$enum = $row["enum"];
+
+			if ( "t" == $enum ) {
+				echo "<tr><td>$label:</td><td><select name=\"$tid\">";
+				global $enums;
+				echo "<option value=\"\">Any\n";
+				foreach ( $enums[$tid] as $k => $v ) {
+					echo "<option value=\"$k\">$v\n";
+				} // end foreach
+				echo "</select></td>\n";
+			} else {
+				echo "<tr><td>$label:</td><td><input name=\"$tid\"></td></tr>\n";
+			} // end if
 		} // end foreach
 	} // end if
 	echo "<tr><td><input checked type=\"radio\" name=\"type\" value=\"AND\"> Match all (AND search)</td>";
@@ -99,6 +123,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 		$name = $row["name"];
 		$label = $row["label"];
 		$theBigArray[$typeid] = $name;
+		$reverseArray[$name] = $typeid;
 	} // end foreach
 
 	$theQuery = "SELECT * FROM crosstab('" . $qq . " ORDER BY personid', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
@@ -129,8 +154,14 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 		foreach ( $r[0] as $k => $f ) {
 			if ( ($k != "personid") && ($k != "status") ) {
 				echo "<td><a href=\"detail.php?id=$pers\">";
-				echo $row[$k];
-				echo "</a></td>";
+				$tid = $reverseArray[$k];
+				if ( isset( $enums[$tid] ) ) {
+					$which = $row[$k];
+					echo $enums[$tid][$which];
+				} else {
+					echo $row[$k];
+				} // end if
+			echo "</a></td>";
 			} // end if
 		} // end foreach
 		echo "</tr>\n";
