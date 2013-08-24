@@ -224,8 +224,11 @@ function runJob($jobId) {
 				// The typical marathon application for this at is the 'Runner crossed finish line' notice.
 				$q = "BEGIN;\n";
 
+				$_tac = query("SELECT tactical FROM sessions WHERE callsign='$callsign'");
+				$tac = $_tac[0]["tactical"];
+
 				if ( "0" == $updatetype ) {
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', $updatetype, '$data');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
 				} else {
 					$_dt = query("SELECT name,enum FROM datatypes WHERE typeid=$updatetype");
@@ -236,7 +239,7 @@ function runJob($jobId) {
 						$statusText = "Set " . $_dt[0]["name"] . " to " . $data;
 					} // end if
 					$q .= "UPDATE persondata SET value='$data' WHERE personid=$personid AND datatype=$updatetype;\n";
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', 0, '$statusText');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', 0, '$statusText');\n";
 					$q .= "COMMIT;\n";
 				} // end if
 

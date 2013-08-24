@@ -1,11 +1,5 @@
 <?php
 
-function fixcall() {
-	$q = "SELECT callsign FROM pidmap WHERE pid=" . getmypid();
-	$r = query($q);
-	return( $r[0]["callsign"] );
-}
-
 function tn_help($line) {
 	if ( count($line) > 1 ) {
 		if ( isset(  $help_text[ $line[1] ] ) ) {
@@ -72,7 +66,7 @@ function tn_batch($line) {
 	// Prompts: New value for update field
 	// Then, one search field data value per line, until 'END' or 'DONE'
 
-	$mycall = fixcall();
+	global $mycall;
 
 	// drop the verb
 	array_shift($line);
@@ -225,7 +219,7 @@ function tn_search($line) {
 			// Didn't recognize first object as a field; use defaults
 
 			// Get the system default search field, if they don't specify one
-			$mycall = fixcall();
+			global $mycall;
 			$qd = "SELECT callsign,defsearch FROM defaults WHERE ( callsign='$mycall' OR callsign='none' )";
 			$rd = query($qd);
 
@@ -347,7 +341,7 @@ function tn_details($line) {
 				$data = $who; unset($who);
 				
 				// Get the system default search field, if they don't specify one
-				$mycall = fixcall();
+				global $mycall;
 				$qd = "SELECT callsign,defsearch FROM defaults WHERE ( callsign='$mycall' OR callsign='none' )";
 				$rd = query($qd);
 		
@@ -387,7 +381,7 @@ function tn_details($line) {
 	$r = query($q);
 	if ( count($r) > 0 ) {
 		foreach( $r as $row ) {
-			$mesg = $row["message"];
+			$mesg = $row["value"];
 			$who = $row["source"];
 			$when = date("r", $row["timestamp"]);
 			echo "$when\t$who\t$mesg\n\r";
@@ -396,7 +390,7 @@ function tn_details($line) {
 } // end details
 
 function tn_update($line) {
-		$mycall = fixcall();
+		global $mycall;
 
 		$find = "";		// This is the user-specified search type
 		$search = "";	// This is the query string
@@ -521,7 +515,11 @@ function tn_update($line) {
 			// Status message update only
 			$mesg = $value;
 		} // end if
-		$q .= "INSERT INTO updatesequence VALUES ( $who, " . time() . ", '$mycall', '" . trim($mesg) . "' );\n";
+
+		$_tac = query("SELECT tactical FROM sessions WHERE callsign='$mycall'");
+		$tac = $_tac[0]["tactical"];
+
+		$q .= "INSERT INTO updatesequence VALUES ( $who, " . time() . ", '$mycall/$tac [P]', 0, '" . trim($mesg) . "' );\n";
 		$q .= "COMMIT;\n";
 		
 		// echo $q;
@@ -541,7 +539,7 @@ function tn_tell($line) {
 		if ( $who == "*" ) { $who = "all"; }
 		echo "Sending message to " . $who . "\n\r";
 		$what = implode( " ", $line );
-		$mycall = fixcall();
+		global $mycall;
 		$q = "INSERT INTO messages VALUES ( " . time() . ", '$mycall', '$what', '$who' );";
 		$r = query_simple($q);
 	} else {
@@ -550,8 +548,10 @@ function tn_tell($line) {
 } // end tell
 
 function tn_whoami($line) {
-	$mycall = fixcall();
-	echo "Current tactical callsign is " . $mycall . "\n\r";
+	global $mycall;
+	$tac = query("SELECT tactical FROM sessions WHERE callsign='$mycall'");
+	echo "Current FCC callsign is " . $mycall . "\n\r";
+	echo "Current tactical callsign is " . $tac[0]["tactical"] . "\n\r";
 	$return = "";
 } // end whoami
 
@@ -566,19 +566,18 @@ function tn_who($line) {
 } // end who
 
 function tn_mycall($line) {
-	echo "\n\rCallsign or tactical call>";
+	global $mycall;
+	$_sid = query("SELECT sessionid FROM sessions WHERE callsign='$mycall'");
+	echo "\n\rNew tactical callsign>";
 	global $fp;
-	$newcall = trim( fgets($fp,4094) );
-	stop_session($mycall);
-	start_session($newcall);
-	$mycall = $newcall;
-	unset($newcall);
+	$newtac = trim( fgets($fp,4094) );
+	pkt_stop_session($mycall);
+	pkt_start_session($mycall, $newtac);
+	unset($newtac);
 	$return = "";
 } // end mycall
 
 function tn_exit($line) {
-	$mycall = fixcall();
-	stop_session($mycall);
 	bye();
 } // end quit
 

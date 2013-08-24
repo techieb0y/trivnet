@@ -1,7 +1,8 @@
 #!/usr/bin/php
 <?php
 
-error_reporting(E_ERROR);
+// error_reporting(E_ERROR);
+error_reporting(E_ALL);
 
 if ( isset($_SERVER["SERVER_SOFTWARE"]) ) { die("This script is the command-line component of Trivnet; it is not to be run via a browser."); }
 
@@ -36,10 +37,19 @@ $fp=fopen("php://stdin", "r");
 
 echo "[KD8GBL's less-trivial database]\n\r";
 
-echo "\n\rCallsign or tactical call>";
-$mycall = trim( fgets($fp,4094) );
+echo "\n\rFCC Callsign>";
+$_call = trim( fgets($fp,4094) );
 
-start_session($mycall);
+$_rn = query("SELECT name FROM part97 WHERE callsign='$_call'");
+$name = $_rn[0]["name"];
+echo "Hello, $name\n";
+
+echo "\n\rTactical Callsign>";
+$_tac = trim( fgets($fp,4094) );
+
+pkt_start_session($_call, $_tac);
+
+$mycall = $_call;
 
 // Get defaults
 $q_def = "SELECT * from defaults WHERE callsign='none' OR callsign='$mycall'";
@@ -127,11 +137,12 @@ while ( !feof($fp) ) {
 	} // end if
 
 	// Update my idle counter
-	touch_session($mycall);
+	pkt_touch_session($mycall);
 } // end of the main everything loop
 
 function bye() {
 	echo "\n\rBye!\n\r";
+	pkt_stop_session($mycall);
 	exit(0);
 }
 
