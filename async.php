@@ -228,13 +228,12 @@ function runJob($jobId) {
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
 				} else {
-					$_en = query("SELECT enum FROM datatypes WHERE typeid=$updatetype");
-					if ( 't' == $_en[0]["enum"] ) {
+					$_dt = query("SELECT name,enum FROM datatypes WHERE typeid=$updatetype");
+					if ( 't' == $_dt[0]["enum"] ) {
 						$st = query("SELECT value FROM enumtypes WHERE datatype=$updatetype and id=$data");
-						$_dtn = query("SELECT name FROM datatypes WHERE typeid=$updatetype");
-						$statusText = "Set " . $_dtn[0]["name"] . " to " . $st[0]["value"];
+						$statusText = "Set " . $_dt[0]["name"] . " to " . $st[0]["value"];
 					} else {
-						$statusText = "Set " . $_dtn[0]["name"] . " to " . $data;
+						$statusText = "Set " . $_dt[0]["name"] . " to " . $data;
 					} // end if
 					$q .= "UPDATE persondata SET value='$data' WHERE personid=$personid AND datatype=$updatetype;\n";
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', 0, '$statusText');\n";

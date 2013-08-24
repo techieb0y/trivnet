@@ -40,7 +40,9 @@ foreach($r as $row) {
 <textarea name="searchkeys" id="searchkeys" columns=12 rows=20></textarea>
 <br>(or from a text file: <input type=file name="searchkey_file">)
 </td> <td>
-Update message to: 
+
+
+Update Message: 
 <select name="quickmesg">
 <?php
 	$r = query("SELECT text from quickmesg");
@@ -50,16 +52,36 @@ Update message to:
 	} // end foreach
 ?>
 </select>
+<br>
 <br>...or use custom: <input name="custom" size=40><br>
 <i>(overrides selected message)</i>
-
 <br><br>
 Mile marker: <input type=text size=4 name="mile">
 <br>
 
+<hr>
+
+Update Data value: 
+<?php
+echo "<select name=\"updatetype\">";
+$_dts = query("SELECT * from datatypes order by typeid");
+
+foreach( $_dts as $_dt ) {
+	$typeid = $_dt["typeid"];
+	$label = $_dt["label"];
+	echo "<option value=\"$typeid\">$label\n";
+} // end foreach
+echo "</select>";
+?>
+
+<input name="updatevalue" size=16>
+
+
 <div id="base" style="display: none;">
 <input type=text id="base" name="searchkey[]" disabled size=6>
 </div>
+
+<br>
 
 <input type=submit value="Perform Updates">
 </td></tr></table>

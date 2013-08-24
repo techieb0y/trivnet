@@ -16,6 +16,8 @@ if ( $_FILES["searchkey_file"]["size"] > 0 ) {
 	$use_file = 1;
 }
 
+echo "<pre>"; print_r($_POST); echo "</pre>";
+
 $mile = $_POST["mile"];
 $datatype = $_POST["datatype"];
 $canned_status = $_POST["quickmesg"];
@@ -31,6 +33,9 @@ $mesg = $status;
 if ( strlen($mile) > 0 ) {
 	$mesg .= " at mile $mile";
 } // end if
+
+$updatetype = $_POST["updatetype"];
+$updatevalue = $_POST["updatevalue"];
 
 echo "<pre>";
 
@@ -85,9 +90,9 @@ stream_copy_to_stream($tmp, $fh);
 fclose($fh);
 fclose($tmp);
 
-$updatetype = "0";
+if ( $updatetype != 0 ) { $data = $updatevalue; } else { $data = $mesg; }
 
-$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$updatetype', '$mesg', 1, 0, '" . time() . "');";
+$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$updatetype', '$data', 1, 0, '" . time() . "');";
 echo "<pre>" . $q_submit . "</pre><br>\n";
 $r_submit = query($q_submit);
 
