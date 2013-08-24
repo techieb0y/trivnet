@@ -66,7 +66,7 @@ foreach ( $rh as $row ) {
 	$typeid = $row["typeid"];
 	$name = $row["name"];
 	$label = $row["label"];
-	$theBigArray[$typeid] = $name;
+	$theBigArray[$typeid] = $name; 
 } // end foreach
 
 $theQuery = "SELECT * FROM crosstab('SELECT * from persondata WHERE personid=$id', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
@@ -85,31 +85,6 @@ echo "<input id=\"personID\" name=\"personID\" value=\"$id\" type=hidden>\n";
 echo "<input id=\"updateString\" name=\"updateString\" type=hidden>\n";
 echo "</form>\n";
 
-$q_cur = "SELECT status FROM people WHERE id=$id";
-$r_curr = query($q_cur);
-$curr_stat = $r_curr[0]["status"];
-
-echo "<form method=\"POST\" action=\"setStatusQuick.php?personID=$id\">\n";
-
-echo "Person's status is: <select name=\"setStatus\">\n";
-
-$q_st = "SELECT id, status from statustypes ORDER BY status";
-$r_st = query($q_st);
-foreach( $r_st as $rr ) {
-	$status = $rr["status"];
-	$code = $rr["id"];
-	if ( $code == $curr_stat ) {
-		echo "<option selected value=\"$code\">$status\n";
-	} else {
-		echo "<option value=\"$code\">$status\n";
-	} // end if
-} // end foreach
-echo "</select>\n";
-
-echo "<input type=\"submit\" value=\"Save\">";
-
-echo "</form>";
-
 echo "<form name=\"personinfo\" id=\"personinfo\" action=\"javascript:;\" method=GET>\n";
 
 // Fetch the enum-ness of all the datatypes
@@ -126,7 +101,7 @@ echo "<table>\n";
 echo "<tr>";
 echo "<th>PersonID</th>";
 foreach ( $theBigArray as $fieldName ) {
-	if ( $fieldName != "status" ) {
+	if ( $fieldName != "message" ) {
 		echo "<th>$fieldName</th>";
 	} // end if
 } // end foreach
@@ -140,10 +115,10 @@ foreach ( $r as $key => $row ) {
 		// This is for each datatype column
 		$val = $row[$k];
 
-		if ( $k != "status" ) {
+			if ( $k != "message" ) {
 			echo "<td>\n";
-			// Don't display edit box for PersonID
 			if ( $id == $val ) {
+				// Don't display edit box for PersonID
 				// is there a better way to check for this?
 				echo "\t$row[$k]\n";
 			} else if ( isset($dts[$k]["enum"]) && ( "t" == $dts[$k]["enum"] ) ) {
@@ -159,6 +134,7 @@ foreach ( $r as $key => $row ) {
 				} // end foreach
 				echo "</select>\n";
 			} else {
+					// Plain entry field
 					$mylen = 2 + strlen($val);
 					$l += $mylen;
 					echo "\t<input type=text name=\"$k\" id=\"$k\" size=$mylen value=\"" . $val . "\" onChange=\"doChange(this.id)\">\n";
@@ -166,7 +142,7 @@ foreach ( $r as $key => $row ) {
 			// Marthon-specific: save the bib number for the results link
 			if ( $k == "bibnum" ) { $bibNum = $val; }
 			echo "</td>\n";
-		} // end if
+			} // end if
 	} // end foreach
 	echo "<td><input type=button value=\"Save\" onClick=\"doUpdate()\"></td>";
 	echo "<td><input type=reset  value=\"Reset\" onClick=\"doUnChange()\"></td>";

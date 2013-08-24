@@ -40,19 +40,7 @@ foreach($r as $row) {
 <textarea name="searchkeys" id="searchkeys" columns=12 rows=20></textarea>
 <br>(or from a text file: <input type=file name="searchkey_file">)
 </td> <td>
-Update status to: 
-<select name="status">
-<option value="">---
-<?php
-	$r = query("SELECT id, status from statustypes");
-	foreach ($r as $row) {
-		$id = $row["id"];
-		$text = $row["status"];
-		echo "<option value=\"$id\">$text</option>\n";
-	} // end foreach
-?>
-</select><br><br>
-and message to: 
+Update message to: 
 <select name="quickmesg">
 <?php
 	$r = query("SELECT text from quickmesg");

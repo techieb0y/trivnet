@@ -89,13 +89,9 @@ if ( isset($_GET["mode"]) ) {
 	</script>
 		";
 
-	$q = "SELECT * FROM datatypes ORDER BY typeid";
-	$r = query($q);
-
 	echo "<div id=\"tabs\">\n";
 	echo "<ul>\n";
 	echo "<li><a href=\"#tabs1\">Data Types</a></li>\n";
-	echo "<li><a href=\"#tabs4\">Enumerated Status Types</a></li>\n";
 	echo "<li><a href=\"#tabs5\">Quick Status Messages</a></li>\n";
 	echo "<li><a href=\"#tabs2\">Bulk Import</a></li>\n";
 	echo "<li><a href=\"#tabs3\">Async Jobs</a></li>\n";
@@ -107,6 +103,10 @@ if ( isset($_GET["mode"]) ) {
 
 	echo "<table>\n";
 	echo "<tr><th>id</th><th>&nbsp;</th><th>name</th><th>Label</th><th>Match Type</th><th>&nbsp;</th></tr>";
+
+	$q = "SELECT * FROM datatypes ORDER BY typeid";
+	$r = query($q);
+
 	if ( count( $r ) > 0 ) {
 		foreach ( $r as $z ) {
 			unset($delMsg);
@@ -115,6 +115,7 @@ if ( isset($_GET["mode"]) ) {
 			$flag = "";
 			if ( $z["exact"] == "t" ) { $match = "Exact"; } else { $match = "Substring"; }
 			if ( $z["typeid"] == $config["multidefault"] ) { $flag = "<img src=\"images/key.png\">"; }
+			$_en = $z["enum"];
 
 			echo "<tr><td>" . $z["typeid"] . "</td><td>$flag</td><td><code>" .  $z["name"] . "</code></td><td><b>" . $z["label"] . "</b></td><td>$match</td>\n";
 
@@ -136,9 +137,25 @@ if ( isset($_GET["mode"]) ) {
 				echo "<td>[<a href=\"admin.php?mode=datatypes&deletetype=" . $z["typeid"] . "\">delete</a>]</td>\n";
 			} // end if
 
+			// Handle enumerated types here
+
+			if ( 't' == $_en ) {
+
+			echo "<tr><td colspan=2>&nbsp;</td><td colspan=5><table width=\"100%\" border=1>\n";
+				echo "<tr><th>ID</th><th>Value</th></tr>\n";
+				$_entable = query("SELECT id, value FROM enumtypes WHERE datatype=" . $z["typeid"]);
+				foreach( $_entable as $_enum ) {
+					echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
+				} // end foreach
+			echo "</table></td></tr>\n";
+
+			} // end if
+
 			echo "</tr>" . "\n";
 		} // end foreach
 	} // end if
+
+	$flag = "<img src=\"images/key.png\">";
 	echo "</table>";
 	echo "<br>$flag indicates Multi-Edit search key datatype.<br>\n";
 	//	echo "<hr>";
@@ -181,6 +198,7 @@ if ( isset($_GET["mode"]) ) {
 
 	echo "</div>\n";
 
+	// -------- Bulk Import Stuff ------------
 	echo "<div id=\"tabs2\">\n";
 
 	$dir = opendir("csvdata") or die("Could not open CSV data directory");
@@ -209,42 +227,11 @@ if ( isset($_GET["mode"]) ) {
 	echo "</form>";
 	echo "</div>\n";
 
-	echo "<div id=\"tabs4\">\n";
-
-	// -------- Status Stuff ------------
-
-	$q = "select statustypes.id, statustypes.status, count(people.status) as num from statustypes left join people on statustypes.id=people.status group by statustypes.id, statustypes.status order by id;";
-	$r = query($q);
-
-	echo "<form method=\"POST\" action=\"admin.php?mode=statustypes\">";
-	echo "<table>\n";
-	echo "<tr><th>id</th><th>name</th><th>&nbsp;</th></tr>";
-	if ( count( $r ) > 0 ) {
-		foreach ( $r as $z ) {
-			echo "<tr><td>" . $z["id"] . "</td><td>" .  $z["status"] . "</td>";
-				if ( $z["num"] > 0 ) {
-			echo "<td>[in use]</td></tr>\n";
-			} else {
-				echo "<td>[<a href=\"admin.php?mode=statustypes&sdeletetype=" . $z["id"] . "\">delete</a>]</td></tr>\n";
-			} // end if
-		} // end foreach
-	} // end if
-
-	echo "<tr><td>...</td><td> <input name=\"addstat_name\" size=16> </td><td>[add new]</td></tr>\n";
-
-	echo "</table>";
-
-	echo "<br>";
-	echo "<input type=\"submit\">";
-	echo "</form>";
-
-	echo "</div>\n";
-
+	// -------- Async Stuff ------------
 	echo "<div id=\"tabs3\">\n";
 	echo "Recent async jobs:<br>\n";
 
-	// $q = "SELECT * from async ORDER BY jobid DESC";
-	$q = "SELECT async.jobid, async.filename, async.callsign, async.data, async.searchtype, async.updatetype, async.state, async.progress, async.timestamp, statustypes.status FROM async LEFT JOIN statustypes on statustypes.id=async.status ORDER BY jobid desc;";
+	$q = "SELECT * from async ORDER BY jobid DESC";
 	$r = query($q);
 	if ( count($r) > 0 ) {
 		$q_dt = "SELECT * from datatypes";
@@ -255,19 +242,20 @@ if ( isset($_GET["mode"]) ) {
 			$label = $row_dt["label"];
 			$types[$id] = $label;	
 		}
+		$types[0] = "Message";
 
 		echo "<table width=\"80%\" border=0>\n";
-		echo "<tr><th>Job ID</th><th>Filename</th><th>Owner</th><th>Search on</th><th>Update</th><th>Data</th><th>New Status</th><th>Job State</th><th>Progress</th><th>Timestamp</th></tr>\n";
+		echo "<tr><th>Job ID</th><th>Filename</th><th>Owner</th><th>Search on</th><th>Update</th><th>Data</th><th>Job State</th><th>Progress</th><th>Timestamp</th></tr>\n";
 		foreach ($r as $row) {
 			$ts = date("Y-m-d H:i:s", $row["timestamp"]);
 			$stat = $row["status"];
 
 			if ( preg_match("/^IMPORT/", $row["data"] ) ) { 
-				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td><em>n/a</em></td><td><em>n/a</em></td><td><em>Bulk Data Import</em></td><td>&nbsp;</td><td><a href=\"showasync.php?file=%s.err\">%s</a></td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"],$row["filename"], $jobstate[$row["state"]], $row["progress"], $ts );
+				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td><em>n/a</em></td><td><em>n/a</em></td><td><em>Bulk Data Import</em></td><td><a href=\"showasync.php?file=%s.err\">%s</a></td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"],$row["filename"], $jobstate[$row["state"]], $row["progress"], $ts );
 			} else if ( $row["state"] == 0 || $row["state"] == 5 ) {		
-				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"showasync.php?file=%s.err\">%s</a></td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $row["data"], $stat, $row["filename"], $jobstate[$row["state"]], $row["progress"], $ts );
+				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"showasync.php?file=%s.err\">%s</a></td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $row["data"], $row["filename"], $jobstate[$row["state"]], $row["progress"], $ts );
 			} else {
-				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $row["data"], $stat, $jobstate[$row["state"]], $row["progress"], $ts );
+				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $row["data"], $jobstate[$row["state"]], $row["progress"], $ts );
 			}
 		} // end forearch
 		echo "</table>\n";

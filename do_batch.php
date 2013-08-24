@@ -18,8 +18,6 @@ if ( $_FILES["searchkey_file"]["size"] > 0 ) {
 
 $mile = $_POST["mile"];
 $datatype = $_POST["datatype"];
-$statuscode = $_POST["status"];
-if ( ! (strlen($statuscode) > 0 ) ) { $statuscode = "null"; }
 $canned_status = $_POST["quickmesg"];
 $custom_status = $_POST["custom"];
 
@@ -87,7 +85,9 @@ stream_copy_to_stream($tmp, $fh);
 fclose($fh);
 fclose($tmp);
 
-$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', " . $datatype . ", " . 0 . ", '$mesg', 1, 0, '" . time() . "', $statuscode)";
+$updatetype = "0";
+
+$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$updatetype', '$mesg', 1, 0, '" . time() . "');";
 echo "<pre>" . $q_submit . "</pre><br>\n";
 $r_submit = query($q_submit);
 

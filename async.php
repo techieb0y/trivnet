@@ -109,7 +109,6 @@ function runJob($jobId) {
 	$searchtype = $r[0]["searchtype"];
 	$updatetype = $r[0]["updatetype"];
 	$data = $r[0]["data"];
-	$statuscode = $r[0]["status"];
 	$state = $r[0]["state"];
 	if ( $state != 1 ) { echo "Cannot run job $id\n"; break; }
 
@@ -221,21 +220,27 @@ function runJob($jobId) {
 				$err++;
 			} else if ( count($r) == 1 ) {
 				$personid = $r[0]["personid"];
-				// $w = query("SELECT value FROM persondata WHERE personid=$personid AND datatype=$updatetype");
-				// $was = $w[0]["value"];
-
 				// 0 is the update type for a status-message-only, non-persondata update
 				// The typical marathon application for this at is the 'Runner crossed finish line' notice.
 				$q = "BEGIN;\n";
-				$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', $updatetype, '$data');\n";
-				if ( isset($statuscode) && ( strlen($statuscode) > 0 ) ) {
-					$q_st = "SELECT status FROM statustypes WHERE id=$statuscode";
-					$r_st = query($q_st);
-					$statusText = $r_st[0]["status"];
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', 0, 'Set status to: $statusText');\n";
-					$q .= "UPDATE people SET status=$statuscode WHERE id=$personid;";
-				}
-				$q .= "COMMIT;\n";
+
+				if ( "0" == $updatetype ) {
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', $updatetype, '$data');\n";
+					$q .= "COMMIT;\n";
+				} else {
+					$_en = query("SELECT enum FROM datatypes WHERE typeid=$updatetype");
+					if ( 't' == $_en[0]["enum"] ) {
+						$st = query("SELECT value FROM enumtypes WHERE datatype=$updatetype and id=$data");
+						$_dtn = query("SELECT name FROM datatypes WHERE typeid=$updatetype");
+						$statusText = "Set " . $_dtn[0]["name"] . " to " . $st[0]["value"];
+					} else {
+						$statusText = "Set " . $_dtn[0]["name"] . " to " . $data;
+					} // end if
+					$q .= "UPDATE persondata SET value='$data' WHERE personid=$personid AND datatype=$updatetype;\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign', 0, '$statusText');\n";
+					$q .= "COMMIT;\n";
+				} // end if
+
 				// echo $q;
 				$r = query($q);
 			} else {
