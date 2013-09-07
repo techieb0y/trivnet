@@ -28,7 +28,7 @@
 
 	$timestamp = time();
 
-	$q = "INSERT INTO async VALUES ( '$jobid', '$file', '$mycall', '0', '0', '$dtastring', '1', '0', $timestamp, null )";
+	$q = "INSERT INTO async VALUES ( '$jobid', '$file', '$mycall', '0', '0', '$dtastring', '1', '0', $timestamp )";
 	$r = query($q);
 	
 	echo "Job submitted!";

@@ -13,6 +13,19 @@ include("inmedtent.inc");
 echo "<hr>";
 
 // Overall summery
+
+
+$r_sum = query("select datatypes.label, enumtypes.value as option, count(persondata.value) as num from persondata, datatypes, enumtypes where persondata.datatype=datatypes.typeid and enumtypes.id=persondata.value::integer and persondata.datatype in ( select typeid from datatypes where enum='t' ) group by label, option");
+
+if ( count($r_sum) > 0 ) {
+	echo "<table border=1>\n";
+	foreach ($r_sum as $row_summary) {
+		echo "<tr><td>" . $row_summary["label"] ."</td><td>" . $row_summary["option"] . "</td><td>" . $row_summary["num"] . "</td></tr>\n";
+	}
+	echo "</table>\n";
+} // end if
+
+
 /*
 $q_summary = "select message, count(message) as num from updatesequence where message in ( select text from quickmesg ) group by message";
 

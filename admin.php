@@ -32,24 +32,23 @@ if ( isset($_GET["mode"]) ) {
 			// Send back
 			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 		} // end if
-	} else if ( "statustypes" == $mode ) {
-		if ( isset($_GET["sdeletetype"]) && $_GET["sdeletetype"] != "NULL" )	{	
-			$q = "DELETE FROM statustypes WHERE id=" . $_GET["sdeletetype"];
-			$r = query($q);
+	} else if ( "enumtypes" == $mode ) {
+		if ( isset($_GET["enumdt"]) && isset($_GET["enumid"]) ) {
+			// Delete an enumerated value
+			$_dt = $_GET["enumdt"];
+			$_id = $_GET["enumid"];
+			$query = "DELETE FROM enumtypes WHERE id=$_id and datatype=$_dt";
+			query($query);
 			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
-		} // end if
-
-		if ( count($_POST) > 0 ) {
-			if ( isset($_POST["addstat_name"]) && ( strlen( $_POST["addstat_name"] ) > 0 ) ) {	
-				$q = "SELECT 1+MAX(id) AS newid FROM statustypes";
-				$r = query($q);
-				$num = $r[0]["newid"];
-				if ( !isset($num) ) { $num = 0; }
-				$q = "INSERT INTO statustypes VALUES ( $num, '" . $_POST["addstat_name"] . "')";
-				$r = query($q);
-			} // end if
-
-			// Send back
+		} else if ( isset($_POST["enumval"]) && isset($_POST["enumdt"]) && isset($_POST["enumid"]) ) { 
+			// echo "<pre>"; print_r($_POST); echo "</pre>";
+			// Add an enumerated value
+			$value = $_POST["enumval"];
+			$_id = $_POST["enumid"];
+			$dt = $_POST["enumdt"];
+			$query="INSERT INTO enumtypes VALUES ($_id, $dt, '$value')";
+			query($query);
+			// echo $query;
 			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 		} // end if
 	} else if ( "quickmesg" == $mode ) {
@@ -142,11 +141,24 @@ if ( isset($_GET["mode"]) ) {
 			if ( 't' == $_en ) {
 
 			echo "<tr><td colspan=2>&nbsp;</td><td colspan=5><table width=\"100%\" border=1>\n";
-				echo "<tr><th>ID</th><th>Value</th></tr>\n";
-				$_entable = query("SELECT id, value FROM enumtypes WHERE datatype=" . $z["typeid"]);
+				echo "<tr><th>ID</th><th colspan=2>Value</th></tr>\n";
+				$_entable = query("SELECT id, value FROM enumtypes WHERE datatype=" . $z["typeid"] . " ORDER BY id");
 				foreach( $_entable as $_enum ) {
+					$id = $_enum["id"];
 					echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
+					echo "<td><a href=\"admin.php?mode=enumtypes&enumid=" . $_enum["id"] . "&enumdt=" . $z["typeid"] . "\">[X]</a></td></tr>";
 				} // end foreach
+
+				$enumid = ++$id;
+				echo "<form action=\"admin.php?mode=enumtypes\" method=POST>";
+				echo "<tr><td><i>$enumid</i></td>";
+				echo "<td>";
+				echo "<input type=hidden name=\"enumdt\" value=\"" . $z["typeid"] . "\">";
+				echo "<input type=hidden name=\"enumid\" value=\"$enumid\">";
+				echo "<input name=\"enumval\">";
+				echo "</td><td>";
+				echo "<input type=submit value=\"Add\">";
+				echo "</td></form></tr>";
 			echo "</table></td></tr>\n";
 
 			} // end if
