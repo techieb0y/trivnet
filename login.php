@@ -52,7 +52,7 @@ function hamSearch() {
 <form action="index.php" method=POST>
 
 	<table>
-	<tr><td>Callsign:</td><td><input type=text name="callsign" id="callsign" maxlength=10 size=10 onBlur="javascript:hamSearch()"></td></tr>
+	<tr><td>Callsign:</td><td><input type=text name="callsign" id="callsign" maxlength=10 size=10 onBlur="javascript:hamSearch()"> (<i>or enter 'guest')</i></td></tr>
 	<tr><td>Name:</td>    <td><div name="realname" id="realname"></td></tr>
 	<tr><td>Tactical: (<em>optional</em>)</td><td><input type=text maxlength=20 name="tactical" id="tactical"></td></tr>
 	<tr><td>Symbol: </td><td><img class="symbol" id="symb" src="getAPRS.php?sym=0" onClick="toggleSymbols()">

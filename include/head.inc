@@ -32,6 +32,20 @@ if ( isset($_POST["callsign"]) ) {
 		} // end if
 		start_session();
 	} // end if
+	if ( "GUEST" == $mycall ) {
+		// Guest user
+		$name = "Guest user";
+		$_SESSION["callsign"] = "Guest";
+		$_SESSION["realname"] = "Guest User";
+		
+		if ( isset($_POST["tactical"]) ) {
+			$_SESSION["tactical"] = $_POST["tactical"];
+		} // end if
+		if ( isset($_POST["symbol"]) ) {
+			$_SESSION["symbol"] = $_POST["symbol"];
+		} // end if
+		start_session();
+	} // end if
 } // end if 
 
 if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }

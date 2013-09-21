@@ -53,7 +53,7 @@ function query($string) {
 	// Returns: result array. rows as first index; associative array of fields under that
 
 	// echo "*** $string\n";
-	error_log("Q: " . $string, 0);
+	// error_log("Q: " . $string, 0);
 
 	// Make sure we're connected. This lets us get away with being lazy.
 	if ( !isset($db) ) {
