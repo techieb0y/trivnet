@@ -1,13 +1,16 @@
 TrivNet improvements list
-2010 Apr 23 - KD8GBL
+2013 Sep 22 - KD8GBL
 
-* merge bulk-person-import, batch edits, and async jobs
+Web
+* AJAX/Web2.0/etc UI work
+* Symbols as a user preference
+* Tactical calls in message display
 
-* canned message add/del/use from the CLI
+
+CLI
+* canned message add/del/use
+* support for enumerated types
 * pager for search results?
 
-* streaming status update
 * network toplogy awareness
 
-* AJAX and/or XSL based UI work
-* Use a proper session handler, drop HTTP Basic Auth stuff
