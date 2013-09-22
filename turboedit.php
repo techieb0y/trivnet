@@ -1,14 +1,9 @@
 <?php
 	require_once("include/config.inc");
 	require_once("include/db_ops.inc");
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-<head>
-	<meta charset="utf-8">
-	<title>TrivnetDB - Amateur Radio Information Network</title>
+	require_once("include/head.inc");
+?>
 
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 
@@ -41,7 +36,7 @@
 		$.ajax({
 			type: "POST",
 			dataType: "json",
-			url: "/trivnet/demo2.php",
+			url: "agents/set_status_json.php",
 			success: processResult,
 			data: data
 		});
@@ -52,9 +47,11 @@
 	}
 
 	function processResult (_data, _status, _jqXHR) {
+		id = _data.id;
 		if ( _data.result == 'OK' ) {
-			id = _data.id;
 			$( "#" + id ).remove();
+		} else {
+			$( "#" + id ).find("img").attr("src", "images/warning.png");
 		}
 	}
 
@@ -115,6 +112,5 @@
 </div>
 
 <input id="fix" type=button value="Fix">
-
 
 </body></html>
