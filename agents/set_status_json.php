@@ -6,6 +6,8 @@ require_once("../include/sessions.inc");
 
 global $config;
 
+$ok = 0;
+
 // Make sure this is permitted
 session_start();
 // session_register("mycall");
@@ -27,7 +29,11 @@ $typeid = $config["multidefault"];
 
 $q_id = "SELECT personid FROM persondata WHERE value='$value' AND datatype='$typeid'";
 $r_id=query($q_id);
-$id = $r_id[0]["personid"];
+
+if ( count($r_id) == 1 ) {
+	$id = $r_id[0]["personid"];
+	$ok = 1;
+} // end if
 
 $status = $data->data;
 
@@ -35,14 +41,14 @@ if ( has_session($mycall) ) {
 	$now = time();
 	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', 0, '$status' )";
 	$r = query($qr);
-	$ok = 1;
 } else {
+	$ok = 0;
 	header("401 Unauthorized");
 }
 
 $input_id = $data->id;
-
 $ret["id"] = $input_id;
+
 if ( 1 == $ok ) {
 	$ret["result"] = "OK";
 } else {
