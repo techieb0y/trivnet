@@ -53,7 +53,7 @@ if ( !has_session() ) {
 	<title>TrivnetDB - Amateur Radio Information Network</title>
 	<link rel="stylesheet" href="common/trivnet.css" />
 	<link rel="stylesheet" href="css/flick/jquery-ui-1.8.24.custom.css" />
-	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui-1.8.24.custom.min.js"></script>
 	<script src="/trivnet/common/jquery_msg.js"></script>
 </head>
