@@ -7,7 +7,7 @@ $to = "all";
 
 if ( isset($_POST["sendto"]) ) {
 	$to = $_POST["sendto"];
-	if ( ("*" == $to) || ("everyone" == $to) || ("any" == $to) || (null == $to) ) {
+	if ( ("ALL" == $to) || ("*" == $to) || ("everyone" == $to) || ("any" == $to) || (null == $to) ) {
 		$to = "all";
 	} // end if
 } // end if
