@@ -5,7 +5,7 @@
 	require_once("include/head.inc");
 ?>
 
-<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
 
 <script type="text/javascript">
 	var c = 0;

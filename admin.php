@@ -77,7 +77,7 @@ if ( isset($_GET["mode"]) ) {
 	require_once("include/head.inc");
 
 	echo "<link rel=\"stylesheet\" href=\"/trivnet/css/flick/jquery-ui-1.8.24.custom.css\">\n";
-	echo "<script src=\"/trivnet/js/jquery-1.8.2.min.js\"></script>\n";
+	echo "<script src=\"/trivnet/js/jquery.js\"></script>\n";
 	echo "<script src=\"/trivnet/js/jquery-ui-1.8.24.custom.min.js\"></script>\n";
 
 	echo "

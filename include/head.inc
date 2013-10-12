@@ -71,7 +71,7 @@ if ( !has_session() ) {
 	<!--link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" /-->
 	<link rel="stylesheet" href="css/flick/jquery-ui-1.8.24.custom.css" />
 
-	<script src="js/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui-1.8.24.custom.min.js"></script>
 	<!--script src="js/jquery.mobile-1.2.0.min.js"--><!--/script-->
 	
@@ -106,7 +106,9 @@ if ( !has_session() ) {
 <?php
 	// Time and messages window
 	echo "<div id=\"messages\" class=\"messages\">\n";
+	echo "<table>\n";
 	echo "<a href=\"#\"><img class=\"topRight\" id=\"mesgLoad\" src=\"images/refresh.png\"></a>\n";
+	echo "</table>\n";
 	echo "</div>\n";
 
 	// echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
