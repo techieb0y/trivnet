@@ -16,21 +16,17 @@ img { border: 0px; }
 .messages {
 	position: relative;
 	border: 1px solid #000000;
-	width: 66%;
+	width: 85%;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 2px;
 	text-align: left;
-	height: 96px;
 	font-family: monospace;
 	overflow: auto;
 }
-.messagesBig {
-	height: 384px;
-}
 .whoami { text-align: right; }
-.msgItem { height: 16px; }
-.msgSymbol { position: absolute; left: 0px; text-align: left; }
-.msgLeft { position: absolute; left: 18px; text-align: left; }
-.msgRight { position: absolute; right: 24px; text-align: right; }
-.msgCenter { position: absolute; left: 160px; text-align: center; }
+/* .msgItem { height: 16px; } */
+.msgSymbol { position: relative; left: 0px; text-align: left; }
+.msgLeft { position: relative; left: 18px; text-align: left; }
+.msgRight { position: relative; right: 24px; text-align: right; }
+.msgCenter { position: relative; left: 160px; text-align: center; right: 200px; }

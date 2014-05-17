@@ -145,8 +145,18 @@ if ( isset($_GET["mode"]) ) {
 				$_entable = query("SELECT id, value FROM enumtypes WHERE datatype=" . $z["typeid"] . " ORDER BY id");
 				foreach( $_entable as $_enum ) {
 					$id = $_enum["id"];
-					echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
-					echo "<td><a href=\"admin.php?mode=enumtypes&enumid=" . $_enum["id"] . "&enumdt=" . $z["typeid"] . "\">[X]</a></td></tr>";
+
+					// Check to see if these are in use, so we prevent deletion
+					$dt = $z["typeid"];
+					$query = "SELECT COUNT(persondata) FROM persondata WHERE datatype='$dt' AND value='$id'";
+					$q = query($query);
+					if ( $q[0]["count"] > 0 ) {
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
+						echo "<td>[in use]</td></tr>";
+					} else {
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
+						echo "<td><a href=\"admin.php?mode=enumtypes&enumid=" . $_enum["id"] . "&enumdt=" . $z["typeid"] . "\">[X]</a></td></tr>";
+					} // end if
 				} // end foreach
 
 				$enumid = ++$id;
