@@ -68,6 +68,7 @@ if ( !has_session() ) {
 		echo "<img src=\"getAPRS.php?sym=$sym\">&nbsp;";
 		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
+	<script>var callsign = <?php echo "'$call'" ?></script>
 	</div>
 
 	<!-- Menu -->

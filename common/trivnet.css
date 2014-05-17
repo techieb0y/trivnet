@@ -24,9 +24,14 @@ img { border: 0px; }
 	font-family: monospace;
 	overflow: auto;
 }
+.messagesBig {
+	height: 600px;
+}
 .whoami { text-align: right; }
 /* .msgItem { height: 16px; } */
 .msgSymbol { position: relative; left: 0px; text-align: left; }
 .msgLeft { position: relative; left: 18px; text-align: left; }
 .msgRight { position: relative; right: 24px; text-align: right; }
 .msgCenter { position: relative; left: 160px; text-align: center; right: 200px; }
+.evenRow { background-color: #bebebe; }
+.oddRow { background-color: #ffffff; }

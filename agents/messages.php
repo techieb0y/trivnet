@@ -16,7 +16,7 @@ if ( !has_session($mycall) ) {
 	// header("WWW-Authenticate: Basic");
 } else {
 	touch_session($mycall);
-	$q = "SELECT messages.callsign, messages.dest, messages.message, to_timestamp(messages.timestamp) AS timestamp, sessions.symbol FROM messages,sessions WHERE messages.callsign=sessions.callsign AND ( dest='$mycall' OR dest='all') ORDER BY timestamp DESC LIMIT $num";
+	$q = "SELECT messages.callsign, messages.dest, messages.message, to_timestamp(messages.timestamp) AS timestamp, sessions.symbol, sessions.tactical FROM messages,sessions WHERE messages.callsign=sessions.callsign AND ( dest='$mycall' OR dest='all') ORDER BY timestamp DESC LIMIT $num";
 	// $q = "SELECT callsign, dest, message, to_timestamp(timestamp) AS timestamp FROM messages ORDER BY timestamp DESC LIMIT $num";
 	$r = query($q);
 	if ( count($r) > 0 ) {

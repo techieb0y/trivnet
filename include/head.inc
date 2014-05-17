@@ -91,6 +91,7 @@ if ( !has_session() ) {
 		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
+	<script>var callsign = <?php echo "'$call'" ?></script>
 	<table class="menu">
 	<tr class="menu">
 		<td> <a class="menu" href="index.php">Home</a> </td>
