@@ -106,8 +106,8 @@ if ( !has_session() ) {
 
 <?php
 	// Time and messages window
-	echo "<div id=\"messages\" class=\"messages\">\n";
-	echo "<table>\n";
+	echo "<div class=\"messages\">\n";
+	echo "<table id=\"messages\">\n";
 	echo "<a href=\"#\"><img class=\"topRight\" id=\"mesgLoad\" src=\"images/refresh.png\"></a>\n";
 	echo "</table>\n";
 	echo "</div>\n";

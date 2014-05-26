@@ -24,7 +24,7 @@ $config["localnets"] = array( "10.0.10.0/24", "172.16.206.0/24" );
 $config["slownets"] = array("10.0.1.0/24");
 $config["default"] = "fancy";
 
-$config["multidefault"] = 5;
+$config["multidefault"] = 1;
 
 // Idle session auto-disconnect timeout (in seconds)
 $config["idle_timeout"] = 300;
