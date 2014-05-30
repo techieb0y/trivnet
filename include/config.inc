@@ -32,4 +32,9 @@ $config["idle_timeout"] = 300;
 // Number of async (batch) jobs to run in parallel
 $config["async_count"] = 1;
 
+global $RACEID;
+$RACEID[1] = "2244"; // Full
+$RACEID[2] = "2245"; // Half
+$RACEID[3] = "2246"; // Half
+
 ?>

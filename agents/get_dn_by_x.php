@@ -26,7 +26,7 @@ $qr = "SELECT datatype,value FROM persondata WHERE personid=$id AND datatype IN 
 $r = query($qr);
 
 // simulate delay
-usleep( rand(0,2000000) );
+// usleep( rand(0,2000000) );
 
 if ( count($r) != 2 ) { $ok = 0; }
 

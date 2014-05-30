@@ -1,7 +1,5 @@
 <?php 
 
-$raceid=279;
-
 require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
@@ -141,6 +139,7 @@ foreach ( $r as $key => $row ) {
 			} // end if
 			// Marthon-specific: save the bib number for the results link
 			if ( $k == "bibnum" ) { $bibNum = $val; }
+			if ( $k == "race" ) { $rid = $val; }
 			echo "</td>\n";
 			} // end if
 	} // end foreach
@@ -152,7 +151,8 @@ foreach ( $r as $key => $row ) {
 
 echo "</table>\n";
 
-// echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
+$raceid = $RACEID[ $rid ];
+echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
 
 echo "</form>";
 
