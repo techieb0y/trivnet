@@ -1,11 +1,10 @@
 <?php 
+header("Content-type: text/plain");
 
-// This is the basic query page, where you search for people, to get more information or to update their info.
-// To make the process simple, we show all the fields and let you search by entering criteria into any of them.
+// This is the XHR-JSON backend to the basic search page.
 
-require_once("include/head.inc");
-require_once("include/config.inc");
-require_once("include/db_ops.inc");
+require_once("../include/config.inc");
+require_once("../include/db_ops.inc");
 
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes order by datatype, id";
@@ -17,46 +16,6 @@ foreach( $r_enum as $k => $v ) {
 	$eid = $v["id"];
 	$enums[$dt][$eid] = $val;
 } // end foreach
-
-function showFields() {
-	// Display the search field stuff
-	$db = connect();
-	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid > 0 ORDER BY typeid";
-	$r = query($q);
-	// echo "<form action=\"agents/search.php\" method=POST>\n";
-	echo "<form action=\"query.php\" method=POST>\n";
-	echo "<table>\n";
-	if ( count($r) > 0 ) {
-		foreach ( $r as $row ) {
-			$label = $row["label"];
-			$tid = $row["typeid"];
-			$name = $row["name"];
-			$enum = $row["enum"];
-
-			if ( "t" == $enum ) {
-				echo "<tr><td>$label:</td><td><select name=\"$tid\">";
-				global $enums;
-				echo "<option value=\"\">Any\n";
-				foreach ( $enums[$tid] as $k => $v ) {
-					echo "<option value=\"$k\">$v\n";
-				} // end foreach
-				echo "</select></td>\n";
-			} else {
-				echo "<tr><td>$label:</td><td><input name=\"$tid\"></td></tr>\n";
-			} // end if
-		} // end foreach
-	} // end if
-	echo "<tr><td><input checked type=\"radio\" name=\"type\" value=\"AND\"> Match all (AND search)</td>";
-	echo "<td><input type=\"radio\" name=\"type\" value=\"OR\"> Match any (OR search)</td></tr>\n";
-	echo "<tr><td>or by status message:</td><td><input name=\"0\"></td></tr>\n";
-	echo "<tr><td><input type=\"reset\"></td><td><input type=\"submit\"></td></tr>\n";
-	echo "</table></form>\n";
-} // end showFields
-
-
-showFields();
-
-echo "<hr>\n";
 
 if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) ) ) {
 	if ( isset( $_GET["offset"] ) ) { $offset = $_GET["offset"]; } else { $offset = 0; }
@@ -80,11 +39,6 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 		$typeid = $rv["typeid"];
 		$exactness[$typeid] = $rv["exact"];
 	} // end foreach
-
-	// echo "<pre>"; print_r($exactness); echo "</pre>";
-	// echo "<pre>"; print_r($_POST); echo "</pre>";
-
-	echo "<table width=\"100%\">\n";
 
 	$q = $q_base;
 
@@ -134,50 +88,29 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	$theQuery .= ")";
 
 	// Get results
-	// echo "<pre>" . $theQuery . "</pre>";
 
 	$r = query( $theQuery );
 	
 	// echo "<pre>" . print_r($r) . "</pre>";
 
-	echo "<table>\n";
-	echo "<tr>";
-	foreach ( $theBigArray as $fieldName ) {
-		if ( $fieldName != "status" ) {
-			echo "<th>$fieldName</th>";
-		} // end if
-	} // end foreach
-	echo "</tr>\n";
+
 
 	foreach ( $r as $key => $row ) {
 		$pers = $row["personid"];
-		echo "<tr>";
-		foreach ( $r[0] as $k => $f ) {
+		foreach ( $row as $k => $f ) {
 			if ( ($k != "personid") && ($k != "status") ) {
-				echo "<td><a href=\"detail.php?id=$pers\">";
 				$tid = $reverseArray[$k];
 				if ( isset( $enums[$tid] ) ) {
-					$which = $row[$k];
-					echo $enums[$tid][$which];
+					$data[$key][$k] = $enums[$tid][$f];
 				} else {
-					echo $row[$k];
+					$data[$key][$k] = $f;
 				} // end if
-			echo "</a></td>";
 			} // end if
 		} // end foreach
-		echo "</tr>\n";
 	} // end foreach
 
+
+echo json_encode($data, JSON_PRETTY_PRINT);
 } // end if
 
-echo "</table>\n";
-if ( isset($r) ) { $numRows = count($r); } else { $numRows = 0; }
-echo "<b>" . $numRows . " rows</b><br>\n";
-
-echo "...or <a href=\"addPerson.php\">Add New Person Manually</a><br>";
-
-echo "<hr>\n";
-showFields();
-
-echo "</body></html>";
 ?>
