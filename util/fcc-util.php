@@ -8,7 +8,7 @@
 // 4. In psql:
 // 5. SET client_encoding TO latin1;
 // 6. DELETE from part97;
-// 7. COPY part97 FROM /tmp/load-XXXX
+// 7. \copy part97 FROM /tmp/load-XXXX
 //     (where load-XXXX is the filename returned from this tool)
 
 // Get the input directory
