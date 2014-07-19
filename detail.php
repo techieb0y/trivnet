@@ -41,6 +41,15 @@ if ( isset($_GET["id"]) ) {
 } // end if
 
 
+// Record an 'audit log' event
+
+$who = $_SESSION["tactical"];
+$cs = $_SESSION["callsign"];
+$now = time();
+$q = "INSERT INTO updatesequence VALUES ( $id, $now, '$who', 0, '<span class=\"audit\">Search performed by $cs</span>' )";
+$r = query($q);
+
+
 // ------- Re-dispplay the person's info, for confirmation that we're looking at
 // the right person
 
