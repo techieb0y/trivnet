@@ -17,12 +17,12 @@ foreach( $r_enum as $k => $v ) {
 	$enums[$dt][$eid] = $val;
 } // end foreach
 
-if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) ) ) {
+if ( isset($_SESSION["criteria"] ) || ( isset($_GET) && ( count($_GET) > 1 ) ) ) {
 	if ( isset( $_GET["offset"] ) ) { $offset = $_GET["offset"]; } else { $offset = 0; }
 
-	// echo count($_POST);
+	// echo count($_GET);
 
-	if ( strlen($_POST[0]) > 0 ) { 
+	if ( strlen($_GET[0]) > 0 ) { 
 		$q_base = "SELECT DISTINCT personid FROM updatesequence WHERE ";
 	} else {
 		$q_base = "SELECT DISTINCT personid FROM persondata WHERE ";
@@ -42,11 +42,11 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 	$q = $q_base;
 
-	if ( strlen($_POST[0]) > 0 ) {
-		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . $_POST[0] . "%'')";
+	if ( strlen($_GET[0]) > 0 ) {
+		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . $_GET[0] . "%'')";
 	} else {
-	// echo "<pre>" . print_r($_POST) . "</pre>";
-	foreach ( $_POST as $key => $param ) {
+	// echo "<pre>" . print_r($_GET) . "</pre>";
+	foreach ( $_GET as $key => $param ) {
 
 		if ( ($key != "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
 
@@ -56,7 +56,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 				$q .= $prefix . "( datatype=''$key'' AND value ILIKE ''%$param%'' ) ";
 			} // end if
 
-			if ( "AND" == $_POST["type"] ) {
+			if ( "AND" == $_GET["type"] ) {
 				$prefix = "INTERSECT " . $q_base;
 			} else {
 				$prefix = "OR ";
@@ -91,14 +91,15 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 	$r = query( $theQuery );
 	
-	// echo "<pre>" . print_r($r) . "</pre>";
+//	echo "<pre>" . print_r($r) . "</pre>";
 
 
 
 	foreach ( $r as $key => $row ) {
 		$pers = $row["personid"];
 		foreach ( $row as $k => $f ) {
-			if ( ($k != "personid") && ($k != "status") ) {
+			if ( $k != "status") {
+			// if ( ($k != "personid") && ($k != "status") ) {
 				$tid = $reverseArray[$k];
 				if ( isset( $enums[$tid] ) ) {
 					$data[$key][$k] = $enums[$tid][$f];
@@ -110,7 +111,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	} // end foreach
 
 
-echo json_encode($data, JSON_PRETTY_PRINT);
+ echo json_encode($data, JSON_PRETTY_PRINT);
 } // end if
 
 ?>

@@ -66,7 +66,7 @@ $q = "SELECT timestamp,source,datatype,value from updatesequence WHERE personid=
 $r = query($q);
 
 // $outputArray["datatypes"] = $theBigArray;
-// $outputArray["personData"] = $r_pd;
+$outputArray["personData"] = $r_pd;
 $outputArray["updateSequence"] = $r;
 
 echo json_encode($outputArray, JSON_PRETTY_PRINT);

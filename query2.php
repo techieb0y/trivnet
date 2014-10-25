@@ -23,7 +23,7 @@ function showFields() {
 	$db = connect();
 	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid > 0 ORDER BY typeid";
 	$r = query($q);
-	echo "<form action=\"agents/search.php\" method=POST>\n";
+	echo "<form action=\"agents/search.php\" method=GET>\n";
 	echo "<table>\n";
 	if ( count($r) > 0 ) {
 		foreach ( $r as $row ) {
