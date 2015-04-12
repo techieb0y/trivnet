@@ -179,5 +179,6 @@ echo "...or <a href=\"addPerson.php\">Add New Person Manually</a><br>";
 echo "<hr>\n";
 showFields();
 
+require_once("include/foot.inc");
 echo "</body></html>";
 ?>

@@ -112,5 +112,5 @@
 </div>
 
 <input id="fix" type=button value="Fix">
-
+<?php require_once("include/foot.inc"); ?>
 </body></html>

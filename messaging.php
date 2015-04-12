@@ -123,6 +123,6 @@ if ( !has_session() ) {
 	<tr><td>Send: </td><td><input type="submit" value="send"></td></tr>
 	</table>
 </form>
-
+<?php require_once("include/foot.inc"); ?>
 </body>
 </html>

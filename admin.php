@@ -314,6 +314,8 @@ if ( isset($_GET["mode"]) ) {
 
 	echo "</div></div>";
 
+	require_once("include/foot.inc");
+
 	echo "</body></html>";
 } // end if
 ?>

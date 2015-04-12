@@ -87,5 +87,5 @@ echo "</select>";
 </td></tr></table>
 
 </form>
-
+<?php require_once("include/foot.inc"); ?>
 </body></html>

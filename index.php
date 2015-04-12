@@ -49,6 +49,7 @@ echo "Trivnetdb v2.5 - by KD8GBL<br>\n";
  *	echo "Build: $ver<br>\n";
  */
 
-echo "</body></html>";
+require_once("include/foot.inc");
 
+echo "</body></html>";
 ?>
