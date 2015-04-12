@@ -20,11 +20,11 @@ $DB_PASS = "trivnet";
 $DB_HOST = "127.0.0.1";
 
 // Network-topolgy-aware page display parameters
-$config["localnets"] = array( "10.0.10.0/24", "172.16.206.0/24" );
+$config["localnets"] = array( "192.168.54.0/24", "172.16.104.0/24" );
 $config["slownets"] = array("10.0.1.0/24");
 $config["default"] = "fancy";
 
-$config["multidefault"] = 1;
+$config["multidefault"] = 5;
 
 // Idle session auto-disconnect timeout (in seconds)
 $config["idle_timeout"] = 300;
