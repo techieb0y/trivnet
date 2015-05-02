@@ -26,11 +26,11 @@ $loadfile = fopen($lf, "w+");
 $fh_HD = fopen( $dirname . "HD.dat", "r" ) or die("ERROR: Could not open HD.dat\n");
 $fh_EN = fopen( $dirname . "EN.dat", "r" ) or die("ERROR: Could not open EN.dat\n");
 
-echo "Processing HD.dat\n";
+// echo "Processing HD.dat\n";
 while ( $ech = fgets($fh_HD) ) {
 	$data = str_getcsv($ech, "|");
 	$lines++;
-	if ( 0 == $lines % 1000 ) { echo "."; } 
+	// if ( 0 == $lines % 1000 ) { echo "."; } 
 
 	$call = $data[4];
 	$licstat = $data[5];
@@ -44,11 +44,11 @@ while ( $ech = fgets($fh_HD) ) {
 
 $lines = 0;
 
-echo "\nProcessing EN.dat\n";
+// echo "\nProcessing EN.dat\n";
 while ( $ech = fgets($fh_EN) ) {
 	$data = str_getcsv($ech, "|");
 	$lines++;
-	if ( 0 == $lines % 1000 ) { echo "."; } 
+//	if ( 0 == $lines % 1000 ) { echo "."; } 
 
 	$call = $data[4];
 	$name = $data[7];
@@ -64,5 +64,5 @@ fclose($fh_EN);
 fclose($fh_HD);
 fclose($loadfile);
 
-echo "\nDone preparing load file $lf\n";
+echo "$lf\n";
 ?>
