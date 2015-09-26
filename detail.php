@@ -160,6 +160,18 @@ foreach ( $r as $key => $row ) {
 
 echo "</table>\n";
 
+
+	$mt = array( "11", "27", "65", "72" );
+	if ( in_array( $_SESSION["symbol"], $mt ) ) {
+		echo "<table><tr>\n";
+		echo "<th colspan=2>Med-tent specific options</th>\n";
+		echo "</tr><tr>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=3\">Entered Med Tent</a>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=4\">Left Med Tent</a>\n";
+		echo "</tr></table>\n";
+		echo "<hr>\n";
+	}
+
 $raceid = $RACEID[ $rid ];
 echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
 
