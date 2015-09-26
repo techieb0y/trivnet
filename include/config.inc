@@ -24,7 +24,9 @@ $config["localnets"] = array( "192.168.54.0/24", "172.16.104.0/24" );
 $config["slownets"] = array("10.0.1.0/24");
 $config["default"] = "fancy";
 
-$config["multidefault"] = 5;
+$config["multidefault"] = 2;
+$config["status"] = 0;
+$config["message"] = 1;
 
 // Idle session auto-disconnect timeout (in seconds)
 $config["idle_timeout"] = 300;
@@ -33,8 +35,11 @@ $config["idle_timeout"] = 300;
 $config["async_count"] = 1;
 
 global $RACEID;
-$RACEID[1] = "2244"; // Full
-$RACEID[2] = "2245"; // Half
-$RACEID[3] = "2246"; // Half
+$RACEID[1] = "2569"; // Full
+$RACEID[3] = "2571"; // 10-mile
+$RACEID[4] = "2570"; // Wheelchair
+
+$RACEID[5] = "2700"; // Ultra Loony
+$RACEID[6] = "2572"; // 10K Loony
 
 ?>

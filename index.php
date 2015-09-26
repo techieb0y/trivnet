@@ -9,9 +9,10 @@
 include("head.inc");
 
 // Overall summery
+$sdt = $config["status"];
 echo "Status summary:<br>\n";
 
-$r_sum = query("select count(persondata.value) as num, enumtypes.value as option from persondata,enumtypes where persondata.datatype=1 and enumtypes.id=persondata.value::integer and enumtypes.datatype=persondata.datatype group by persondata.value, enumtypes.value order by option");
+$r_sum = query("select count(persondata.value) as num, enumtypes.value as option from persondata,enumtypes where persondata.datatype=$sdt and enumtypes.id=persondata.value::integer and enumtypes.datatype=persondata.datatype group by persondata.value, enumtypes.value order by option");
 
 // $r_sum = query("select datatypes.label, enumtypes.value as option, count(persondata.value) as num from persondata, datatypes, enumtypes where persondata.datatype=datatypes.typeid and enumtypes.id=persondata.value::integer and persondata.datatype in ( select typeid from datatypes where enum='t' ) group by label, option");
 
@@ -39,7 +40,8 @@ foreach ( $rh as $row ) {
 	$theBigArray[$typeid] = $name; 
 } // end foreach
 
-$theQuery = "SELECT personid,firstname,lastname FROM crosstab('SELECT * from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype=''1'' AND value=''3'')', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
+
+$theQuery = "SELECT personid,firstname,lastname FROM crosstab('SELECT * from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype=''$sdt'' AND value=''3'')', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
 foreach ( $theBigArray as $fieldName ) {
 	$theQuery .= ", " . $fieldName . " varchar ";
 } // end foreach
@@ -47,14 +49,18 @@ $theQuery .= ") WHERE firstname IS NOT NULL AND lastname IS NOT NULL";
 
 $inmed = query($theQuery);
 
+if ( count($inmed) > 0 ) {
 echo "<ul>";
-foreach($inmed as $m) {
-	$pid = $m["personid"];
-	$fn = $m["firstname"];
-	$ln = $m["lastname"];
-	echo "<li>$pid - <a href=\"detail.php?id=$pid\">$fn $ln</a>\n";
-} //end foreach
-echo "</ul>";
+	foreach($inmed as $m) {
+		$pid = $m["personid"];
+		$fn = $m["firstname"];
+		$ln = $m["lastname"];
+		echo "<li>$pid - <a href=\"detail.php?id=$pid\">$fn $ln</a>\n";
+	} //end foreach
+	echo "</ul>";
+} else {
+	echo "Med tent is empty.";
+} // end if
 
 echo "</td></tr></table>";
 
@@ -62,8 +68,10 @@ echo "<hr>\n";
 
 echo "Message summary:<br>\n";
 
+$msgdt = $config["message"];
+
 // $q_summary = "select value, count(value) as num from updatesequence where datatype=0 and value ilike '%out at%' group by message";
-$q_summary = "select value, count(value) as num from updatesequence where datatype=0 group by value";
+$q_summary = "select value, count(value) as num from updatesequence where datatype=$msgdt and value not like '%Search performed%' group by value";
 
 //$q_summary = "select message,count(message) as num from updatesequence where message not ilike '%out%'  and message not like '%bed%' group by message order by message;";
 

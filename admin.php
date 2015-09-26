@@ -114,6 +114,8 @@ if ( isset($_GET["mode"]) ) {
 			$flag = "";
 			if ( $z["exact"] == "t" ) { $match = "Exact"; } else { $match = "Substring"; }
 			if ( $z["typeid"] == $config["multidefault"] ) { $flag = "<img src=\"images/key.png\">"; }
+			if ( $z["typeid"] == $config["message"] ) { $flag = "<img src=\"images/message.png\">"; }
+			if ( $z["typeid"] == $config["status"] ) { $flag = "<img src=\"images/status.png\">"; }
 			$_en = $z["enum"];
 
 			echo "<tr><td>" . $z["typeid"] . "</td><td>$flag</td><td><code>" .  $z["name"] . "</code></td><td><b>" . $z["label"] . "</b></td><td>$match</td>\n";
@@ -124,7 +126,7 @@ if ( isset($_GET["mode"]) ) {
 			$y = query("SELECT COUNT(updatetype) as num FROM async WHERE updatetype=" . $z["typeid"]);
 			$w = query("SELECT COUNT(searchtype) as num FROM async WHERE searchtype=" . $z["typeid"]);
 
-			if ( ($z["typeid"] == $config["multidefault"]) || ($z["typeid"] == 0) ) {
+			if ( ($z["typeid"] == $config["multidefault"]) || ($z["typeid"] == $config["status"]) || ($z["typeid"] == $config["message"]) ) {
 				$delMsg = "[reserved]";
 			}  else if ( ($x[0]["num"] > 0) || ($y[0]["num"] > 0) || ($w[0]["num"] > 0) ) {
 				$delMsg = "[in use]";
@@ -179,7 +181,6 @@ if ( isset($_GET["mode"]) ) {
 
 	$flag = "<img src=\"images/key.png\">";
 	echo "</table>";
-	echo "<br>$flag indicates Multi-Edit search key datatype.<br>\n";
 	//	echo "<hr>";
 	echo "<form method=\"POST\" action=\"admin.php?mode=datatypes\">";
 
@@ -191,6 +192,11 @@ if ( isset($_GET["mode"]) ) {
 	echo "<br>";
 	echo "<input type=\"submit\">";
 	echo "</form>";
+
+	echo "<br>";
+	echo "<li><img src=\"images/key.png\">indicates Multi-Edit search key datatype\n";
+	echo "<li><img src=\"images/status.png\">indicates Status datatype\n";
+	echo "<li><img src=\"images/message.png\">indicates Message datatype\n";
 	echo "</div>\n";
 
 	echo "<div id=\"tabs5\">\n";

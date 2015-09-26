@@ -30,14 +30,17 @@ $text = "ERROR: Unspecified med-tent event";
 if ( $dir == 3 ) { $text = "Runner entered med tent"; }
 if ( $dir == 4 ) { $text = "Runner left med tent"; }
 
-$pre = query("SELECT * FROM persondata WHERE personid=$id AND datatype=1");
+$mtdt = $config["status"];
+$msgdt = $config["message"];
+
+$pre = query("SELECT * FROM persondata WHERE personid=$id AND datatype=$mtdt");
 if ( count($pre) == 0 ) {
-	$qq = "INSERT INTO persondata VALUES ( $id, 1, $dir );";
+	$qq = "INSERT INTO persondata VALUES ( $id, $mtdt, $dir );";
 } else {
-	$qq = "UPDATE persondata SET value='$dir' WHERE personid=$id AND datatype=1;";
+	$qq = "UPDATE persondata SET value='$dir' WHERE personid=$id AND datatype=$mtdt;";
 } // end if
 
-$q = "BEGIN;\n INSERT INTO updatesequence VALUES ( $id, $time, '$mycall', 0, '$text' );\n" . $qq . "COMMIT;";
+$q = "BEGIN;\n INSERT INTO updatesequence VALUES ( $id, $time, '$mycall', $msgdt, '$text' );\n" . $qq . "COMMIT;";
 
 $r = query($q);
 

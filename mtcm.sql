@@ -1,4 +1,16 @@
 BEGIN;
-INSERT INTO datatypes VALUES ( 0, 'bibnum', 'Bib Number', false);
+INSERT INTO datatypes VALUES ( 2, 'bibnum', 'Bib Number', false, false);
+INSERT INTO datatypes VALUES ( 3, 'firstname', 'First Name', false, false);
+INSERT INTO datatypes VALUES ( 4, 'lastname', 'Last Name', false, false);
+INSERT INTO datatypes VALUES ( 5, 'gender', 'Gender', true, true);
+INSERT INTO enumtypes VALUES ( 1, 5, 'Male');
+INSERT INTO enumtypes VALUES ( 2, 5, 'Female');
+INSERT INTO datatypes VALUES ( 6, 'racer', 'Race', true, true);
+INSERT INTO enumtypes VALUES ( 3, 6, 'Full');
+INSERT INTO enumtypes VALUES ( 4, 6, 'Half');
 INSERT INTO defaults VALUES ( 'none', 'bibnum', 'status' );
+INSERT INTO enumtypes VALUES ( 20, 0, 'Unknown');
+INSERT INTO enumtypes VALUES ( 21, 0, 'Crossed Finish Line');
+INSERT INTO enumtypes VALUES ( 22, 0, 'In Med Tent');
+INSERT INTO enumtypes VALUES ( 23, 0, 'Dropped out');
 COMMIT;
