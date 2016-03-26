@@ -16,7 +16,8 @@ $dirname = $argv[1];
 
 // Set up the output file
 $lines = 0;
-$lf = tempnam("/tmp", "load-");
+// $lf = tempnam("/tmp", "load-");
+$lf = /tmp/trivnet-fcc.out
 $loadfile = fopen($lf, "w+");
 
 // Open up the individual input files
