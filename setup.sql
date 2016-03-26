@@ -1,5 +1,5 @@
 BEGIN;
-CREATE TABLE people ( id int NOT NULL PRIMARY KEY) );
+CREATE TABLE people ( id int NOT NULL PRIMARY KEY );
 CREATE TABLE part97 ( callsign varchar(10) primary key, name varchar(200) );
 CREATE TABLE datatypes ( typeid int PRIMARY KEY, name varchar(12) unique, label varchar(32), exact boolean default false, enum boolean default false );
 INSERT INTO datatypes VALUES ( 0, 'status', 'Status', 'f', 'f' );
