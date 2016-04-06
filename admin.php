@@ -293,8 +293,8 @@ if ( isset($_GET["mode"]) ) {
 
 	echo "<br>\n";
 
-	if ( file_exists("/tmp/asyncEngine.stat") ) {
-		$info = stat("/tmp/asyncEngine.stat");
+	if ( file_exists("/var/www/trivnet/jobs/asyncEngine.stat") ) {
+		$info = stat("/var/www/trivnet/jobs/asyncEngine.stat");
 		$tm = $info["atime"];
 		$delta = time() - $tm;
 		echo "Last Async Engine checkin was $delta seconds ago.<br>\n";

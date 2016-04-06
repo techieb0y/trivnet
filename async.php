@@ -273,7 +273,7 @@ function runJob($jobId) {
 		fclose($errlog);
 	} // end if - bulk-import special case
 
-	touch("/tmp/asyncEngine.stat");
+	touch("/var/www/trivnet/jobs/asyncEngine.stat");
 } // end runJob
 
 function housekeeping() {
@@ -288,7 +288,7 @@ function housekeeping() {
 			} // end if
 		} // end foreach
 	} // enf if
-	touch("/tmp/asyncEngine.stat");
+	touch("/var/www/trivnet/jobs/asyncEngine.stat");
 } // end housekeeping
 
 ?>

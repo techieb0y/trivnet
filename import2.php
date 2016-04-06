@@ -5,7 +5,7 @@ require_once("include/head.inc");
 // Did they select a file to upload?
 if ( $_FILES["persondata"]["size"] > 0 ) {
 	// uploaded file, instead of entering data into textarea
-	$filename = "/tmp/" . basename($_FILES['persondata']['name']);
+	$filename = "/var/www/trivnet/jobs/" . basename($_FILES['persondata']['name']);
 	move_uploaded_file($_FILES['persondata']['tmp_name'], $filename);
 	echo "Using " . filesize($filename) . " bytes of person data file contents<br>\n";
 	$use_file = 1;

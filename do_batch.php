@@ -9,7 +9,7 @@ require_once("include/head.inc");
 
 if ( $_FILES["searchkey_file"]["size"] > 0 ) {
 	// uploaded file, instead of entering data into textarea
-	$filename = "/tmp/" . basename($_FILES['searchkey_file']['name']);
+	$filename = "/var/www/trivnet/jobs/" . basename($_FILES['searchkey_file']['name']);
 	if ( file_exists($filename) ) { copy($filename, $filename . ".old"); }
 	move_uploaded_file($_FILES['searchkey_file']['tmp_name'], $filename);
 	echo "Overriding textarea with " . filesize($filename) . " bytes of file content";
