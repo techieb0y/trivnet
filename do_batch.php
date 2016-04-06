@@ -83,7 +83,7 @@ $q_id = "SELECT nextval('async_jobid_seq') AS jobid";
 $r_id = query($q_id);
 $jobid = $r_id[0]["jobid"];
 
-$jobfile = "/tmp/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
+$jobfile = "/var/www/trivnet/jobs/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
 $fh = fopen($jobfile, "w+");
 fseek($tmp, 0);
 stream_copy_to_stream($tmp, $fh);

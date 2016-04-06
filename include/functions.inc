@@ -148,7 +148,7 @@ function tn_batch($line) {
 
 		// Create job file
 		fflush($tmp);
-		$jobfile = "/tmp/" . $mycall . "-" . $async_id;
+		$jobfile = "/var/www/trivnet/jobs/" . $mycall . "-" . $async_id;
 		$h2 = fopen($jobfile, "w+");
 		fseek($tmp, 0);
 		stream_copy_to_stream($tmp, $h2);
