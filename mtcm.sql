@@ -5,7 +5,7 @@ INSERT INTO datatypes VALUES ( 4, 'lastname', 'Last Name', false, false);
 INSERT INTO datatypes VALUES ( 5, 'gender', 'Gender', true, true);
 INSERT INTO enumtypes VALUES ( 1, 5, 'Male');
 INSERT INTO enumtypes VALUES ( 2, 5, 'Female');
-INSERT INTO datatypes VALUES ( 6, 'racer', 'Race', true, true);
+INSERT INTO datatypes VALUES ( 6, 'race', 'Race', true, true);
 INSERT INTO enumtypes VALUES ( 3, 6, 'Full');
 INSERT INTO enumtypes VALUES ( 4, 6, 'Half');
 INSERT INTO defaults VALUES ( 'none', 'bibnum', 'status' );
