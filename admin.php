@@ -152,9 +152,10 @@ if ( isset($_GET["mode"]) ) {
 					$dt = $z["typeid"];
 					$query = "SELECT COUNT(persondata) FROM persondata WHERE datatype='$dt' AND value='$id'";
 					$q = query($query);
-					if ( $q[0]["count"] > 0 ) {
-						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
-						echo "<td>[in use]</td></tr>";
+					if ( ( $dt == $config["status"] ) && ( $id == $config["medtentstatus"] ) ) {
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td><img src=\"getAPRS.php?sym=11\"></td></tr>";
+					} else if ( $q[0]["count"] > 0 ) {
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td>[in use]</td></tr>";
 					} else {
 						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td>";
 						echo "<td><a href=\"admin.php?mode=enumtypes&enumid=" . $_enum["id"] . "&enumdt=" . $z["typeid"] . "\">[X]</a></td></tr>";

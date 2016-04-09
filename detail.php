@@ -166,8 +166,8 @@ echo "</table>\n";
 		echo "<table><tr>\n";
 		echo "<th colspan=2>Med-tent specific options</th>\n";
 		echo "</tr><tr>\n";
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=3\">Entered Med Tent</a>\n";
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=4\">Left Med Tent</a>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["medtentstatus"] . "\">Entered Med Tent</a>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["lefttentstatus"] . "\">Left Med Tent</a>\n";
 		echo "</tr></table>\n";
 		echo "<hr>\n";
 	}
