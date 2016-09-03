@@ -27,8 +27,8 @@ if ( isset($_GET["direction"]) ) {
 $time = time();
 $text = "ERROR: Unspecified med-tent event";
 
-if ( $dir == 3 ) { $text = "Runner entered med tent"; }
-if ( $dir == 4 ) { $text = "Runner left med tent"; }
+if ( $dir == $config["medtentstatus"] ) { $text = "Runner entered med tent"; }
+if ( $dir == $config["lefttentstatus"] ) { $text = "Runner left med tent"; }
 
 $mtdt = $config["status"];
 $msgdt = $config["message"];

@@ -39,7 +39,8 @@ $status = $data->data;
 
 if ( has_session($mycall) ) {
 	$now = time();
-	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', 0, '$status' )";
+	$dt = $config["message"];
+	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $dt, '$status' )";
 	$r = query($qr);
 } else {
 	$ok = 0;

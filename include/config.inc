@@ -25,8 +25,8 @@ $config["slownets"] = array("10.0.1.0/24");
 $config["default"] = "fancy";
 
 $config["multidefault"] = 2;
-$config["status"] = 1;
-$config["message"] = 0;
+$config["status"] = 0;
+$config["message"] = 1;
 $config["medtentstatus"] = 3;
 $config["lefttentstatus"] = 4;
 
