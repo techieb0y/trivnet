@@ -32,7 +32,7 @@ if ( isset($argv[1]) ) {
 
 switch ($argv[0]) {
 	case "--list":
-		$q = "SELECT * from async";
+		$q = "SELECT * from async ORDER BY jobid";
 	$r = query($q);
 	if ( count($r) > 0 ) {
 		foreach ($r as $job) {
@@ -133,7 +133,7 @@ function runJob($jobId) {
 
 	if ( preg_match("/^IMPORT!/", $data) ) {
 		// Magic keyword telling us to use the bulk dataset import rules
-		// Explore into parts: header, delim, serialized data
+		// Explode into parts: header, delim, serialized data
 		$stuff = explode("!", $data);
 		$fields = unserialize($stuff[2]);
 		$delimname = $stuff[1];
@@ -205,12 +205,12 @@ function runJob($jobId) {
 		// Count of errors
 		$err = 0;
 
-		// Marathon special-case handling for bib numbers
-		$bibNum_dataType = query("SELECT typeid FROM datatypes WHERE name = 'bibnum'");
-
 		foreach ($workingSet as $row) {
+			global $config;
+
 			if ( trim($row )== "END" ) { break; }
-			if ( $searchtype == $bibNum_dataType[0]["typeid"] ) {
+			// Marathon special-case handling for bib numbers, which will almost always be the multi-edit default type.
+			if ( $searchtype == $config["multidefault"] ) {
 				$r = query("SELECT personid FROM persondata WHERE datatype=$searchtype AND value='" . strtoupper(trim($row)) . "'");
 			} else {
 				$r = query("SELECT personid FROM persondata WHERE datatype=$searchtype AND value='" . trim($row) . "'");
@@ -219,31 +219,33 @@ function runJob($jobId) {
 				fwrite($errlog, "Duplicate entry for $personid\n");
 				$err++;
 			} else if ( count($r) == 1 ) {
+				$msg = $config["message"];
 				$personid = $r[0]["personid"];
-				// 0 is the update type for a status-message-only, non-persondata update
-				// The typical marathon application for this at is the 'Runner crossed finish line' notice.
 				$q = "BEGIN;\n";
 
 				$_tac = query("SELECT tactical FROM sessions WHERE callsign='$callsign'");
 				$tac = $_tac[0]["tactical"];
 
-				if ( "0" == $updatetype ) {
+				if ( $msg == $updatetype ) {
+					// We're updating the status message, but no actual data values
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
 				} else {
+					// We're updating a data value, and generating a status message to say we did so
 					$_dt = query("SELECT name,enum FROM datatypes WHERE typeid=$updatetype");
 					if ( 't' == $_dt[0]["enum"] ) {
 						$st = query("SELECT value FROM enumtypes WHERE datatype=$updatetype and id=$data");
 						$statusText = "Set " . $_dt[0]["name"] . " to " . $st[0]["value"];
 					} else {
 						$statusText = "Set " . $_dt[0]["name"] . " to " . $data;
-					} // end if
+					} // end if 
+
 					$q .= "UPDATE persondata SET value='$data' WHERE personid=$personid AND datatype=$updatetype;\n";
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', 0, '$statusText');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$statusText');\n";
 					$q .= "COMMIT;\n";
 				} // end if
 
-				// echo $q;
+				echo $q;
 				$r = query($q);
 			} else {
 				fwrite($errlog, "No match found for $personid\n");

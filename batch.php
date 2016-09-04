@@ -39,43 +39,55 @@ foreach($r as $row) {
 
 <textarea name="searchkeys" id="searchkeys" columns=12 rows=20></textarea>
 <br>(or from a text file: <input type=file name="searchkey_file">)
-</td> <td>
-
-
-Update Message: 
-<select name="quickmesg">
+</td>
+<td>
+Update Data values: 
+<table>
 <?php
-	$r = query("SELECT text from quickmesg");
-	foreach ($r as $row) {
-		$text = $row["text"];
-		echo "<option value=\"$text\">$text</option>\n";
-	} // end foreach
-?>
-</select>
-<br>
-<br>...or use custom: <input name="custom" size=40><br>
-<i>(overrides selected message)</i>
-<br><br>
-Mile marker: <input type=text size=4 name="mile">
-<br>
-
-<hr>
-
-Update Data value: 
-<?php
-echo "<select name=\"updatetype\">";
 $_dts = query("SELECT * from datatypes order by typeid");
 
 foreach( $_dts as $_dt ) {
 	$typeid = $_dt["typeid"];
 	$label = $_dt["label"];
-	echo "<option value=\"$typeid\">$label\n";
+	$isEnum = $_dt["enum"];
+	echo "<tr>";
+	echo "<td><input type=\"checkbox\" id=\"updateType[$typeid]\" name=\"updateType[$typeid]\" value=\"true\"></td>\n";
+	echo "<td><label for=\"updateType[$typeid]\">$label</label></td>\n<td>";
+
+
+	echo "<td><label for=\"updateType[$typeid]\">";
+	// Messages can be enum or custom, so they're a bit of a special case.
+	if ( $typeid == $config["message"] ) {
+		echo "<select name=\"quickmesg\">";
+		$r = query("SELECT text from quickmesg");
+		foreach ($r as $row) {
+			$text = $row["text"];
+			echo "<option value=\"$text\">$text</option>\n";
+		} // end foreach
+		echo "</select>";
+		echo "<br>...or use custom: <input name=\"custom\" size=40><br><i>(overrides selected message)</i>\n";
+		echo "<br>Mile marker: <input type=text size=4 name=\"mile\">\n";
+	} else {
+		// General case of not the status text
+		// Can be enum or not.
+		if ( 't' == $isEnum ) {
+			echo "<select name=\"value[$typeid]\">\n";
+			$r = query("SELECT * from enumtypes WHERE datatype=$typeid");
+			foreach ( $r as $row ) {
+				$val = $row["id"];
+				$text = $row["value"];
+				echo "<option name=\"value[$typeid]\" value=\"$val\">$text</option>\n";
+			} // end foreach
+			echo "</select>\n";
+		} else {
+			echo "<input size=32 name=\"value[$typeid]\">\n";
+		} // end if
+	} // end if
+
+	echo "</label></td></tr>\n";
 } // end foreach
-echo "</select>";
+echo "</table>";
 ?>
-
-<input name="updatevalue" size=16>
-
 
 <div id="base" style="display: none;">
 <input type=text id="base" name="searchkey[]" disabled size=6>
@@ -85,7 +97,7 @@ echo "</select>";
 
 <input type=submit value="Perform Updates">
 </td></tr></table>
-
 </form>
+
 <?php require_once("include/foot.inc"); ?>
 </body></html>

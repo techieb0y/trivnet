@@ -23,6 +23,9 @@ $datatype = $_POST["datatype"];
 $canned_status = $_POST["quickmesg"];
 $custom_status = $_POST["custom"];
 
+$types= $_POST["updateType"];
+$values = $_POST["value"];
+
 if ( strlen($custom_status) > 0 ) {
 	$status = $custom_status;
 } else {
@@ -34,8 +37,7 @@ if ( strlen($mile) > 0 ) {
 	$mesg .= " at mile $mile";
 } // end if
 
-$updatetype = $_POST["updatetype"];
-$updatevalue = $_POST["updatevalue"];
+$msgtype = $config["message"];
 
 echo "<pre>";
 
@@ -79,23 +81,28 @@ foreach($data as $key) {
 } // end foreach
 fflush($tmp);
 
-$q_id = "SELECT nextval('async_jobid_seq') AS jobid";
-$r_id = query($q_id);
-$jobid = $r_id[0]["jobid"];
+foreach ( $types as $k => $t ) {
+	// k is the keys, which are datatype IDs.
+	// t is alwas 'true', which is just a placeholder.
+	
+	$q_id = "SELECT nextval('async_jobid_seq') AS jobid";
+	$r_id = query($q_id);
+	$jobid = $r_id[0]["jobid"];
 
-$jobfile = "/var/www/trivnet/jobs/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
-$fh = fopen($jobfile, "w+");
-fseek($tmp, 0);
-stream_copy_to_stream($tmp, $fh);
-fclose($fh);
+	$jobfile = "/var/www/trivnet/jobs/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
+	$fh = fopen($jobfile, "w+");
+	fseek($tmp, 0);
+	stream_copy_to_stream($tmp, $fh);
+	fclose($fh);
+
+	if ( $k != $msgtype ) { $data = $values[$k]; } else { $data = $mesg; }
+	$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$k', '$data', 1, 0, '" . time() . "');";
+	echo "<pre>" . $q_submit . "</pre><br>\n";
+	$r_submit = query($q_submit);
+	// FIXME: error handling goes here
+	echo "Submitted async job $jobid<br>\n";
+} // end foreach
+
+// Do this last
 fclose($tmp);
-
-if ( $updatetype != 0 ) { $data = $updatevalue; } else { $data = $mesg; }
-
-$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$updatetype', '$data', 1, 0, '" . time() . "');";
-echo "<pre>" . $q_submit . "</pre><br>\n";
-$r_submit = query($q_submit);
-
-echo "Submitted async job $jobid<br>\n";
-
 ?>
