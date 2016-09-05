@@ -39,6 +39,9 @@ foreach($r as $row) {
 
 <textarea name="searchkeys" id="searchkeys" columns=12 rows=20></textarea>
 <br>(or from a text file: <input type=file name="searchkey_file">)
+<br>Repeated file behavior:
+<input type=radio name="autodiff" value="on" checked id="autodiffon"><label for="autodiffon">Incremental</label>
+<input type=radio name="autodiff" value="off" id="autodiffoff"><label for="autodiffoff">Authoratative</label>
 </td>
 <td>
 Update Data values: 
@@ -51,7 +54,11 @@ foreach( $_dts as $_dt ) {
 	$label = $_dt["label"];
 	$isEnum = $_dt["enum"];
 	echo "<tr>";
-	echo "<td><input type=\"checkbox\" id=\"updateType[$typeid]\" name=\"updateType[$typeid]\" value=\"true\"></td>\n";
+	if ( $typeid == $config["message"] || $typeid == $config["status"] ) {
+		echo "<td><input type=\"checkbox\" checked id=\"updateType[$typeid]\" name=\"updateType[$typeid]\" value=\"true\"></td>\n";
+	} else {
+		echo "<td><input type=\"checkbox\" id=\"updateType[$typeid]\" name=\"updateType[$typeid]\" value=\"true\"></td>\n";
+	} // end if
 	echo "<td><label for=\"updateType[$typeid]\">$label</label></td>\n<td>";
 
 
@@ -72,11 +79,16 @@ foreach( $_dts as $_dt ) {
 		// Can be enum or not.
 		if ( 't' == $isEnum ) {
 			echo "<select name=\"value[$typeid]\">\n";
+			echo "<option selected disabled>Select One</option>\n";
 			$r = query("SELECT * from enumtypes WHERE datatype=$typeid");
 			foreach ( $r as $row ) {
 				$val = $row["id"];
 				$text = $row["value"];
-				echo "<option name=\"value[$typeid]\" value=\"$val\">$text</option>\n";
+				if ( ( $typeid == $config["status"] && $val == $config["finishstatus"] ) ) {
+					echo "<option name=\"value[$typeid]\" selected value=\"$val\">$text</option>\n";
+				} else {
+					echo "<option name=\"value[$typeid]\" value=\"$val\">$text</option>\n";
+				} // end if
 			} // end foreach
 			echo "</select>\n";
 		} else {

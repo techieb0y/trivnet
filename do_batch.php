@@ -84,7 +84,14 @@ fflush($tmp);
 foreach ( $types as $k => $t ) {
 	// k is the keys, which are datatype IDs.
 	// t is alwas 'true', which is just a placeholder.
-	
+
+	$dt = query("SELECT label from datatypes where typeid=$k")[0]["label"];
+
+	if ( ( ( !isset($values[$k])) || ( strlen($values[$k]) > 0 ) ) && ( !isset($mesg) ) ) {
+		echo "<b>Error: No valid value for update of $dt($k) found; skipping.</b>\n";
+		continue;
+	} // end if
+
 	$q_id = "SELECT nextval('async_jobid_seq') AS jobid";
 	$r_id = query($q_id);
 	$jobid = $r_id[0]["jobid"];
@@ -100,7 +107,7 @@ foreach ( $types as $k => $t ) {
 	echo "<pre>" . $q_submit . "</pre><br>\n";
 	$r_submit = query($q_submit);
 	// FIXME: error handling goes here
-	echo "Submitted async job $jobid<br>\n";
+	echo "Submitted update of $dt as job $jobid<br>\n";
 } // end foreach
 
 // Do this last

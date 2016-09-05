@@ -154,6 +154,8 @@ if ( isset($_GET["mode"]) ) {
 					$q = query($query);
 					if ( ( $dt == $config["status"] ) && ( $id == $config["medtentstatus"] ) ) {
 						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td><img src=\"getAPRS.php?sym=11\"></td></tr>";
+					} else if ( ( $dt == $config["status"] ) && ( $id == $config["finishstatus"] ) ) {
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td><img src=\"getAPRS.php?sym=59\"></td></tr>";
 					} else if ( $q[0]["count"] > 0 ) {
 						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td>[in use]</td></tr>";
 					} else {
