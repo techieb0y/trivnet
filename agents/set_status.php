@@ -8,8 +8,10 @@ require_once("../include/sessions.inc");
 header("Content-type: text/plain");
 
 $ok = 0;
+global $config;
+$msgtyp = $config["message"];
 
-$status = $_GET["status"];
+$status = pg_escape_string( $_GET["status"] );
 $id = $_GET["personid"];
 
 session_start();
@@ -25,7 +27,8 @@ if ( strlen($tac) > 0 ) {
 
 if ( has_session($mycall) ) {
 	$now = time();
-	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', 0, '$status' )";
+	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $msgtyp, '$status' )";
+	syslog(LOG_DEBUG, $qr);
 	$r = query($qr);
 	$ok = 1;
 } else {

@@ -21,6 +21,7 @@ if ( strlen($tac) > 0 ) {
 
 // Read the data
 $rawData = file_get_contents('php://input');
+syslog(LOG_DEBUG, $rawData);
 $data = json_decode($rawData);
 
 $value = $data->searchKey;
@@ -35,9 +36,9 @@ if ( count($r_id) == 1 ) {
 	$ok = 1;
 } // end if
 
-$status = $data->data;
+$status = pg_escape_string(urldecode($data->data));
 
-if ( has_session($mycall) ) {
+if ( ($ok == 1) && has_session($mycall) ) {
 	$now = time();
 	$dt = $config["message"];
 	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $dt, '$status' )";
@@ -56,6 +57,7 @@ if ( 1 == $ok ) {
 	$ret["result"] = "FAIL";
 } // end if
 	
+syslog(LOG_DEBUG, print_r($ret, true) );
 $return = json_encode($ret);
 echo $return;
 ?>

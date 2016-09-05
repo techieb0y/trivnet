@@ -239,7 +239,7 @@ function runJob($jobId) {
 					} else {
 						$statusText = "Set " . $_dt[0]["name"] . " to " . $data;
 					} // end if 
-
+					// FIXME: this update needs to be an upsert.
 					$q .= "UPDATE persondata SET value='$data' WHERE personid=$personid AND datatype=$updatetype;\n";
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$statusText');\n";
 					$q .= "COMMIT;\n";

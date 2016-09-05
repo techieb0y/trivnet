@@ -69,7 +69,12 @@ foreach( $_dts as $_dt ) {
 		$r = query("SELECT text from quickmesg");
 		foreach ($r as $row) {
 			$text = $row["text"];
-			echo "<option value=\"$text\">$text</option>\n";
+			// FIXME: finish refactoring quick-messages into the message datatype
+			if ( preg_match("/crossed/i", $text) ) {
+				echo "<option selected value=\"$text\">$text</option>\n";
+			} else {
+				echo "<option value=\"$text\">$text</option>\n";
+			} // end if
 		} // end foreach
 		echo "</select>";
 		echo "<br>...or use custom: <input name=\"custom\" size=40><br><i>(overrides selected message)</i>\n";
