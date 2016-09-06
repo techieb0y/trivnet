@@ -1,4 +1,5 @@
 <?php
+	$begin = microtime(true);
 	require_once("config.inc");
 	require_once("constants.inc");
 	require_once("db_ops.inc");

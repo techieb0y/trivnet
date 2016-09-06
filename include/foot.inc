@@ -12,3 +12,7 @@
 	</table>
 
 	<!-- end foot.inc -->
+<?php
+	$delta = microtime(true) - $begin;
+	syslog(LOG_DEBUG, "Page output in $delta msec");
+?>

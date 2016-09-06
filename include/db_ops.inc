@@ -109,6 +109,7 @@ function query_pgsql( $string ) {
 	//} // end if
 
 // error_log($string, 0);
+$before = microtime(true);
 
 	$return = array();
 
@@ -123,6 +124,9 @@ function query_pgsql( $string ) {
 		if ( isset($return) ) {
 			return($return);
 		}
+$after = microtime(true);
+$delta = $after - $before;
+syslog(LOG_DEBUG, "Query performed in $delta msec");
 
 	} else {
 		// FIXME
