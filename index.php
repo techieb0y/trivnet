@@ -95,7 +95,7 @@ if ( count( $r_summary) > 0 ) {
 
 
 echo "<br><hr>";
-echo "Trivnetdb v2.5 - by KD8GBL<br>\n";
+echo "Trivnetdb v2.6 - by KD8GBL<br>\n";
 
 /*
  *  // Display the build version, if the current directory is an SVN
