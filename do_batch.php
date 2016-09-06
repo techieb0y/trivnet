@@ -77,7 +77,7 @@ $tmp = tmpfile() or die("Unable to open tempfile.");
 // For uploaded files, this is the same as copying said file.
 // But they could have typed it in, so we write it out to a temp file
 foreach($data as $key) {
-	fwrite($tmp, $key . "\n");
+	fwrite($tmp, trim($key) . "\n");
 } // end foreach
 fflush($tmp);
 
