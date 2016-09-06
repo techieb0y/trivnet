@@ -21,7 +21,9 @@ foreach( $r_enum as $k => $v ) {
 function showFields() {
 	// Display the search field stuff
 	$db = connect();
-	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid > 0 ORDER BY typeid";
+	global $config;
+	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid <> " . $config["message"] . " ORDER BY typeid";
+	syslog(LOG_DEBUG, $q);
 	$r = query($q);
 	// echo "<form action=\"agents/search.php\" method=POST>\n";
 	echo "<form action=\"query.php\" method=POST>\n";
