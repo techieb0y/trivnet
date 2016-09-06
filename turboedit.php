@@ -30,9 +30,9 @@
 	function postData(_which) {
 		myRowId = _which[0].id;
 		bibNum = _which.find("input.bib")[0].value;
-		statusMsg = _which.find("input.status")[0].value;
+		statusMsg = encodeURI(_which.find("input.status")[0].value);
 		data = '{ "id": "' + myRowId + '", "searchKey" : "' + bibNum + '", "data" : "' + statusMsg  + '" }';
-		console.out(data);
+		console.log(data);
 		$.ajax({
 			type: "POST",
 			dataType: "json",
