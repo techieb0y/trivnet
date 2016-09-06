@@ -273,7 +273,6 @@ if ( isset($_GET["mode"]) ) {
 			$label = $row_dt["label"];
 			$types[$id] = $label;	
 		}
-		$types[0] = "Message";
 
 		echo "<table width=\"80%\" border=0>\n";
 		echo "<tr><th>Job ID</th><th>Filename</th><th>Owner</th><th>Search on</th><th>Update</th><th>Data</th><th>Job State</th><th>Progress</th><th>Timestamp</th></tr>\n";
