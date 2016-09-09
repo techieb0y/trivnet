@@ -1,5 +1,6 @@
 <?php
 require_once("config.inc");
+require_once("send-metric.inc");
 
 /********************** Common functions - these are abstract redirectors *****/
 
@@ -127,6 +128,7 @@ $before = microtime(true);
 $after = microtime(true);
 $delta = $after - $before;
 syslog(LOG_DEBUG, "Query performed in $delta msec");
+sendFullMetric("trivnet.psql.time", $delta);
 
 	} else {
 		// FIXME

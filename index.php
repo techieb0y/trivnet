@@ -93,6 +93,9 @@ if ( count( $r_summary) > 0 ) {
 	echo "</table>\n";
 } 
 
+echo "<div id=\"graph\" style=\"position: absolute; left: 450px; top: 225px;\">\n";
+echo "<img src=\"mtgraph.php\">\n";
+echo "</div>\n";
 
 echo "<br><hr>";
 echo "Trivnetdb v2.6 - by KD8GBL<br>\n";

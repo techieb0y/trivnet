@@ -4,6 +4,7 @@
 	require_once("constants.inc");
 	require_once("db_ops.inc");
 	require_once("sessions.inc");
+	require_once("send-metric.inc");
 
 // Trivnetdb 2.0 was designed and built by KD8GBL 
 

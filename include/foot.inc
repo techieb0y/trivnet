@@ -15,4 +15,5 @@
 <?php
 	$delta = microtime(true) - $begin;
 	syslog(LOG_DEBUG, "Page output in $delta msec");
+	sendFullMetric("trivnet.page.time", $delta);
 ?>
