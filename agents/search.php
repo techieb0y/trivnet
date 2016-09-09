@@ -6,6 +6,8 @@ header("Content-type: text/plain");
 require_once("../include/config.inc");
 require_once("../include/db_ops.inc");
 
+$mdt = $config["message"];
+
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes order by datatype, id";
 $r_enum = query($q_enum);
@@ -43,7 +45,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_GET) && ( count($_GET) > 1 ) ) )
 	$q = $q_base;
 
 	if ( strlen($_GET[0]) > 0 ) {
-		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . $_GET[0] . "%'')";
+		$q = $q_base . "(datatype=$mdt AND value ILIKE ''%" . $_GET[0] . "%'')";
 	} else {
 	// echo "<pre>" . print_r($_GET) . "</pre>";
 	foreach ( $_GET as $key => $param ) {

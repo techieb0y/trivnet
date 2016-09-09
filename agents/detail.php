@@ -62,7 +62,8 @@ foreach($r_dts as $dt) {
 	$dts[$_name]["enum"] = $_en;
 } // end foreach
 
-$q = "SELECT timestamp,source,datatype,value from updatesequence WHERE personid=$id AND datatype=0 ORDER BY timestamp desc";
+$mdt = $config["message"];
+$q = "SELECT timestamp,source,datatype,value from updatesequence WHERE personid=$id AND datatype=$mdt ORDER BY timestamp desc";
 $r = query($q);
 
 // $outputArray["datatypes"] = $theBigArray;

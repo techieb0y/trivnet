@@ -5,6 +5,8 @@
 	require_once("include/db_ops.inc");
 	require_once("include/sessions.inc");
 
+	$mdt = $config["message"];
+
 	session_start();
 	$tac = $_SESSION["tactical"];
 	$call = $_SESSION["callsign"];
@@ -31,7 +33,7 @@
 		$q = "BEGIN;\n";
 		$q .= "UPDATE people SET status='$what' WHERE ( id=$who );\n";
 		$msg = "Changed satus to " . $sname[0]["status"] . "\n";
-		$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', 0, '$msg');\n";
+		$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', $mdt, '$msg');\n";
 		$q .= "COMMIT;\n";
 		$result = query($q);
 	} // end sanity-check if

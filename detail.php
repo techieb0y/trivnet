@@ -42,11 +42,12 @@ if ( isset($_GET["id"]) ) {
 
 
 // Record an 'audit log' event
-
+global $config;
 $who = $_SESSION["tactical"];
 $cs = $_SESSION["callsign"];
 $now = time();
-$q = "INSERT INTO updatesequence VALUES ( $id, $now, '$who', 0, '<span class=\"audit\">Search performed by $cs</span>' )";
+$dt = $config["message"];
+$q = "INSERT INTO updatesequence VALUES ( $id, $now, '$who', $dt, '<span class=\"audit\">Search performed by $cs</span>' )";
 $r = query($q);
 
 
@@ -177,7 +178,8 @@ echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$
 
 echo "</form>";
 
-$q = "SELECT * from updatesequence WHERE personid=$id AND datatype=0 ORDER BY timestamp desc";
+$mdt = $config["message"];
+$q = "SELECT * from updatesequence WHERE personid=$id AND datatype=$mdt ORDER BY timestamp desc";
 $r = query($q);
 
 echo "<table width=\"100%\">\n";
