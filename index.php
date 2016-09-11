@@ -71,7 +71,12 @@ echo "<ul>";
 	echo "Med tent is empty.";
 } // end if
 
-echo "</td></tr></table>";
+echo "</td>\n";
+
+$num = count($inmed);
+echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
+
+echo "</tr></table>";
 
 echo "<hr>\n";
 
@@ -93,9 +98,6 @@ if ( count( $r_summary) > 0 ) {
 	echo "</table>\n";
 } 
 
-echo "<div id=\"graph\" style=\"position: absolute; left: 450px; top: 225px;\">\n";
-echo "<img src=\"mtgraph.php\">\n";
-echo "</div>\n";
 
 echo "<br><hr>";
 echo "Trivnetdb v2.6 - by KD8GBL<br>\n";
