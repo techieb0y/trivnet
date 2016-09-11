@@ -98,10 +98,12 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 		if ( ($key != "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
 
+			$p = pg_escape_string($param);
+
 			if ( "t" == $exactness[$key] ) {
-				$q .= $prefix . "( datatype=''$key'' AND value = ''$param'' ) ";
+				$q .= $prefix . "( datatype=''$key'' AND value = ''$p'' ) ";
 			} else {				
-				$q .= $prefix . "( datatype=''$key'' AND value ILIKE ''%$param%'' ) ";
+				$q .= $prefix . "( datatype=''$key'' AND value ILIKE ''%$p%'' ) ";
 			} // end if
 
 			if ( "AND" == $_POST["type"] ) {

@@ -7,6 +7,9 @@
 
 	session_start();
 
+	global $config;
+	$msgdt = $config["message"];
+
 	$tac = $_SESSION["tactical"];
 	$call = $_SESSION["callsign"];
 	if ( strlen($tac) > 0 ) { 
@@ -32,7 +35,7 @@
 	foreach ($tuples as $pair) {
 		$parts = explode(":", $pair);
 		$what = $parts[0];
-		$value = $parts[1];
+		$value = pg_escape_string($parts[1]);
 
 		if ( strlen($what) > 0 ) {
 			$t = query("SELECT typeid,enum FROM datatypes WHERE name='$what'");
@@ -50,29 +53,30 @@
 			} // end if
 
 			$w = query("SELECT value FROM persondata WHERE personid=$who AND datatype=$typeid");
-			$was = $w[0]["value"];
+			$was = pg_escape_string( $w[0]["value"] );
 
 			if ( count($was) > 0 ) {
 				$q .= "UPDATE persondata SET value='$value' WHERE ( datatype=$typeid AND personid=$who );\n";
 				if ( isset( $enums[$typeid][$value] ) ) {
 					$_was = $enums[$typeid][$was];
 					$_value = $enums[$typeid][$value];
-					$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', 0, 'Changed $what from $_was to $_value');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', $msgdt, 'Changed $what from $_was to $_value');\n";
 				} else {
-					$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', 0, 'Changed $what from $was to $value');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$who', '$now', '$mycall', $msgdt, 'Changed $what from $was to $value');\n";
 				} // end if
 			} else {
 				$q .= "INSERT INTO persondata VALUES ( $who, $typeid, '$value' );\n";
 				if ( isset( $enums[$typeid][$value] ) ) {
 					$_value = $enums[$typeid][$value];
-					$q .= "INSERT INTO updatesequence VALUES ($who, '$now', '$mycall', 0, 'Set $what to $_value');\n";
+					$q .= "INSERT INTO updatesequence VALUES ($who, '$now', '$mycall', $msgdt, 'Set $what to $_value');\n";
 				} else {
-					$q .= "INSERT INTO updatesequence VALUES ($who, '$now', '$mycall', 0, 'Set $what to $value');\n";
+					$q .= "INSERT INTO updatesequence VALUES ($who, '$now', '$mycall', $msgdt, 'Set $what to $value');\n";
 				} // end if
 			} // end if
 		}
 	} // end foreach
 	$q .= "COMMIT;\n";
+	// syslog(LOG_DEBUG, $q);
 	$result = query($q);
 
 	$path = explode("/", $_SERVER["SCRIPT_NAME"]);

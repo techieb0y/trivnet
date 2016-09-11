@@ -34,3 +34,4 @@ img { border: 0px; }
 .msgCenter {  left: 160px; text-align: center; }
 .evenRow { background-color: #bebebe; }
 .oddRow { background-color: #ffffff; }
+.audit { color: grey; font-size: 10pt; }
