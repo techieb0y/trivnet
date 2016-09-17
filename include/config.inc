@@ -28,8 +28,8 @@ $config["multidefault"] = 2;
 $config["status"] = 0;
 $config["message"] = 1;
 $config["medtentstatus"] = 3;
-$config["lefttentstatus"] = 4;
-$config["finishstatus"] = 2;
+$config["lefttentstatus"] = 7;
+$config["finishstatus"] = 4;
 
 // Idle session auto-disconnect timeout (in seconds)
 $config["idle_timeout"] = 300;
