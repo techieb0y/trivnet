@@ -10,7 +10,7 @@ include("head.inc");
 
 echo "<table width=\"100%\"><tr>";
 // 2 is a magic number for 'crossed finish line' enum value of status type.
-$done = query("select count(value) as done from persondata where datatype=" . $config["status"] . " and value='2'")[0]["done"];
+$done = query("select count(value) as done from persondata where datatype=" . $config["status"] . " and value='" . $config["finishstatus"] . "'")[0]["done"];
 $total = query("select count(id) as total from people")[0]["total"];
 $percent = floor(100 * ($done/$total));
 echo "<td style=\"background-color: green;\" width=\"$percent%\">$percent% Crossed Finish Line</td>";
