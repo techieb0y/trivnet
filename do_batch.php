@@ -57,6 +57,8 @@ if ( $use_file == 1 ) {
 		} // end if
 	} else {
 		// Use whole preexisting file
+		$fn2 = $filename . ".old";
+		if ( file_exists($fn2) ) { unlink($fn2); }
 		$search_keys = trim(file_get_contents($filename));
 	} // end if
 } else {

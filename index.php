@@ -72,8 +72,13 @@ echo "<ul>";
 
 echo "</td>\n";
 
-$num = count($inmed);
-echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
+if ( getenv("slownet") == "true" ) {
+	syslog(LOG_DEBUG, "Skipping display of graph for DSTAR network");
+	echo "<td>&nbsp;</td>\n";
+} else {
+	$num = count($inmed);
+	echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
+} // end if
 
 echo "</tr></table>";
 

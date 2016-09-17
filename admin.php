@@ -292,7 +292,7 @@ if ( isset($_GET["mode"]) ) {
 			} else if ( $row["state"] == 0 || $row["state"] == 5 ) {		
 				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"showasync.php?file=%s.err\">%s</a></td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $data, $row["filename"], $jobstate[$row["state"]], $row["progress"], $ts );
 			} else {
-				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $row["data"], $jobstate[$row["state"]], $row["progress"], $ts );
+				printf( "<tr><td>%s</td><td><a href=\"showasync.php?file=%s\">%s</a></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s%%</td><td>%s</td></tr>\n", $row["jobid"], $row["filename"], $row["filename"], $row["callsign"], $types[$row["searchtype"]], $types[$row["updatetype"]], $data, $jobstate[$row["state"]], $row["progress"], $ts );
 			}
 		} // end forearch
 		echo "</table>\n";
