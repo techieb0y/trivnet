@@ -71,13 +71,16 @@ if ( !has_session() ) {
 	<link rel="stylesheet" href="common/trivnet.css" />
 
 	<!--link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" /-->
-	<link rel="stylesheet" href="css/flick/jquery-ui-1.8.24.custom.css" />
 
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-	<!--script src="js/jquery.mobile-1.2.0.min.js"--><!--/script-->
-	
-	<script src="common/jquery.js"></script>
+<?php
+	if ( "true" != getenv("slownet") ) {
+		echo "	<link rel=\"stylesheet\" href=\"css/flick/jquery-ui-1.8.24.custom.css\" />\n";
+		echo "	<script src=\"js/jquery.js\"></script>\n";
+		echo "	<script src=\"js/jquery-ui-1.8.24.custom.min.js\"></script>\n";
+		echo "	<!--script src=\"js/jquery.mobile-1.2.0.min.js\"--><!--/script-->\n";
+		echo "	<script src=\"common/jquery.js\"></script>\n";
+	} // end if
+?>
 </head>
 
 <body>
@@ -108,12 +111,16 @@ if ( !has_session() ) {
 
 <?php
 	// Time and messages window
-	echo "<div class=\"messages\">\n";
-	echo "<table id=\"messages\">\n";
-	echo "<a href=\"#\"><img class=\"topRight\" id=\"mesgLoad\" src=\"images/refresh.png\"></a>\n";
-	echo "</table>\n";
-	echo "</div>\n";
-
+	if ( "true" != getenv("slownet") ) {
+		echo "<div class=\"messages\">\n";
+		echo "<table id=\"messages\">\n";
+		echo "<a href=\"#\"><img class=\"topRight\" id=\"mesgLoad\" src=\"images/refresh.png\"></a>\n";
+		echo "</table>\n";
+		echo "</div>\n";
+	} else {
+		include("mesgslow.inc");
+	} // end if
+	
 	// echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
 
 ?>
