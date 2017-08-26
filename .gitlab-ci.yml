@@ -3,6 +3,7 @@ rpmbuild:
   tags:
     - docker
   script:
+    - yum -y install rsync php-cli rpmbuild curl unzip
     - for i in SOURCES BUILD BUILDROOT SPECS RPMS; do mkdir -p rpmbuild/${i}; done
     - rsync -rv src/ rpmbuild/BUILD/trivnet/
     - rsync -rv util/ rpmbuild/BUILD/util/
