@@ -1,4 +1,7 @@
 rpmbuild:
+  image: centos
+  tags:
+    - docker
   script:
     - for i in SOURCES BUILD BUILDROOT SPECS RPMS; do mkdir -p rpmbuild/${i}; done
     - rsync -rv src/ rpmbuild/BUILD/trivnet/
