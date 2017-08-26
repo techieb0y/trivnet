@@ -5,7 +5,7 @@ rpmbuild:
     - rsync -rv util/ rpmbuild/BUILD/util/
     - mv httpd.conf rpmbuild/SOURCES/
     - mv trivnet.spec rpmbuild/SPECS/
-    - rpmbuild --define "_topdir `pwd/rpmbuild/`" -bb rpmbuild/SPECS/trivnet.spec
+    - rpmbuild --define "_topdir `pwd`/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
   artifacts:
     paths:
       - rpmbuild/RPMS/
