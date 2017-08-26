@@ -1,0 +1,8 @@
+rpmbuild:
+  script:
+    - for i in SOURCES BUILD BUILDROOT RPMS; do mkdir -p rpmbuild/${i}
+	- rsync -rv src/ rpmbuild/BUILD/trivnet/
+	- rsync -rv util/ rpmbuild/BUILD/util/
+	- mv httpd.conf rpmbuild/SOURCES/
+    - mv trivnet.spec rpmbuild/SPECS/
+	- rpmbuild --define "_topdir `pwd/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
