@@ -91,7 +91,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	$q = $q_base;
 
 	if ( strlen($_POST[0]) > 0 ) {
-		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . $_POST[0] . "%'')";
+		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . trim($_POST[0]) . "%'')";
 	} else {
 	// echo "<pre>" . print_r($_POST) . "</pre>";
 	foreach ( $_POST as $key => $param ) {
@@ -101,9 +101,9 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 			$p = pg_escape_string($param);
 
 			if ( "t" == $exactness[$key] ) {
-				$q .= $prefix . "( datatype=''$key'' AND value = ''$p'' ) ";
+				$q .= $prefix . "( datatype=''$key'' AND value = ''" . trim($p) . "'' ) ";
 			} else {				
-				$q .= $prefix . "( datatype=''$key'' AND value ILIKE ''%$p%'' ) ";
+				$q .= $prefix . "( datatype=''$key'' AND value ILIKE ''%" . trim($p) . "%'' ) ";
 			} // end if
 
 			if ( "AND" == $_POST["type"] ) {
