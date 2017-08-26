@@ -18,7 +18,6 @@ BuildRequires:  php-cli curl unzip
 A rewrite of TrivnetDB (original by Dennis, KB8ZQZ), building on the original ARESDATA.
 
 %prep
-%setup
 rm -vf /tmp/trivnet/*.dat
 rm -vf /tmp/trivnet/counts
 
