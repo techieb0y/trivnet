@@ -1,6 +1,6 @@
 rpmbuild:
   script:
-    - for i in SOURCES BUILD BUILDROOT RPMS; do mkdir -p rpmbuild/${i}; done
+    - for i in SOURCES BUILD BUILDROOT SPECS RPMS; do mkdir -p rpmbuild/${i}; done
     - rsync -rv src/ rpmbuild/BUILD/trivnet/
     - rsync -rv util/ rpmbuild/BUILD/util/
     - mv httpd.conf rpmbuild/SOURCES/
