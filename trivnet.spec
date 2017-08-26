@@ -92,9 +92,14 @@ mv /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
 awk -f /tmp/$$.awk /var/lib/pgsql/data/pg_hba.orig > /var/lib/pgsql/data/pg_hba.conf
 rm -f /var/lib/pgsql/data/pg_hba.orig
 
+ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
+
 mkdir /var/www/trivnet/jobs/
+mkdir /var/www/trivnet/csvdata/
+
 chown trivnet:apache /var/www/trivnet/jobs/
 chmod 774 /var/www/trivnet/jobs/
+
 
 systemctl enable httpd
 systemctl start httpd
