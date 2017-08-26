@@ -8,4 +8,4 @@ rpmbuild:
     - rpmbuild --define "_topdir `pwd/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
   artifacts:
     paths:
-	  - rpmbuild/RPMS/
+      - rpmbuild/RPMS/
