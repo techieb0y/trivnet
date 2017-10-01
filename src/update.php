@@ -20,16 +20,18 @@ $id = $_GET["id"];
 $quickmesg = $_POST["quickmesg"];
 $customtext = $_POST["customtext"];
 
+$mt = $config["message"];
+
 if ( strlen($customtext) > 0 ) {
 	$text = $customtext;
 
-	$q = "INSERT INTO updatesequence VALUES ( $id, " . time() . ", '$mycall', 0, '$text' )";
+	$q = "INSERT INTO updatesequence VALUES ( $id, " . time() . ", '$mycall', $mt, '$text' )";
 	$r = query($q);
 } else {
 	if ( $quickmesg != "null" ) {
 		$text = $quickmesg;
 
-		$q = "INSERT INTO updatesequence VALUES ( $id, " . time() . ", '$mycall', 0, '$text' )";
+		$q = "INSERT INTO updatesequence VALUES ( $id, " . time() . ", '$mycall', $mt, '$text' )";
 		$r = query($q);
 	} // end if
 } // end if
