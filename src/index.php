@@ -49,7 +49,7 @@ foreach ( $rh as $row ) {
 } // end foreach
 
 
-$theQuery = "SELECT personid,firstname,lastname FROM crosstab('SELECT * from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype=''" . $config["status"] . "'' AND value=''" . $config["medtentstatus"] . "'')', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
+$theQuery = "SELECT personid,bibnum,firstname,lastname FROM crosstab('SELECT * from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype=''" . $config["status"] . "'' AND value=''" . $config["medtentstatus"] . "'')', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
 foreach ( $theBigArray as $fieldName ) {
 	$theQuery .= ", " . $fieldName . " varchar ";
 } // end foreach
@@ -63,7 +63,8 @@ echo "<ul>";
 		$pid = $m["personid"];
 		$fn = $m["firstname"];
 		$ln = $m["lastname"];
-		echo "<li>$pid - <a href=\"detail.php?id=$pid\">$fn $ln</a>\n";
+		$bn = $m["bibnum"];
+		echo "<li>$bn - <a href=\"detail.php?id=$pid\">$fn $ln</a>\n";
 	} //end foreach
 	echo "</ul>";
 } else {
