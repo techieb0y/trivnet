@@ -1,5 +1,5 @@
 rpmbuild:
-  image: trivnet
+  image: gitlab.corbettdigital.net:4567/trivnet/trivnet
   tags:
     - docker
   script:
