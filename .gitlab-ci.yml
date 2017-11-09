@@ -1,5 +1,5 @@
 rpmbuild:
-  image: gitlab.corbettdigital.net:4567/trivnet/buildenv:master
+  image: dockreg.corbettdigital.net/trivnet/buildenv:master
   tags:
     - docker
   script:
