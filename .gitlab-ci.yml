@@ -1,5 +1,18 @@
+stages:
+  - preflight
+  - package
+
+php-lint:
+  stage: preflight
+  image: dockreg.corbettdigital.net/trivnet/buildenv
+  tags:
+    - docker
+  script:
+    - find ./ -name \*.php -exec php -l '{}' \;
+
 rpmbuild:
-  image: dockreg.corbettdigital.net/trivnet/buildenv:master
+  stage: package
+  image: dockreg.corbettdigital.net/trivnet/buildenv
   tags:
     - docker
   script:
