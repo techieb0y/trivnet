@@ -25,3 +25,13 @@ rpmbuild:
   artifacts:
     paths:
       - rpmbuild/RPMS/
+
+
+deploy-oberon:
+  stage: deploy
+  tags:
+    - oberon-trivnet
+  dependencies:
+    - rpmbuild
+  script:
+    - echo "Squid"
