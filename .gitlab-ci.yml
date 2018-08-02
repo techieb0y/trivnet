@@ -1,6 +1,7 @@
 stages:
   - preflight
   - package
+  - deploy
 
 php-lint:
   stage: preflight
