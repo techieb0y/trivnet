@@ -27,7 +27,6 @@ rpmbuild:
     paths:
       - rpmbuild/RPMS/
 
-
 deploy-oberon:
   stage: deploy
   tags:
@@ -35,4 +34,4 @@ deploy-oberon:
   dependencies:
     - rpmbuild
   script:
-    - echo "Squid"
+    - yum localinstall rpmbuild/RPMS/x86_64/trivnet.rpm
