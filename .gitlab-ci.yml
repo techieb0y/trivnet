@@ -34,4 +34,4 @@ deploy-oberon:
   dependencies:
     - rpmbuild
   script:
-    - yum localinstall rpmbuild/RPMS/x86_64/trivnet.rpm
+    - sudo yum localinstall rpmbuild/RPMS/x86_64/trivnet.rpm
