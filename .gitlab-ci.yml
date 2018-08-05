@@ -21,8 +21,7 @@ get-fcc-db:
     - mkdir fcc
     - curl -s -o fcc/l_amat.zip http://storage.corbettdigital.net/l_amat.zip
     - unzip -d fcc/ fcc/l_amat.zip
-    - php util/fcc-util.php fcc/
-    - ls -alR
+    - mv `php util/fcc-util.php fcc/` ./fcc/
   artifacts:
     paths:
       - fcc/trivnet-fcc.out
