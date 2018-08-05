@@ -18,13 +18,13 @@ get-fcc-db:
     - docker
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   script:
-    - mkdir /tmp/trivnet
-    - curl -o /tmp/trivnet/l_amat.zip http://storage.corbettdigital.net/l_amat.zip
-    - unzip -d /tmp/trivnet/ /tmp/trivnet/l_amat.zip
-    - php util/fcc-util.php /tmp/trivnet/
+    - mkdir fcc
+    - curl -o fcc/l_amat.zip http://storage.corbettdigital.net/l_amat.zip
+    - unzip -d fcc/ fcc/l_amat.zip
+    - php util/fcc-util.php fcc/
   artifacts:
     paths:
-      - /tmp/trivnet-fcc.out
+      - fcc/trivnet-fcc.out
 
 rpmbuild:
   stage: package
