@@ -22,13 +22,14 @@ rm -vf /tmp/trivnet/*.dat
 rm -vf /tmp/trivnet/counts
 
 %build
-# Create a loadable copy of the current FCC database
-echo "Fetching FCC database..."
-[ -d /tmp/trivnet/ ] || mkdir /tmp/trivnet/
-[ -f /tmp/trivnet/l_amat.zip ] || curl -o /tmp/trivnet/l_amat.zip http://wireless.fcc.gov/uls/data/complete/l_amat.zip
-unzip -d /tmp/trivnet/ /tmp/trivnet/l_amat.zip
-echo "Parsing FCC database files..."
-php %{_builddir}/util/fcc-util.php /tmp/trivnet/
+# # Create a loadable copy of the current FCC database
+# This has been moved to the GitLab CI pipeline, so repeated builds can cache the file
+# echo "Fetching FCC database..."
+# [ -d /tmp/trivnet/ ] || mkdir /tmp/trivnet/
+# [ -f /tmp/trivnet/l_amat.zip ] || curl -o /tmp/trivnet/l_amat.zip http://wireless.fcc.gov/uls/data/complete/l_amat.zip
+# unzip -d /tmp/trivnet/ /tmp/trivnet/l_amat.zip
+# echo "Parsing FCC database files..."
+# php %{_builddir}/util/fcc-util.php /tmp/trivnet/
 
 
 %install
@@ -42,6 +43,7 @@ mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet php /var/www/trivne
 mkdir -p %{buildroot}/etc/httpd/conf.d/ && mv %{_sourcedir}/httpd.conf %{buildroot}/etc/httpd/conf.d/trivnet.conf
 
 %clean
+rm -f /tmp/trivnet-fcc.out
 
 %post
 set -x

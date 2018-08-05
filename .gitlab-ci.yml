@@ -11,6 +11,18 @@ php-lint:
   script:
     - find ./ -name \*.php -exec php -l '{}' \;
 
+get-fcc-db:
+  stage: package
+  image: dockreg.corbettdigital.net/trivnet/buildenv:master
+  script:
+    - mkdir /tmp/trivnet
+    - curl -o /tmp/trivnet/l_amat.zip http://wireless.fcc.gov/uls/data/complete/l_amat.zip
+    - unzip -d /tmp/trivnet/ /tmp/trivnet/l_amat.zip
+    - php util/fcc-util.php /tmp/trivnet/
+  artifacts:
+    paths:
+      - /tmp/trivnet-fcc.out
+
 rpmbuild:
   stage: package
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
@@ -26,6 +38,8 @@ rpmbuild:
   artifacts:
     paths:
       - rpmbuild/RPMS/
+  dependencies:
+    - get-fcc-db
 
 deploy-stage:
   stage: deploy
