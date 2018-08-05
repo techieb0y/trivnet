@@ -27,10 +27,10 @@ rpmbuild:
     paths:
       - rpmbuild/RPMS/
 
-deploy-oberon:
+deploy-stage:
   stage: deploy
   tags:
-    - oberon-trivnet
+    - trivnet-stage
   dependencies:
     - rpmbuild
   script:
