@@ -19,9 +19,10 @@ get-fcc-db:
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   script:
     - mkdir fcc
-    - curl -o fcc/l_amat.zip http://storage.corbettdigital.net/l_amat.zip
+    - curl -# -o fcc/l_amat.zip http://storage.corbettdigital.net/l_amat.zip
     - unzip -d fcc/ fcc/l_amat.zip
     - php util/fcc-util.php fcc/
+    - ls -alR
   artifacts:
     paths:
       - fcc/trivnet-fcc.out
