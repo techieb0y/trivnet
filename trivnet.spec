@@ -35,7 +35,7 @@ rm -vf /tmp/trivnet/counts
 %install
 mkdir -p %{buildroot}/tmp/
 mkdir -p %{buildroot}/var/www/trivnet/
-mv /tmp/trivnet-fcc.out %{buildroot}/tmp/
+mv trivnet-fcc.out %{buildroot}/tmp/
 rsync -arv %{_builddir}/trivnet/ %{buildroot}/var/www/trivnet/
 mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet php /var/www/trivnet/async.php --runonce" > %{buildroot}/etc/cron.d/trivnet
 
