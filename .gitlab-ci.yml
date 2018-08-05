@@ -52,7 +52,7 @@ deploy-stage:
   dependencies:
     - rpmbuild
   script:
-    - sudo yum localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
+    - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
   environment:
     name: Stage
     url: http://172.16.104.76/
