@@ -45,4 +45,5 @@ $RACEID[4] = "2570"; // Wheelchair
 $RACEID[5] = "2700"; // Ultra Loony
 $RACEID[6] = "2572"; // 10K Loony
 
+$config["use_graphite"] = false;
 ?>

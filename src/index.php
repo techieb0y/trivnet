@@ -71,16 +71,18 @@ echo "<ul>";
 	echo "Med tent is empty.";
 } // end if
 
+
+if ( $config["use_graphite"] ) {
+	if ( getenv("slownet") == "true" ) {
+		syslog(LOG_DEBUG, "Skipping display of graph for DSTAR network");
+		echo "<td>&nbsp;</td>\n";
+	} else {
+		$num = count($inmed);
+		echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
+	} // end if
+}
+
 echo "</td>\n";
-
-if ( getenv("slownet") == "true" ) {
-	syslog(LOG_DEBUG, "Skipping display of graph for DSTAR network");
-	echo "<td>&nbsp;</td>\n";
-} else {
-	$num = count($inmed);
-	echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
-} // end if
-
 echo "</tr></table>";
 
 echo "<hr>\n";
