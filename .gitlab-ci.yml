@@ -1,5 +1,6 @@
 stages:
   - preflight
+  - assets
   - package
   - deploy
 
@@ -12,7 +13,9 @@ php-lint:
     - find ./ -name \*.php -exec php -l '{}' \;
 
 get-fcc-db:
-  stage: package
+  stage: assets
+  tags:
+    - docker
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   script:
     - mkdir /tmp/trivnet
