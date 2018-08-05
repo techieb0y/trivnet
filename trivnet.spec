@@ -46,65 +46,67 @@ mkdir -p %{buildroot}/etc/httpd/conf.d/ && mv %{_sourcedir}/httpd.conf %{buildro
 rm -f /tmp/trivnet-fcc.out
 
 %post
-set -x
-PASSWORD=`head -c12 /dev/urandom | sha1sum | base64 | cut -c 1-16`
+if [ $1 -eq 1 ]; then
+	set -x
+	PASSWORD=`head -c12 /dev/urandom | sha1sum | base64 | cut -c 1-16`
 
-adduser -r trivnet -M -d /var/www/trivnet/
-chown -R trivnet /var/www/trivnet/
+	adduser -r trivnet -M -d /var/www/trivnet/
+	chown -R trivnet /var/www/trivnet/
 
-systemctl enable postgresql
-systemctl start postgresql
+	systemctl enable postgresql
+	systemctl start postgresql
 
-# Create 'trivnet' database objects
-su -c "createuser -l -S -R -D trivnet" postgres
-su -c "createdb -O trivnet trivnet" postgres
-su -c "psql -c \"alter user trivnet with password '${PASSWORD}'\" trivnet" postgres
+	# Create 'trivnet' database objects
+	su -c "createuser -l -S -R -D trivnet" postgres
+	su -c "createdb -O trivnet trivnet" postgres
+	su -c "psql -c \"alter user trivnet with password '${PASSWORD}'\" trivnet" postgres
 
-# Load the schema
-su -c "psql trivnet < /var/www/trivnet/setup.sql" trivnet
-su -c "psql trivnet < /var/www/trivnet/mtcm.sql" trivnet
+	# Load the schema
+	su -c "psql trivnet < /var/www/trivnet/setup.sql" trivnet
+	su -c "psql trivnet < /var/www/trivnet/mtcm.sql" trivnet
 
-# Load the tablefunc stuff from contrib
-su -c "psql -c \"CREATE EXTENSION tablefunc;\" trivnet" postgres
+	# Load the tablefunc stuff from contrib
+	su -c "psql -c \"CREATE EXTENSION tablefunc;\" trivnet" postgres
 
-# Load the FCC database data
-cat << EOF > /tmp/load.sql
-set client_encoding to latin1;
-copy "part97" from '/tmp/trivnet-fcc.out';
-EOF
-su -c "psql trivnet < /tmp/load.sql" postgres && rm -f /tmp/load.sql && rm -f /tmp/trivnet-fcc.out
+	# Load the FCC database data
+	cat << EOF > /tmp/load.sql
+	set client_encoding to latin1;
+	copy "part97" from '/tmp/trivnet-fcc.out';
+	EOF
+	su -c "psql trivnet < /tmp/load.sql" postgres && rm -f /tmp/load.sql && rm -f /tmp/trivnet-fcc.out
 
-# Put the generated password into the config file
-cat << EOF > /tmp/$$.awk
-/^\\\$DB_PASS/    { print "\$DB_PASS = \"${PASSWORD}\";"; next }
-/.*/            { print \$0 }
-EOF
+	# Put the generated password into the config file
+	cat << EOF > /tmp/$$.awk
+	/^\\\$DB_PASS/    { print "\$DB_PASS = \"${PASSWORD}\";"; next }
+	/.*/            { print \$0 }
+	EOF
 
-mv /var/www/trivnet/include/config.inc /var/www/trivnet/include/config.tmpl
-awk -f /tmp/$$.awk /var/www/trivnet/include/config.tmpl > /var/www/trivnet/include/config.inc
-rm -f /var/www/trivnet/include/config.tmpl
+	mv /var/www/trivnet/include/config.inc /var/www/trivnet/include/config.tmpl
+	awk -f /tmp/$$.awk /var/www/trivnet/include/config.tmpl > /var/www/trivnet/include/config.inc
+	rm -f /var/www/trivnet/include/config.tmpl
 
-# Insert ACL into pg_hba.conf
-cat << EOF > /tmp/$$.awk
-/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
-/.*/            { print \$0 }
-EOF
+	# Insert ACL into pg_hba.conf
+	cat << EOF > /tmp/$$.awk
+	/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
+	/.*/            { print \$0 }
+	EOF
 
-mv /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
-awk -f /tmp/$$.awk /var/lib/pgsql/data/pg_hba.orig > /var/lib/pgsql/data/pg_hba.conf
-rm -f /var/lib/pgsql/data/pg_hba.orig
+	mv /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
+	awk -f /tmp/$$.awk /var/lib/pgsql/data/pg_hba.orig > /var/lib/pgsql/data/pg_hba.conf
+	rm -f /var/lib/pgsql/data/pg_hba.orig
 
-ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
+	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 
-mkdir /var/www/trivnet/jobs/
-mkdir /var/www/trivnet/csvdata/
+	mkdir /var/www/trivnet/jobs/
+	mkdir /var/www/trivnet/csvdata/
 
-chown trivnet:apache /var/www/trivnet/jobs/
-chmod 774 /var/www/trivnet/jobs/
+	chown trivnet:apache /var/www/trivnet/jobs/
+	chmod 774 /var/www/trivnet/jobs/
 
-
-systemctl enable httpd
-systemctl start httpd
+	systemctl enable httpd
+	systemctl start httpd
+fi
+%end
 
 %files
 /var/www/trivnet/
