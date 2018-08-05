@@ -38,7 +38,7 @@ rpmbuild:
     - mv httpd.conf rpmbuild/SOURCES/
     - mv fcc/trivnet-fcc.out rpmbuild/SOURCES/
     - mv trivnet.spec rpmbuild/SPECS/
-    - rpmbuild --define "_topdir `pwd`/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
+    - rpmbuild --define "now `date +%s`" --define "_topdir `pwd`/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
   artifacts:
     paths:
       - rpmbuild/RPMS/
@@ -52,7 +52,6 @@ deploy-stage:
   dependencies:
     - rpmbuild
   script:
-    - ls -alR
     - sudo yum localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
   environment:
     name: Stage

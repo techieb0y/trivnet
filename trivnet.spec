@@ -1,6 +1,6 @@
 Name:           trivnet
 Version:        1.0
-Release:        b1
+Release:        %{now}
 Summary:        A web-based database for tracking marathon runners and other uses.
 
 Group:          ham
