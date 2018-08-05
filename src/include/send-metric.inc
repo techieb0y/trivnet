@@ -1,7 +1,8 @@
 <?php
 
 function sendMetric( $name, $value ) {
-	require_once("include/config.inc");
+	require_once("config.inc");
+	global $config;
 	if ( $config["use_graphite"] ) {
 		$socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 		socket_connect($socket, "localhost", 2023) or die("Could not open socket to carbon.");
@@ -15,7 +16,8 @@ function sendMetric( $name, $value ) {
 }
 
 function sendFullMetric( $name, $value ) {
-	require_once("include/config.inc");
+	require_once("config.inc");
+	global $config;
 	if ( $config["use_graphite"] ) {	
 		$socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 		socket_connect($socket, "localhost", 2003) or die("Could not open socket to carbon.");
