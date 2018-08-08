@@ -13,7 +13,7 @@ if ( isset($_POST["sendto"]) ) {
 } // end if
 
 $from = $_SESSION["callsign"];
-$text = mysql_real_escape_string($_POST["text"]);
+$text = $_POST["text"];
 
 $q = "INSERT INTO messages VALUES ( " . time() . ", '$from', '$text', '$to' )";
 $r = query($q);
