@@ -13,7 +13,7 @@ if ( isset($_POST["sendto"]) ) {
 } // end if
 
 $from = $_SESSION["callsign"];
-$text = addslashes($_POST["text"]);
+$text = $_POST["text"];
 
 $q = "INSERT INTO messages VALUES ( " . time() . ", '$from', '$text', '$to' )";
 $r = query($q);
