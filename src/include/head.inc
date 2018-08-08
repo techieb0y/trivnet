@@ -1,4 +1,5 @@
 <?php
+	global $begin;
 	$begin = microtime(true);
 	require_once("config.inc");
 	require_once("constants.inc");

@@ -6,6 +6,8 @@
 //	The original trivnetdb author has a web page with more inforamtion at:
 //	http://msuarc.egr.msu.edu/kb8zqz/packet/
 
+$begin = 0;
+
 include("head.inc");
 
 echo "<table width=\"100%\"><tr>";
