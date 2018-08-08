@@ -1,5 +1,7 @@
 <?php
 require_once("include/aprs-symbols.php");
+date_default_timezone_set("America/Chicago");
+
 $sym = urldecode($_GET["sym"]);
 header("Content-type: image/png");
 $when = date("D, j M Y G:i:s T", time() + 604800);
