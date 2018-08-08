@@ -6,6 +6,8 @@
 	require_once("sessions.inc");
 	require_once("send-metric.inc");
 
+date_default_timezone_set("America/Chicago");
+
 // Trivnetdb 2.0 was designed and built by KD8GBL 
 
 //	The original trivnetdb author used to have web page with more information at:
