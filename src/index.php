@@ -107,16 +107,9 @@ if ( count( $r_summary) > 0 ) {
 	echo "</table>\n";
 } 
 
-
 echo "<br><hr>";
-echo "Trivnetdb v2.6 - by KD8GBL<br>\n";
-
-/*
- *  // Display the build version, if the current directory is an SVN
- *  // working copy. 
- *	$ver = `svn info | grep Revision | awk '{print $2}'`;
- *	echo "Build: $ver<br>\n";
- */
+$sha = getenv('TRIVNET-SHA'); 
+echo "Trivnetdb v2.6 ($sha) - by KD8GBL<br>\n";
 
 require_once("include/foot.inc");
 

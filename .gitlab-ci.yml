@@ -38,6 +38,7 @@ rpmbuild:
     - mv httpd.conf rpmbuild/SOURCES/
     - mv fcc/trivnet-fcc.out rpmbuild/SOURCES/
     - mv trivnet.spec rpmbuild/SPECS/
+    - echo "SetEnv TRIVNET-SHA ${CI_COMMIT_SHA}" > rpmbuild/BUILD/trivnet/.htaccess
     - rpmbuild --define "now `date +%s`" --define "_topdir `pwd`/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
   artifacts:
     paths:
