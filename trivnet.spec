@@ -105,6 +105,8 @@ if [ $1 -eq 1 ]; then
 
 	systemctl enable httpd
 	systemctl start httpd
+else
+  echo "Not doing DB setup as this is an upgrde"
 fi
 %end
 
