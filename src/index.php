@@ -18,6 +18,23 @@ echo "<td style=\"background-color: green;\" width=\"$percent%\">$percent% Cross
 echo "<td style=\"background-color: black\">&nbsp;</td>";
 echo "</tr></table>\n";
 
+
+// Per-race head-tail graphic
+echo "<table width=\"100%\">";
+$races = query("select * from race");
+foreach ( $races as $r ) {
+	echo "<tr>";
+	$left = ( 100 * ( $r["tail"] / 26.2 ) );
+	$right = 100 - ( 100 * ( $r["head"] / 26.2 ) );
+	$middle = 100 - ( $left + $right );
+	echo "<td width=\"$left\" style=\"background-color: red; align: right;\"><img src=\"getAPRS.php?sym=48\"</td>";
+	echo "<td width=\"$middle\" style=\"background-color: white;\">&nbsp;</td>";
+	echo "<td width=\"$right\" style=\"background-color: blue; align: left\"><img src=\"getAPRS.php?sym=59\"></td>";
+	echo "</tr>\n";
+}
+echo "</table><br>\n";
+
+
 // Overall summery
 $sdt = $config["status"];
 echo "Status summary:<br>\n";
