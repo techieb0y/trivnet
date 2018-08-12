@@ -34,9 +34,13 @@ foreach ( $races as $r ) {
         }
         echo "<td style=\"width: 16px;\">&#x1F693;</td>\n";
         echo "<td style=\"background-color: grey;\">&nbsp;</td>\n";
-        echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
-	
-        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
+	if ( $r["raceid"] == 4 ) {
+        	echo "<td style=\"width: 16px;\">&#x267F;</td>\n";
+        	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead wheeler past mile " . $r["head"] . "</td>";
+	} else {
+        	echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
+        	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
+	}
         echo "</tr>\n";
         echo "</table>\n";
         echo "</td></tr></table>\n";
