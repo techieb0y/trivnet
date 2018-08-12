@@ -20,9 +20,9 @@ echo "</tr></table>\n";
 
 
 echo "Per-race Head and Tail locations:<br>\n";
-echo "<table width=\"100%\">";
 $races = query("select * from race");
 foreach ( $races as $r ) {
+	echo "<table width=\"100%\">";
 	echo "<tr>";
 	$rn = $r["raceid"];
 	echo "<td>" . $RACENAME[$rn] . "</td>";
@@ -38,8 +38,8 @@ foreach ( $races as $r ) {
 
 	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
 	echo "</tr>\n";
+	echo "</table><br>\n";
 }
-echo "</table><br>\n";
 
 
 // Overall summery
