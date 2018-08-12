@@ -22,24 +22,25 @@ echo "</tr></table>\n";
 echo "Per-race Head and Tail locations:<br>\n";
 $races = query("select * from race");
 foreach ( $races as $r ) {
-	echo "<table width=\"100%\">";
-	echo "<tr>";
-	$rn = $r["raceid"];
-	echo "<td>" . $RACENAME[$rn] . "</td>";
-	$left = floor( ( 100 * ( $r["tail"] / 26.2 ) ) );
-	$right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
-	$middle = 100 - ( $left + $right );
-	if ( $left > 0 ) {
-		echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $r["tail"] . "</td>";
-	}
-	echo "<td><img src=\"getAPRS.php?sym=48\" style=\"position: absolute; left: $left%;\"></td>\n";
-	echo "<td width=\"$middle%\" style=\"background-color: grey;\">&nbsp;</td>\n";
-	echo "<td><img src=\"getAPRS.php?sym=59\" style=\"position: absolute; right: $right%;\"></td>\n";
-	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
-	echo "</tr>\n";
-	echo "</table><br>\n";
+        echo "<table width=\"100%\">";
+        echo "<tr>";
+        $rn = $r["raceid"];
+        echo "<td style=\"width: 64px;\">" . $RACENAME[$rn] . "</td><td>";
+        $left = floor( ( 100 * ( $r["tail"] / 26.2 ) ) );
+        $right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
+        echo "<table width=\"100%\"><tr>";
+        if ( $left > 0 ) {
+                echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $r["tail"] . "</td>";
+        }
+        echo "<td style=\"width: 16px;\">&#x1F693;</td>\n";
+        echo "<td style=\"background-color: grey;\">&nbsp;</td>\n";
+        echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
+	
+        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
+        echo "</tr>\n";
+        echo "</table>\n";
+        echo "</td></tr></table>\n";
 }
-
 
 // Overall summery
 $sdt = $config["status"];
