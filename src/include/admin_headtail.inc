@@ -7,6 +7,8 @@
 	$q = "SELECT * FROM race ORDER BY raceid ASC";
 	$r = query($q);
 
+	if ( count($r) > 0 ) {
+
 	echo "<form method=\"POST\" action=\"admin.php?mode=headtail\">";
 	echo "<table>\n";
 		foreach ( $r as $z ) {
@@ -19,5 +21,12 @@
 		} // end foreach
 	echo "<tr><td><input type=\"submit\"></td></tr>\n";
 	echo "</table></form>";
+
+	} else {
+		echo "<form method=\"POST\" action=\"admin.php?mode=headtailinit\">";
+		echo "<input type=submit value=\"Initialize\">";
+		echo "</form>";
+	}
+
 	echo "</div>\n";
 ?>
