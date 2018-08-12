@@ -10,7 +10,7 @@ php-lint:
   tags:
     - docker
   script:
-    - find ./ -name \*.php -exec php -l '{}' \;
+    - find ./ -name \*.php -print0 | xargs -I '{}' -n1 -0 php -l '{}'
 
 get-fcc-db:
   stage: assets
