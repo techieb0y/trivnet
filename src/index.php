@@ -25,7 +25,7 @@ foreach ( $races as $r ) {
         echo "<table width=\"100%\">";
         echo "<tr>";
         $rn = $r["raceid"];
-        echo "<td style=\"width: 64px;\">" . $RACENAME[$rn] . "</td><td>";
+        echo "<td style=\"width: 72px;\">" . $RACENAME[$rn] . "</td><td>";
         $left = floor( ( 100 * ( $r["tail"] / 26.2 ) ) );
         $right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
         echo "<table width=\"100%\"><tr>";
