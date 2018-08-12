@@ -11,8 +11,8 @@
 	echo "<table>\n";
 		foreach ( $r as $z ) {
 			echo "<tr><td>" . $RACENAME[ $z["raceid"] ] . "</td>";
-			$t = "tail[" . $z["raceid"] . "]";
-			$h = "head[" . $z["raceid"] . "]";
+			$t = "race[" . $z["raceid"] . "][\"tail\"]";
+			$h = "race[" . $z["raceid"] . "][\"head\"]";
 			echo "<td>Tail: <input value=\"" . $z["tail"] . "\" name=\"$t\" size=4>";
 			echo "<td>Head: <input value=\"" . $z["head"] . "\" name=\"$h\" size=4>";
 			echo "</td></tr>\n";
