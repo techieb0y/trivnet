@@ -18,7 +18,6 @@
 			echo "</td></tr>\n";
 		} // end foreach
 	echo "<tr><td><input type=\"submit\"></td></tr>\n";
-	echo "</table>";
-
+	echo "</table></form>";
 	echo "</div>\n";
 ?>
