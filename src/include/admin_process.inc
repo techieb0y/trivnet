@@ -62,7 +62,7 @@
 
 		// Send back
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
-	} else if ( "headtail" == $mode ) {
+	} else if ( "headtailinit" == $mode ) {
 		foreach ( $RACEID as $r ) {
 			query("INSERT INTO race VALUES ( $r, 0, 0 );");
 		}
