@@ -50,7 +50,7 @@ $races = query("select * from race");
 	echo "</td>\n";
 
 	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $races[3]["head"] . "</td>";
-	echo "</tr>\n"
+	echo "</tr>\n";
 echo "</table><br>\n";
 
 
