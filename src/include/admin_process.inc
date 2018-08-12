@@ -63,21 +63,26 @@
 		// Send back
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 	} else if ( "headtail" == $mode ) {
+		foreach ( $RACEID as $r ) {
+			query("INSERT INTO race VALUES ( $r, 0, 0 );");
+		}
+	} else if ( "headtail" == $mode ) {
 		echo "<pre>";
 		print_r($_POST);
 
 		echo "\n\n";
 
 		$matrix = array();
-		foreach ($_POST["race"] as $end) {
-			foreach ($end as $race => $pos) {
-				$matrix[$race][$end] = $pos;
-			}
+		foreach ($_POST["head"] as $race => $pos) {
+			$q = "UPDATE race SET head=$pos WHERE raceid=$race;";
+			echo $q . "\n";
 		}
-
-		print_r($matrix);
-
-		echo "\n\n";
+		
+		$matrix = array();
+		foreach ($_POST["tail"] as $race => $pos) {
+			$q = "UPDATE race SET tail=$pos WHERE raceid=$race;";
+			echo $q . "\n";
+		}
 
 		echo "</pre>";
 	} else {
