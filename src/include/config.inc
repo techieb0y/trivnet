@@ -47,8 +47,11 @@ $RACENAME[3] = "10-mile";
 $RACEID[4] = "2570";
 $RACENAME[4] = "Wheelchair";
 
-$RACEID[5] = "2700"; // Ultra Loony
-$RACEID[6] = "2572"; // 10K Loony
+$RACEID[5] = "2700";
+$RACENAME[5] = "Ultra Loony";
+
+$RACEID[6] = "2572";
+$RACENAME[6] = "10K Loony";
 
 $config["use_graphite"] = false;
 ?>
