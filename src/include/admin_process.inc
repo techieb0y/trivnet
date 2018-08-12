@@ -65,6 +65,7 @@
 	} else if ( "headtailinit" == $mode ) {
 		foreach ( $RACEID as $r ) {
 			query("INSERT INTO race VALUES ( $r, 0, 0 );");
+			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 		}
 	} else if ( "headtail" == $mode ) {
 		echo "<pre>";
