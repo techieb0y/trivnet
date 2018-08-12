@@ -68,24 +68,16 @@
 			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 		}
 	} else if ( "headtail" == $mode ) {
-		echo "<pre>";
-		print_r($_POST);
-
-		echo "\n\n";
-
-		$matrix = array();
 		foreach ($_POST["head"] as $race => $pos) {
 			$q = "UPDATE race SET head=$pos WHERE raceid=$race;";
-			echo $q . "\n";
+			query($q);
 		}
 		
-		$matrix = array();
 		foreach ($_POST["tail"] as $race => $pos) {
 			$q = "UPDATE race SET tail=$pos WHERE raceid=$race;";
-			echo $q . "\n";
+			query($q);
 		}
-
-		echo "</pre>";
+		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 	} else {
 		die("In invalid operation mode was selected.");
 	} // end if
