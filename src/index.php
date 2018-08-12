@@ -24,7 +24,7 @@ echo "<table width=\"100%\">";
 $races = query("select * from race");
 foreach ( $races as $r ) {
 	echo "<tr>";
-	$rn = $["raceid"];
+	$rn = $r["raceid"];
 	echo "<td>" . $RACENAME[$rn] . "</td>";
 	$left = floor( ( 100 * ( $r["tail"] / 26.2 ) ) );
 	$right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
