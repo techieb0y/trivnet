@@ -11,6 +11,7 @@ php-lint:
     - docker
   script:
     - find ./ -name \*.php -print0 | xargs -I '{}' -n1 -0 php -l '{}'
+    - find ./ -name \*.inc -print0 | xargs -I '{}' -n1 -0 php -l '{}'
 
 get-fcc-db:
   stage: assets
