@@ -38,9 +38,14 @@ $config["idle_timeout"] = 300;
 $config["async_count"] = 1;
 
 global $RACEID;
-$RACEID[1] = "2569"; // Full
-$RACEID[3] = "2571"; // 10-mile
-$RACEID[4] = "2570"; // Wheelchair
+$RACEID[1] = "2569";
+$RACENAME[1] = "Marathon";
+
+$RACEID[3] = "2571";
+$RACENAME[3] = "10-mile";
+
+$RACEID[4] = "2570";
+$RACENAME[4] = "Wheelchair";
 
 $RACEID[5] = "2700"; // Ultra Loony
 $RACEID[6] = "2572"; // 10K Loony

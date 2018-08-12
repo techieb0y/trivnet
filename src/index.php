@@ -22,35 +22,23 @@ echo "</tr></table>\n";
 echo "Per-race Head and Tail locations:<br>\n";
 echo "<table width=\"100%\">";
 $races = query("select * from race");
+foreach ( $races as $r ) {
 	echo "<tr>";
-	echo "<td>Marathon</td>";
-	$left = floor( ( 100 * ( $races[1]["tail"] / 26.2 ) ) );
-	$right = floor( 100 - ( 100 * ( $races[1]["head"] / 26.2 ) ) );
+	$rn = $["raceid"];
+	echo "<td>" . $RACENAME[$rn] . "</td>";
+	$left = floor( ( 100 * ( $r["tail"] / 26.2 ) ) );
+	$right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
 	$middle = 100 - ( $left + $right );
 	if ( $left > 0 ) {
-		echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $races[1]["tail"] . "</td>";
+		echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $r["tail"] . "</td>";
 	}
 	echo "<td width=\"$middle%\" style=\"background-color: grey;\">\n";
 	echo "<img src=\"getAPRS.php?sym=48\" style=\"position: absolute; left: $left%;\">&nbsp;<img src=\"getAPRS.php?sym=59\" style=\"position: absolute; right: $right%;\">\n";
 	echo "</td>\n";
 
-	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $races[1]["head"] . "</td>";
+	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
 	echo "</tr>\n";
-
-	echo "<tr>";
-	echo "<td>10-mile</td>";
-	$left = floor( ( 100 * ( $races[3]["tail"] / 26.2 ) ) );
-	$right = floor( 100 - ( 100 * ( $races[3]["head"] / 26.2 ) ) );
-	$middle = 100 - ( $left + $right );
-	if ( $left > 0 ) {
-		echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $races[3]["tail"] . "</td>";
-	}
-	echo "<td width=\"$middle%\" style=\"background-color: grey;\">\n";
-	echo "<img src=\"getAPRS.php?sym=48\" style=\"position: absolute; left: $left%;\">&nbsp;<img src=\"getAPRS.php?sym=59\" style=\"position: absolute; right: $right%;\">\n";
-	echo "</td>\n";
-
-	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $races[3]["head"] . "</td>";
-	echo "</tr>\n";
+}
 echo "</table><br>\n";
 
 
