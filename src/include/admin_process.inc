@@ -62,7 +62,7 @@
 
 		// Send back
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
-	} else if { "headtail" == $mode ) {
+	} else if ( "headtail" == $mode ) {
 		echo "<pre>";
 		print_r($_POST);
 		echo "</pre>";
