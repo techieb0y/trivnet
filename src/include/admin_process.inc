@@ -63,8 +63,8 @@
 		// Send back
 		header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 	} else if ( "headtailinit" == $mode ) {
-		foreach ( $RACEID as $r ) {
-			query("INSERT INTO race VALUES ( $r, 0, 0 );");
+		foreach ( $RACEID as $k => $r ) {
+			query("INSERT INTO race VALUES ( $k, 0, 0 );");
 			header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $_SERVER["SCRIPT_NAME"]);
 		}
 	} else if ( "headtail" == $mode ) {
