@@ -65,6 +65,20 @@
 	} else if ( "headtail" == $mode ) {
 		echo "<pre>";
 		print_r($_POST);
+
+		echo "\n\n";
+
+		$matrix = array();
+		foreach ($_POST["race"] as $end) {
+			foreach ($end as $race => $pos) {
+				$matrix[$race][$end] = $pos;
+			}
+		}
+
+		print_r($matrix);
+
+		echo "\n\n";
+
 		echo "</pre>";
 	} else {
 		die("In invalid operation mode was selected.");
