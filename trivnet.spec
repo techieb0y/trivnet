@@ -73,6 +73,7 @@ if [ $1 -eq 1 ]; then
 	echo "Load the FCC database data"
 	cat << EOF > /tmp/load.sql
 set client_encoding to latin1;
+delete from part97;
 copy "part97" from '/tmp/trivnet-fcc.out';
 EOF
 	su -c "psql trivnet < /tmp/load.sql" postgres && rm -f /tmp/load.sql && rm -f /tmp/trivnet-fcc.out
