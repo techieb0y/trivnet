@@ -13,7 +13,7 @@ if ( isset($_POST["sendto"]) ) {
 } // end if
 
 $from = $_SESSION["callsign"];
-$text = $_POST["text"];
+$text = pg_escape_string($_POST["text"]);
 
 $q = "INSERT INTO messages VALUES ( " . time() . ", '$from', '$text', '$to' )";
 $r = query($q);
