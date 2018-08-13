@@ -72,16 +72,16 @@ if [ $1 -eq 1 ]; then
 
 	echo "Load the FCC database data"
 	cat << EOF > /tmp/load.sql
-	set client_encoding to latin1;
-	copy "part97" from '/tmp/trivnet-fcc.out';
-	EOF
+set client_encoding to latin1;
+copy "part97" from '/tmp/trivnet-fcc.out';
+EOF
 	su -c "psql trivnet < /tmp/load.sql" postgres && rm -f /tmp/load.sql && rm -f /tmp/trivnet-fcc.out
 
 	echo "Put the generated password into the config file"
 	cat << EOF > /tmp/$$.awk
-	/^\\\$DB_PASS/    { print "\$DB_PASS = \"${PASSWORD}\";"; next }
-	/.*/            { print \$0 }
-	EOF
+/^\\\$DB_PASS/    { print "\$DB_PASS = \"${PASSWORD}\";"; next }
+/.*/            { print \$0 }
+EOF
 
 	mv /var/www/trivnet/include/config.inc /var/www/trivnet/include/config.tmpl
 	awk -f /tmp/$$.awk /var/www/trivnet/include/config.tmpl > /var/www/trivnet/include/config.inc
@@ -89,9 +89,9 @@ if [ $1 -eq 1 ]; then
 
 	echo "Insert ACL into pg_hba.conf"
 	cat << EOF > /tmp/$$.awk
-	/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
-	/.*/            { print \$0 }
-	EOF
+/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
+/.*/            { print \$0 }
+EOF
 
 	mv /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
 	awk -f /tmp/$$.awk /var/lib/pgsql/data/pg_hba.orig > /var/lib/pgsql/data/pg_hba.conf
