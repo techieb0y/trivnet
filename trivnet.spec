@@ -46,6 +46,7 @@ mkdir -p %{buildroot}/etc/httpd/conf.d/ && mv %{_sourcedir}/httpd.conf %{buildro
 rm -f /tmp/trivnet-fcc.out
 
 %post
+echo "Running with \$1 of: $1"
 if [ $1 -eq 1 ]; then
 	set -x
 	PASSWORD=`head -c12 /dev/urandom | sha1sum | base64 | cut -c 1-16`
@@ -53,29 +54,30 @@ if [ $1 -eq 1 ]; then
 	adduser -r trivnet -M -d /var/www/trivnet/
 	chown -R trivnet /var/www/trivnet/
 
+	echo "Starting PostgreSQL"
 	systemctl enable postgresql
 	systemctl start postgresql
 
-	# Create 'trivnet' database objects
+	echo "Create 'trivnet' database objects"
 	su -c "createuser -l -S -R -D trivnet" postgres
 	su -c "createdb -O trivnet trivnet" postgres
 	su -c "psql -c \"alter user trivnet with password '${PASSWORD}'\" trivnet" postgres
 
-	# Load the schema
+	echo "Load the schema"
 	su -c "psql trivnet < /var/www/trivnet/setup.sql" trivnet
 	su -c "psql trivnet < /var/www/trivnet/mtcm.sql" trivnet
 
-	# Load the tablefunc stuff from contrib
+	echo "Load the tablefunc stuff from contrib"
 	su -c "psql -c \"CREATE EXTENSION tablefunc;\" trivnet" postgres
 
-	# Load the FCC database data
+	echo "Load the FCC database data"
 	cat << EOF > /tmp/load.sql
 	set client_encoding to latin1;
 	copy "part97" from '/tmp/trivnet-fcc.out';
 	EOF
 	su -c "psql trivnet < /tmp/load.sql" postgres && rm -f /tmp/load.sql && rm -f /tmp/trivnet-fcc.out
 
-	# Put the generated password into the config file
+	echo "Put the generated password into the config file"
 	cat << EOF > /tmp/$$.awk
 	/^\\\$DB_PASS/    { print "\$DB_PASS = \"${PASSWORD}\";"; next }
 	/.*/            { print \$0 }
@@ -85,7 +87,7 @@ if [ $1 -eq 1 ]; then
 	awk -f /tmp/$$.awk /var/www/trivnet/include/config.tmpl > /var/www/trivnet/include/config.inc
 	rm -f /var/www/trivnet/include/config.tmpl
 
-	# Insert ACL into pg_hba.conf
+	echo "Insert ACL into pg_hba.conf"
 	cat << EOF > /tmp/$$.awk
 	/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
 	/.*/            { print \$0 }
@@ -97,12 +99,15 @@ if [ $1 -eq 1 ]; then
 
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 
+	echo "Making data directories"
 	mkdir /var/www/trivnet/jobs/
 	mkdir /var/www/trivnet/csvdata/
 
+	echo "Setting permissions"
 	chown trivnet:apache /var/www/trivnet/jobs/
 	chmod 774 /var/www/trivnet/jobs/
 
+	echo "Starting Apache"
 	systemctl enable httpd
 	systemctl start httpd
 else
