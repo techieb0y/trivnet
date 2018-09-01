@@ -19,9 +19,6 @@ A rewrite of TrivnetDB (original by Dennis, KB8ZQZ), building on the original AR
 
 %package static
 Summary:	Static content used by trivnet
-Requires:	
-BuildRequires:	
-
 
 %prep
 rm -vf /tmp/trivnet/*.dat
