@@ -20,6 +20,9 @@ A rewrite of TrivnetDB (original by Dennis, KB8ZQZ), building on the original AR
 %package static
 Summary:	Static content used by trivnet
 
+%description static
+Static content used by trivnet
+
 %prep
 rm -vf /tmp/trivnet/*.dat
 rm -vf /tmp/trivnet/counts
