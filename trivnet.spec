@@ -9,13 +9,19 @@ Source:        trivnet.tar.gz
 
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:       php postgresql-server postgresql-contrib php-pgsql php-gd python-carbon graphite-web mod_wsgi
+Requires:       php postgresql-server postgresql-contrib php-pgsql php-gd python-carbon graphite-web mod_wsgi trivnet-static
 BuildRequires:  php-cli curl unzip
 
 %define debug_package %{nil}
 
 %description
 A rewrite of TrivnetDB (original by Dennis, KB8ZQZ), building on the original ARESDATA.
+
+%package static
+Summary:	Static content used by trivnet
+Requires:	
+BuildRequires:	
+
 
 %prep
 rm -vf /tmp/trivnet/*.dat
@@ -116,12 +122,25 @@ else
 fi
 %end
 
+%files static
+/var/www/trivnet/css
+/var/www/trivnet/common
+/var/www/trivnet/images
+/var/www/trivnet/js
+
 %files
-/var/www/trivnet/
+/var/www/trivnet/.htaccess
+/var/www/trivnet/*.php
+/var/www/trivnet/*.sql
+/var/www/trivnet/agents
+/var/www/trivnet/include
 /tmp/trivnet-fcc.out
 /etc/cron.d/trivnet
 /etc/httpd/conf.d/trivnet.conf
 
 %changelog
+* Sat Sept 01 2018 kd8gbl - 1.0b2
+- Splitting static content into sub-package for CDN
+
 * Sat Mar 26 2016 kd8gbl - 1.0b1
 - Original packaging for RHEL7
