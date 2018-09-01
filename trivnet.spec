@@ -136,7 +136,7 @@ fi
 /etc/httpd/conf.d/trivnet.conf
 
 %changelog
-* Sat Sept 01 2018 kd8gbl - 1.0b2
+* Sat Sep 01 2018 kd8gbl - 1.0b2
 - Splitting static content into sub-package for CDN
 
 * Sat Mar 26 2016 kd8gbl - 1.0b1
