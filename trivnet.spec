@@ -62,6 +62,17 @@ if [ $1 -eq 1 ]; then
 
 	echo "Checking PostgreSQL setup"
 	[ -d /var/lib/pgsql/9.6/data/base ] || /usr/pgsql-9.6/bin/postgresql96-setup initdb
+
+	echo "Insert ACL into pg_hba.conf"
+	cat << EOF > /tmp/$$.awk
+/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
+/.*/            { print \$0 }
+EOF
+
+	PREFIX="/var/lib/pgsql/9.6/data"
+
+	mv ${PREFIX}/pg_hba.conf ${PREFIX}/pg_hba.orig
+	awk -f /tmp/$$.awk ${PREFIX}/pg_hba.orig > ${PREFIX}/pg_hba.conf && rm -f ${PREFIX}/pg_hba.orig
 	
 	echo "Starting PostgreSQL"
 	systemctl enable postgresql-9.6
@@ -96,17 +107,6 @@ EOF
 	mv /var/www/trivnet/include/config.inc /var/www/trivnet/include/config.tmpl
 	awk -f /tmp/$$.awk /var/www/trivnet/include/config.tmpl > /var/www/trivnet/include/config.inc
 	rm -f /var/www/trivnet/include/config.tmpl
-
-	echo "Insert ACL into pg_hba.conf"
-	cat << EOF > /tmp/$$.awk
-/^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
-/.*/            { print \$0 }
-EOF
-
-	PREFIX="/var/lib/pgsql/9.6/data"
-
-	mv ${PREFIX}/pg_hba.conf ${PREFIX}/pg_hba.orig
-	awk -f /tmp/$$.awk ${PREFIX}/pg_hba.orig > ${PREFIX}/pg_hba.conf && rm -f ${PREFIX}/pg_hba.orig
 
 	echo "Making data directories"
 	mkdir /var/www/trivnet/jobs/
