@@ -51,8 +51,12 @@ $q = "INSERT INTO updatesequence VALUES ( $id, $now, '$who', $dt, '<span class=\
 $r = query($q);
 
 
-// ------- Re-dispplay the person's info, for confirmation that we're looking at
+// ------- Re-display the person's info, for confirmation that we're looking at
 // the right person
+
+// Quick sanity check: does this personId exist in the people table?
+$sc = query("SELECT id from PEOPLE where id=$id");
+if ( $sc[0]["id"] != $id ) { echo "<em>The specified person ID does not exist.</em><br>\n"; }
 
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes";
@@ -115,6 +119,22 @@ foreach ( $theBigArray as $fieldName ) {
 } // end foreach
 echo "</tr>\n";
 
+// Do we know we exist in the DB (from sanity check above) but this monster query returned no rows?
+// This happens why you've just used the 'manually create person' link -- all that does is
+// add to the people table, but not to persondata at all.
+if ( ( $id == $snck ) && ( count($r) == 0 ) ) {
+        $bogoArray = array();
+        foreach ($r_dts as $dt) {
+                $dtn = $dt["name"];
+                $bogoArray[$dtn] = '';
+        }
+        // There isn't a way to insert into the begining of an array, so swap/push/swap to get the same effect.	
+        $r[0] = array_reverse($bogoArray);
+        $r[0]["personid"] = $id;
+        $r[0] = array_reverse($r[0]);
+}
+
+
 $l = 0;
 foreach ( $r as $key => $row ) {
 	// This should only loop once, as we only query one personID.
@@ -125,9 +145,8 @@ foreach ( $r as $key => $row ) {
 
 			if ( $k != "message" ) {
 			echo "<td>\n";
-			if ( $id == $val ) {
+			if ( $k == "personid" ) {
 				// Don't display edit box for PersonID
-				// is there a better way to check for this?
 				echo "\t$row[$k]\n";
 			} else if ( isset($dts[$k]["enum"]) && ( "t" == $dts[$k]["enum"] ) ) {
 				// This is an enumerated data type; reference the table and show it as a dropdown
