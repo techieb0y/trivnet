@@ -85,6 +85,7 @@ EOF
 	echo "Load the schema"
 	su -c "psql trivnet < /var/www/trivnet/setup.sql" trivnet
 	su -c "psql trivnet < /var/www/trivnet/mtcm.sql" trivnet
+	su -c "psql trivnet < /var/www/trivnet/upsert.sql" trivnet
 
 	echo "Load the tablefunc stuff from contrib"
 	su -c "psql -c \"CREATE EXTENSION tablefunc;\" trivnet" postgres
