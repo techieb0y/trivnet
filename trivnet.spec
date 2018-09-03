@@ -121,19 +121,14 @@ EOF
 else
   echo "Not doing DB setup as this is an upgrde"
 fi
-%end
 
 %post static
-	set -x
 	echo "Linking jQuery"
 	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
-%end
 
 %preun static
-	set -x
 	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
-%end
 
 %files static
 /var/www/trivnet/css
