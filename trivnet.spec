@@ -55,7 +55,7 @@ rm -f /tmp/trivnet-fcc.out
 echo "Running with \$1 of: $1"
 if [ $1 -eq 1 ]; then
 	set -x
-	PASSWORD=`head -c12 /dev/urandom | sha1sum | base64 | cut -c 1-16`
+	PASSWORD=`head -c12 /dev/urandom | base64`
 
 	adduser -r trivnet -M -d /var/www/trivnet/
 	chown -R trivnet /var/www/trivnet/
