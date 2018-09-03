@@ -128,6 +128,7 @@ fi
 
 %post static
 	echo "Linking jQuery"
+	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 %end
 
