@@ -103,6 +103,9 @@ EOF
 /.*/            { print \$0 }
 EOF
 
+	echo "Debugging the setup process"
+	find /var/lib/pgsql/9.6/data/
+
 	mv /var/lib/pgsql/9.6/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
 	awk -f /tmp/$$.awk /var/lib/pgsql/9.6/data/pg_hba.orig > /var/lib/pgsql/9.6/data/pg_hba.conf
 	rm -f /var/lib/pgsql/9.6/data/pg_hba.orig
