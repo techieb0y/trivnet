@@ -129,6 +129,8 @@ $q_summary = "select value, count(value) as num from updatesequence where dataty
 $r_summary = query($q_summary);
 if ( count( $r_summary) > 0 ) {
 	echo "<table>\n";
+	$v = $row_summary["value"];
+
 	foreach ($r_summary as $row_summary) {
 		if ( preg_match("/^Set/", $v) ) {
 			echo "<tr class=\"audit\">";
@@ -138,7 +140,7 @@ if ( count( $r_summary) > 0 ) {
 			echo "<tr>";
 		}
 
-		echo "<td>" . $row_summary["value"] . "</td><td>" . $row_summary["num"] . "</td></tr>\n";
+		echo "<td>" . $v . "</td><td>" . $row_summary["num"] . "</td></tr>\n";
 	}
 	echo "</table>\n";
 } 
