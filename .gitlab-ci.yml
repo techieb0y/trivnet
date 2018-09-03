@@ -17,8 +17,6 @@ get-fcc-db:
   stage: assets
   tags:
     - docker
-  variables:
-    GIT_STRATEGY: none      
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   script:
     - mkdir fcc
