@@ -9,7 +9,7 @@ Source:        trivnet.tar.gz
 
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:       php postgresql96-server.x86_64 postgresql96-contrib.x86_64 php-pgsql php-gd python-carbon graphite-web mod_wsgi trivnet-static
+Requires:       php postgresql96-server postgresql96-contrib php-pgsql php-gd python-carbon graphite-web mod_wsgi trivnet-static
 BuildRequires:  php-cli curl unzip
 
 %define debug_package %{nil}
