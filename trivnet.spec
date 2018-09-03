@@ -107,9 +107,6 @@ EOF
 	awk -f /tmp/$$.awk /var/lib/pgsql/9.6/data/pg_hba.orig > /var/lib/pgsql/9.6/data/pg_hba.conf
 	rm -f /var/lib/pgsql/9.6/data/pg_hba.orig
 
-	echo "Linking jQuery"
-	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
-
 	echo "Making data directories"
 	mkdir /var/www/trivnet/jobs/
 	mkdir /var/www/trivnet/csvdata/
@@ -124,6 +121,11 @@ EOF
 else
   echo "Not doing DB setup as this is an upgrde"
 fi
+%end
+
+%post static
+	echo "Linking jQuery"
+	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 %end
 
 %files static
