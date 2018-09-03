@@ -54,7 +54,6 @@ rm -f /tmp/trivnet-fcc.out
 %post
 echo "Running with \$1 of: $1"
 if [ $1 -eq 1 ]; then
-	set -x
 	PASSWORD=`head -c12 /dev/urandom | base64`
 
 	adduser -r trivnet -M -d /var/www/trivnet/
@@ -125,12 +124,14 @@ fi
 %end
 
 %post static
+	set -x
 	echo "Linking jQuery"
 	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 %end
 
 %preun static
+	set -x
 	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
 %end
 
