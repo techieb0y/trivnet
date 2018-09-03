@@ -130,6 +130,10 @@ fi
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 %end
 
+%preun static
+	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
+%end
+
 %files static
 /var/www/trivnet/css
 /var/www/trivnet/common
