@@ -130,7 +130,15 @@ $r_summary = query($q_summary);
 if ( count( $r_summary) > 0 ) {
 	echo "<table>\n";
 	foreach ($r_summary as $row_summary) {
-		echo "<tr><td>" . $row_summary["value"] . "</td><td>" . $row_summary["num"] . "</td></tr>\n";
+		if ( preg_match("/^Set/", $v) ) {
+			echo "<tr class=\"audit\">";
+		} else if ( preg_match("/^Changed/", $v) ) {
+			echo "<tr class=\"audit\">";
+		} else {
+			echo "<tr>";
+		}
+
+		echo "<td>" . $row_summary["value"] . "</td><td>" . $row_summary["num"] . "</td></tr>\n";
 	}
 	echo "</table>\n";
 } 
