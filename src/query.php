@@ -50,7 +50,7 @@ function showFields() {
 	} // end if
 	echo "<tr><td><input checked type=\"radio\" name=\"type\" value=\"AND\"> Match all (AND search)</td>";
 	echo "<td><input type=\"radio\" name=\"type\" value=\"OR\"> Match any (OR search)</td></tr>\n";
-	echo "<tr><td>or by status message:</td><td><input name=\"0\"></td></tr>\n";
+	echo "<tr><td>or by status message:</td><td><input name=\"statusmesg\"></td></tr>\n";
 	echo "<tr><td><input type=\"reset\"></td><td><input type=\"submit\"></td></tr>\n";
 	echo "</table></form>\n";
 } // end showFields
@@ -65,7 +65,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 	// echo count($_POST);
 
-	if ( strlen($_POST[0]) > 0 ) { 
+	if ( strlen($_POST["statusmesg"]) > 0 ) { 
 		$q_base = "SELECT DISTINCT personid FROM updatesequence WHERE ";
 	} else {
 		$q_base = "SELECT DISTINCT personid FROM persondata WHERE ";
@@ -90,10 +90,10 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 	$q = $q_base;
 
-	if ( strlen($_POST[0]) > 0 ) {
-		$q = $q_base . "(datatype=0 AND value ILIKE ''%" . trim($_POST[0]) . "%'')";
+	if ( strlen($_POST["statusmesg"]) > 0 ) {
+		$q = $q_base . "(value ILIKE ''%" . trim($_POST["statusmesg"]) . "%'')";
 	} else {
-	// echo "<pre>" . print_r($_POST) . "</pre>";
+
 	foreach ( $_POST as $key => $param ) {
 
 		if ( ($key != "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
