@@ -56,7 +56,8 @@ $r = query($q);
 
 // Quick sanity check: does this personId exist in the people table?
 $sc = query("SELECT id from PEOPLE where id=$id");
-if ( $sc[0]["id"] != $id ) { echo "<em>The specified person ID does not exist.</em><br>\n"; }
+$snck = $sc[0]["id"];
+if ( $snck != $id ) { echo "<em>The specified person ID does not exist.</em><br>\n"; }
 
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes";
