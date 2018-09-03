@@ -56,7 +56,7 @@ deploy-stage:
   dependencies:
     - rpmbuild
   script:
-    - sudo yum -y remove postgresql-libs-9.2.24-1.el7_5 trivnet-static-1.0-1536015273 postgresql96-libs-9.6.10-1PGDG.rhel7
+    - sudo yum -y remove postgresql-libs trivnet trivnet-static postgresql96-libs
     - sudo rm -rf /var/lib/pgsql
     - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
   environment:
