@@ -9,7 +9,7 @@ Source:        trivnet.tar.gz
 
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-Requires:       php postgresql-server postgresql-contrib php-pgsql php-gd python-carbon graphite-web mod_wsgi trivnet-static
+Requires:       php postgresql96-server.x86_64 postgresql96-contrib.x86_64 php-pgsql php-gd python-carbon graphite-web mod_wsgi trivnet-static
 BuildRequires:  php-cli curl unzip
 
 %define debug_package %{nil}
@@ -61,8 +61,8 @@ if [ $1 -eq 1 ]; then
 	chown -R trivnet /var/www/trivnet/
 
 	echo "Starting PostgreSQL"
-	systemctl enable postgresql
-	systemctl start postgresql
+	systemctl enable postgresql-9.6
+	systemctl start postgresql-9.6
 
 	echo "Create 'trivnet' database objects"
 	su -c "createuser -l -S -R -D trivnet" postgres
@@ -100,10 +100,11 @@ EOF
 /.*/            { print \$0 }
 EOF
 
-	mv /var/lib/pgsql/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
-	awk -f /tmp/$$.awk /var/lib/pgsql/data/pg_hba.orig > /var/lib/pgsql/data/pg_hba.conf
-	rm -f /var/lib/pgsql/data/pg_hba.orig
+	mv /var/lib/pgsql/9.6/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
+	awk -f /tmp/$$.awk /var/lib/pgsql/9.6/data/pg_hba.orig > /var/lib/pgsql/9.6/data/pg_hba.conf
+	rm -f /var/lib/pgsql/9.6/data/pg_hba.orig
 
+	echo "Linking jQuery"
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 
 	echo "Making data directories"
