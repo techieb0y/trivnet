@@ -17,6 +17,8 @@ get-fcc-db:
   stage: assets
   tags:
     - docker
+  variables:
+    GIT_STRATEGY: none      
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   script:
     - mkdir fcc
@@ -51,9 +53,13 @@ deploy-stage:
   stage: deploy
   tags:
     - trivnet-stage
+  variables:
+    GIT_STRATEGY: none
   dependencies:
     - rpmbuild
   script:
+    - sudo yum -y remove postgresql-libs-9.2.24-1.el7_5.x86_64 trivnet-static-1.0-1536015273.x86_64 postgresql96-libs-9.6.10-1PGDG.rhel7.x86_64
+    - sudo rm -rf /var/lib/pgsql
     - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
   environment:
     name: Stage
@@ -64,6 +70,8 @@ deploy-prod:
   when: manual
   tags:
     - trivnet-prod
+  variables:
+    GIT_STRATEGY: none
   dependencies:
     - rpmbuild
   script:
