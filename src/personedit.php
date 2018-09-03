@@ -53,7 +53,7 @@
 			} // end if
 
 			$w = query("SELECT value FROM persondata WHERE personid=$who AND datatype=$typeid");
-			$was = pg_escape_string( $w[0]["value"] );
+			$was = $w[0]["value"];
 
 			if ( count($was) > 0 ) {
 				$q .= "UPDATE persondata SET value='$value' WHERE ( datatype=$typeid AND personid=$who );\n";
