@@ -103,12 +103,10 @@ EOF
 /.*/            { print \$0 }
 EOF
 
-	echo "Debugging the setup process"
-	find /var/lib/pgsql/9.6/data/
+	PREFIX="/var/lib/pgsql/9.6/data"
 
-	mv /var/lib/pgsql/9.6/data/pg_hba.conf /var/lib/pgsql/data/pg_hba.orig
-	awk -f /tmp/$$.awk /var/lib/pgsql/9.6/data/pg_hba.orig > /var/lib/pgsql/9.6/data/pg_hba.conf
-	rm -f /var/lib/pgsql/9.6/data/pg_hba.orig
+	mv ${PREFIX}/pg_hba.conf ${PREFIX}/pg_hba.orig
+	awk -f /tmp/$$.awk ${PREFIX}/pg_hba.orig > ${PREFIX}/pg_hba.conf && rm -f ${PREFIX}/pg_hba.orig
 
 	echo "Making data directories"
 	mkdir /var/www/trivnet/jobs/
