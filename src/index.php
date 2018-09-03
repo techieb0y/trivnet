@@ -129,9 +129,8 @@ $q_summary = "select value, count(value) as num from updatesequence where dataty
 $r_summary = query($q_summary);
 if ( count( $r_summary) > 0 ) {
 	echo "<table>\n";
-	$v = $row_summary["value"];
-
 	foreach ($r_summary as $row_summary) {
+		$v = $row_summary["value"];
 		if ( preg_match("/^Set/", $v) ) {
 			echo "<tr class=\"audit\">";
 		} else if ( preg_match("/^Changed/", $v) ) {
