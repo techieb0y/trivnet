@@ -133,11 +133,12 @@ foreach ( $r as $key => $row ) {
 				// This is an enumerated data type; reference the table and show it as a dropdown
 				echo "<select name=\"$k\" id=\"$k\" onChange=\"doChange(this.id)\" >\n";
 				$_id = $dts[$k]["id"];
+				if ( !isset($val) ) { echo "<option selected disabled>--\n</option>"; }
 				foreach ( $enums[$_id] as $en_k => $en_v ) {
 					if ( $en_k == $val ) {
-						echo "<option selected value=\"$en_k\">$en_v\n";
+						echo "<option selected value=\"$en_k\">$en_v</option>\n";
 					} else {
-						echo "<option value=\"$en_k\">$en_v\n";
+						echo "<option value=\"$en_k\">$en_v</option>\n";
 					} // end if
 				} // end foreach
 				echo "</select>\n";
