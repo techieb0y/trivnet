@@ -60,6 +60,9 @@ if [ $1 -eq 1 ]; then
 	adduser -r trivnet -M -d /var/www/trivnet/
 	chown -R trivnet /var/www/trivnet/
 
+	echo "Checking PostgreSQL setup"
+	[ -d /var/lib/pgsql/9.6/data/base ] || /usr/pgsql-9.6/bin/postgresql96-setup initdb
+	
 	echo "Starting PostgreSQL"
 	systemctl enable postgresql-9.6
 	systemctl start postgresql-9.6
