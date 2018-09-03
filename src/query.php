@@ -36,13 +36,13 @@ function showFields() {
 			$enum = $row["enum"];
 
 			if ( "t" == $enum ) {
-				echo "<tr><td>$label:</td><td><select name=\"$tid\">";
+				echo "<tr><td>$label:</td><td>\n\t<select name=\"$tid\">\n";
 				global $enums;
-				echo "<option value=\"\">Any\n";
+				echo "\t\t<option value=\"\">Any\n";
 				foreach ( $enums[$tid] as $k => $v ) {
-					echo "<option value=\"$k\">$v\n";
+					echo "\t\t<option value=\"$k\">$v\n";
 				} // end foreach
-				echo "</select></td>\n";
+				echo "\t</select></td>\n";
 			} else {
 				echo "<tr><td>$label:</td><td><input name=\"$tid\"></td></tr>\n";
 			} // end if
