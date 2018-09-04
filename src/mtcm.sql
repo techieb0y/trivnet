@@ -20,4 +20,15 @@ INSERT INTO enumtypes VALUES ( 5, 0, 'EMS Transport');
 INSERT INTO enumtypes VALUES ( 6, 0, 'Dropped Out');
 
 INSERT INTO defaults VALUES ( 'none', 'bibnum', 'status' );
+
+INSERT INTO quickmesg VALUES ( 'Runner crossed finish line' );
+INSERT INTO quickmesg VALUES ( 'Dropped out' );
+INSERT INTO quickmesg VALUES ( 'Waiting for SAG' );
+INSERT INTO quickmesg VALUES ( 'SAG dropoff' );
+INSERT INTO quickmesg VALUES ( 'Transported to Regions' );
+INSERT INTO quickmesg VALUES ( 'Transported to United' );
+INSERT INTO quickmesg VALUES ( 'Transported to St. Joseph''s' );
+INSERT INTO quickmesg VALUES ( 'Transported to Southdale' );
+INSERT INTO quickmesg VALUES ( 'Transported to North Memorial' );
+
 COMMIT;
