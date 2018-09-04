@@ -96,7 +96,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 	foreach ( $_POST as $key => $param ) {
 
-		if ( ($key != "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
+		if ( ($key !== "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
 
 			$p = pg_escape_string($param);
 
