@@ -18,5 +18,5 @@ $text = pg_escape_string($_POST["text"]);
 $q = "INSERT INTO messages VALUES ( " . time() . ", '$from', '$text', '$to' )";
 $r = query($q);
 
-header("Location: messaging.php";
+header("Location: messaging.php");
 ?>
