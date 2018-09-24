@@ -57,11 +57,7 @@ if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { 
 if ( !has_session() ) {
 	header("HTTP/403 Forbidden");
 	// header("WWW-Authenticate: Basic");
-	$loc_parts = explode($_SERVER["REQUEST_URI"], "/");
-	$loc_parts = array_slice($loc_parts, 0, -1);
-	$loc_parts[] = "login.php";
-	$loc = implode("/", $loc_parts);
-	header("Location: " . $loc);
+	header("Location: login.php");
 } // end if
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"

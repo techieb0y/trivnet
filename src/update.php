@@ -36,9 +36,5 @@ if ( strlen($customtext) > 0 ) {
 	} // end if
 } // end if
 
-$foo = $_SERVER["SCRIPT_NAME"];
-$bar = str_replace("update", "detail", $foo);
-$baz = $bar . "?id=$id";
-header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $baz);
-
+header("Location: detail.php?id=$id");
 ?>

@@ -36,12 +36,7 @@ if ( isset($_POST["callsign"]) ) {
 if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
 if ( !has_session() ) {
 	header("HTTP/401 Unauthorized");
-	// header("WWW-Authenticate: Basic");
-	$loc_parts = explode($_SERVER["REQUEST_URI"], "/");
-	$loc_parts = array_slice($loc_parts, 0, -1);
-	$loc_parts[] = "login.php";
-	$loc = implode("/", $loc_parts);
-	header("Location: " . $loc);
+	header("Location: login.php");
 } // end if
 
 ?>

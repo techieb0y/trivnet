@@ -79,9 +79,5 @@
 	// syslog(LOG_DEBUG, $q);
 	$result = query($q);
 
-	$path = explode("/", $_SERVER["SCRIPT_NAME"]);
-	$i = count($path);
-	$newpath = implode( "/", array_slice($path, 0, $i-1) );
-	$loc = "http://" .  $_SERVER["SERVER_NAME"] . $newpath;
-	header("Location: " . $loc . "/detail.php?id=$who");
+	header("Location: detail.php?id=$who");
 ?>

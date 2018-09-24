@@ -49,7 +49,5 @@ $r = query($q);
 
 updateMT();
 
-$foo = $_SERVER["SCRIPT_NAME"];
-$bar = str_replace("mtquick.php", "detail.php?id=$id", $foo);
-header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $bar);
+header("Location: detail.php?id=$id");
 ?>

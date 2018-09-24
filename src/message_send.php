@@ -18,7 +18,5 @@ $text = pg_escape_string($_POST["text"]);
 $q = "INSERT INTO messages VALUES ( " . time() . ", '$from', '$text', '$to' )";
 $r = query($q);
 
-$foo = $_SERVER["SCRIPT_NAME"];
-$bar = str_replace("e_send", "ing", $foo);
-header("Location: http://" . $_SERVER["HTTP_HOST"] . "/" . $bar);
+header("Location: messaging.php";
 ?>
