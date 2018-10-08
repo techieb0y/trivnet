@@ -23,6 +23,15 @@ $loadfile = fopen($lf, "w+");
 // Open up the individual input files
 // EN = Entity
 // HD = Header
+// AM = Amateur
+
+// Docs:
+// https://www.fcc.gov/sites/default/files/public_access_database_definitions_v2.pdf
+
+// HD - Header (fields 1-indexed)
+// 2 = Unique ID
+// 5 = Call Sign
+// 6 = Status
 
 $fh_HD = fopen( $dirname . "HD.dat", "r" ) or die("ERROR: Could not open HD.dat\n");
 $fh_EN = fopen( $dirname . "EN.dat", "r" ) or die("ERROR: Could not open EN.dat\n");
@@ -33,12 +42,13 @@ while ( $ech = fgets($fh_HD) ) {
 	$lines++;
 	// if ( 0 == $lines % 1000 ) { echo "."; } 
 
+	$fccuniqueid = $data[1];
 	$call = $data[4];
 	$licstat = $data[5];
 
 	if ( $licstat == "A" ) {
 		if ( strlen($call) > 0 ) {
-			$hams[$call] = "A";	
+			$hams[$fccuniqueid] = $call;	
 		} // sanity check the length.
 	} // end if
 } // end while
@@ -51,13 +61,13 @@ while ( $ech = fgets($fh_EN) ) {
 	$lines++;
 //	if ( 0 == $lines % 1000 ) { echo "."; } 
 
+	$fccuniqueid = $data[1];
 	$call = $data[4];
 	$name = $data[7];
 
-	if ( isset( $hams[$call] ) && ( $hams[$call] == "A" ) ) {
+	if ( isset( $hams[$fccuniqueid] ) ) {
 		$str = sprintf("%s\t%s\n", $call, $name);
 		fwrite( $loadfile, $str);
-		$hams[$call] = "B";
 	} // end if
 } // end while
 
