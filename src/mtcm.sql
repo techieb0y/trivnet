@@ -1,5 +1,5 @@
 BEGIN;
-INSERT INTO datatypes VALUES ( 2, 'bibnum', 'Bib Number', false, false);
+INSERT INTO datatypes VALUES ( 2, 'bibnum', 'Bib Number', true, false);
 INSERT INTO datatypes VALUES ( 3, 'firstname', 'First Name', false, false);
 INSERT INTO datatypes VALUES ( 4, 'lastname', 'Last Name', false, false);
 
