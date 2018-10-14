@@ -161,7 +161,7 @@ function genTablePicker() {
 	echo "<!-- symbols has " . count($symbols) . " items -->\n";
 	for ( $i=0; $i <= count($symbols); $i++ ) {
 		if ( 0 == ($i % 6) ) { echo "<tr>\n"; }
-		echo "\t<td><a onClick=\"setSymbol($i) && toggleSymbols()\"><img src=\"symbol/$i\"></a></td>\n";
+		echo "\t<td><a onClick=\"setSymbol($i); toggleSymbols()\"><img src=\"symbol/$i\"></a></td>\n";
 		if ( 5 == ($i % 6) ) { echo "</tr>\n"; }
 	} // end for
 	echo "</table></div>\n";
