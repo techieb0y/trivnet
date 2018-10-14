@@ -60,7 +60,7 @@ if ( !has_session() ) {
 		$tac = $_SESSION["tactical"];
 		$call = $_SESSION["callsign"];
 		if ( isset($_SESSION["symbol"]) ) { $sym = $_SESSION["symbol"]; } else { $sym = 0; }
-		echo "<img src=\"/symbol/$sym\">&nbsp;";
+		echo "<img src=\"symbol/$sym\">&nbsp;";
 		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	<script>var callsign = <?php echo "'$call'" ?></script>
@@ -98,7 +98,7 @@ if ( !has_session() ) {
 				$call = trim($w["callsign"]);
 				$sym = trim($w["symbol"]);
 				$tac = trim($w["tactical"]);
-				echo "<tr><td><img src=\"/symbol/$sym\"></td>";
+				echo "<tr><td><img src=\"symbol/$sym\"></td>";
 				echo "<td><a onClick=\"document.getElementById('sendto').value='$call'\">$call / $tac</a></td>";
 				echo "</tr>\n";
 			} else {

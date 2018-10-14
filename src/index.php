@@ -67,7 +67,7 @@ if ( count($r_sum) > 0 ) {
 
 echo "</td><td width=\"50%\">";
 
-echo "<img src=\"/symbol/11\">Currently in the med tent:";
+echo "<img src=\"symbol/11\">Currently in the med tent:";
 
 $qh = "SELECT typeid,name,label FROM datatypes ORDER BY typeid";
 $rh = query($qh);
