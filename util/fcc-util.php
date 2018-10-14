@@ -66,7 +66,7 @@ while ( $ech = fgets($fh_EN) ) {
 	$name = $data[7];
 
 	if ( isset( $hams[$fccuniqueid] ) ) {
-		$str = sprintf("%s\t%s\n", $call, $name);
+		$str = sprintf("%s\t%s\t0\n", $call, $name);
 		fwrite( $loadfile, $str);
 	} // end if
 } // end while
