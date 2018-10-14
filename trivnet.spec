@@ -136,6 +136,7 @@ fi
 /var/www/trivnet/common
 /var/www/trivnet/images
 /var/www/trivnet/js
+/var/www/trivnet/help.html
 
 %files
 /var/www/trivnet/.htaccess
