@@ -34,7 +34,7 @@ if ( isset($_POST["callsign"]) ) {
 		} // end if
 		if ( isset($_POST["symbol"]) ) {
 			$_SESSION["symbol"] = $_POST["symbol"];
-			$qu = "UPDATE part97 SET symbol = " . $_POST["symbol"] . " WHERE callsign=" . $_POST["callsign"] . ";";
+			$qu = "UPDATE part97 SET symbol =" . $_POST["symbol"] . " WHERE callsign='" . $_POST["callsign"] . "';";
 			$qur = query($qu);
 		} // end if
 		start_session();
