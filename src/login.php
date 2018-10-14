@@ -28,6 +28,7 @@ function hamSearch() {
 	rslt = JSON.parse( req.responseText );
 	if ( rslt.name ) {
 		realname.innerHTML = rslt.name;
+		setSymbol(rslt.symbol);
 	} else {
 		realname.innerHTML = '<img src=images/warning.png> Error fetching name';
 	} // end if

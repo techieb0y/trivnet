@@ -12,11 +12,13 @@ $cs = trim(strtoupper($_GET["cs"]));
 if ("GUEST" == $cs) {
 	$name = "Guest";
 } else {
-	$qr = "SELECT name FROM part97 WHERE callsign='$cs'";
+	$qr = "SELECT name,symbol FROM part97 WHERE callsign='$cs'";
 	$r = query($qr);
 	$name = $r[0]["name"];
+	$symbol = $r[0]["symbol"];
 } // end if
 
-echo "{ \"name\": \"$name\" }";
+// echo "{ \"name\": \"$name\" }";
+echo json_encode($r[0]);
 
 ?>
