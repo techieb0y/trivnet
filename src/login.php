@@ -39,9 +39,8 @@ function hamSearch() {
 	}
 
 	function setSymbol(which) {
-		document.getElementById("symb").src= '/symbol/' + which;
+		document.getElementById("symb").src= 'symbol/' + which;
 		document.getElementById("symbol").value = which;
-		toggleSymbols();
 	}
 </script>
 </head>
@@ -56,7 +55,7 @@ function hamSearch() {
 	<tr><td>Callsign:</td><td><input type=text name="callsign" id="callsign" maxlength=10 size=10 onBlur="javascript:hamSearch()"> (<i>or enter 'guest')</i></td></tr>
 	<tr><td>Name:</td>    <td><div name="realname" id="realname"></td></tr>
 	<tr><td>Tactical: (<em>optional</em>)</td><td><input type=text maxlength=20 name="tactical" id="tactical"></td></tr>
-	<tr><td>Symbol: </td><td><img class="symbol" id="symb" src="/symbol/0" onClick="toggleSymbols()">
+	<tr><td>Symbol: </td><td><img class="symbol" id="symb" src="symbol/0" onClick="toggleSymbols()">
 		<input type="hidden" id="symbol" value="0" name="symbol">
 		<?php
 			genTablePicker();

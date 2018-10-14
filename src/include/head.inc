@@ -93,7 +93,7 @@ if ( !has_session() ) {
 		$tac = $_SESSION["tactical"];
 		$call = $_SESSION["callsign"];
 		if ( isset($_SESSION["symbol"]) ) { $sym = $_SESSION["symbol"]; } else { $sym = 0; }
-		echo "<img src=\"/symbol/$sym\">&nbsp;";
+		echo "<img src=\"symbol/$sym\">&nbsp;";
 		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
