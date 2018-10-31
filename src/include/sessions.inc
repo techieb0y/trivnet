@@ -126,7 +126,7 @@ function pkt_stop_session($_call) {
 
 function list_sessions() {
 	require_once("db_ops.inc");
-	$q = "SELECT sessionid, callsign, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions;";
+	$q = "SELECT sessionid, callsign, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0;";
 	$r = query($q);
 	return($r);
 } // end list_sessions
