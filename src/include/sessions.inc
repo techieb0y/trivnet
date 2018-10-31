@@ -4,7 +4,7 @@ function has_session() {
 	require_once("db_ops.inc");
 	require("config.inc");
 
-	$q = "SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE sessionid='" . session_id() . "';";
+	$q = "SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid='" . session_id() . "';";
 	$r = query($q);
 	if ( count($r) > 0 ) {
 		$age = $r[0]["age"];
@@ -14,7 +14,7 @@ function has_session() {
 			$rn = query($qn);
 			$call = $rn[0]["callsign"];
 
-			$q = "DELETE FROM sessions WHERE sessionid='". session_id() . "'";
+			$q = "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
 			$r = query($q);
 			error_log("Disconnected timed-out ($age secs)  session for $call", 0);
 			return false;
@@ -100,7 +100,7 @@ function stop_session() {
 	$call = $rn[0]["callsign"];
 
 	$q = "BEGIN;";
-	$q .= "DELETE FROM sessions WHERE sessionid='" . session_id() . "';";
+	$q .= "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
@@ -118,7 +118,7 @@ function pkt_stop_session($_call) {
 	$sid = $rn[0]["sessionid"];
 
 	$q = "BEGIN;";
-	$q .= "DELETE FROM sessions WHERE sessionid='$sid';";
+	$q .= "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
 	$q .= "COMMIT;";
 	query_simple($q);
