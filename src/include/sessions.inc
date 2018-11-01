@@ -108,6 +108,7 @@ function stop_session() {
 
 	$_SESSION = array();
 	session_destroy();
+	session_regenerate_id();
 } // end stop_session
 
 
