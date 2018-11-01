@@ -41,12 +41,15 @@ $config["async_count"] = 1;
 global $RACEID;
 $RACEID[1] = "2569";
 $RACENAME[1] = "Marathon";
+$RACELENGTH[1] = "26.2";
 
 $RACEID[3] = "2571";
 $RACENAME[3] = "10-mile";
+$RACELENGTH[3] = "10";
 
 $RACEID[4] = "2570";
 $RACENAME[4] = "Wheelchair";
+$RACELENGTH[4] = "26.2";
 
 $config["use_graphite"] = false;
 ?>
