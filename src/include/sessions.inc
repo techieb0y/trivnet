@@ -99,8 +99,10 @@ function stop_session() {
 	$rn = query($qn);
 	$call = $rn[0]["callsign"];
 
+	$newid = substr( "VOID-" . md5( time() . session_id() ), 0, 32 );
+
 	$q = "BEGIN;";
-	$q .= "UPDATE sessions SET timestamp=0,sessionid='VOID" . md5( time() . session_id() ) . "' WHERE sessionid='" . session_id() . "';";
+	$q .= "UPDATE sessions SET timestamp=0,sessionid='$newid' WHERE sessionid='" . session_id() . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
