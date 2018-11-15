@@ -105,6 +105,7 @@ function stop_session() {
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
 	query_simple($q);
+	syslog(LOG_DEBUG, $q);
 
 	$_SESSION = array();
 	session_destroy();
