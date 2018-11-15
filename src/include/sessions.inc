@@ -100,7 +100,7 @@ function stop_session() {
 	$call = $rn[0]["callsign"];
 
 	$q = "BEGIN;";
-	$q .= "UPDATE sessions SET timestamp=0,sessionid='" . md5( session_id() ) . "' WHERE sessionid='" . session_id() . "';";
+	$q .= "UPDATE sessions SET timestamp=0,sessionid='" . md5( time() . session_id() ) . "' WHERE sessionid='" . session_id() . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
