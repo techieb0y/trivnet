@@ -100,7 +100,7 @@ function stop_session() {
 	$call = $rn[0]["callsign"];
 
 	$q = "BEGIN;";
-	$q .= "UPDATE sessions SET timestamp=0,sessionid='" . md5( time() . session_id() ) . "' WHERE sessionid='" . session_id() . "';";
+	$q .= "UPDATE sessions SET timestamp=0,sessionid='VOID" . md5( time() . session_id() ) . "' WHERE sessionid='" . session_id() . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
@@ -127,7 +127,7 @@ function pkt_stop_session($_call) {
 
 function list_sessions() {
 	require_once("db_ops.inc");
-	$q = "SELECT sessionid, callsign, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0;";
+	$q = "SELECT sessionid, callsign, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid NOT LIKE 'VOID%';";
 	$r = query($q);
 	return($r);
 } // end list_sessions
