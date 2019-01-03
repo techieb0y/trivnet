@@ -40,7 +40,11 @@ foreach($races as $k => $r) {
 	$y = (1+$k) * $increment;
 	$y2 = floor(0.90 * $y );
 
-	imagefilledrectangle($img, 48,                      $y, floor($width*$left), $y+$increment, $grey);
+        if ( floor($width*$left) > 48 ) {
+                imagefilledrectangle($img, 48,                      $y, floor($width*$left), $y+$increment, $grey);
+                syslog(LOG_DEBUG, "1: 48, $y, floor($width*$left), $y+$increment");
+        }
+
 	imagefilledrectangle($img, 48+floor($width*$right), $y, $width,              $y+$increment, $blue);
 	imageline( $img, 0, $y, $width, $y, $black );
 	
