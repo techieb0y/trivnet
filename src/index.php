@@ -27,7 +27,7 @@ foreach ( $races as $r ) {
         $rn = $r["raceid"];
         echo "<td style=\"width: 72px;\">" . $RACENAME[$rn] . "</td><td>";
         $left = floor( ( 100 * ( $r["tail"] / $RACELENGTH[$rn] ) ) );
-        $right = floor( 100 - ( 100 * ( $r["head"] / 26.2 ) ) );
+        $right = floor( 100 - ( 100 * ( $r["head"] / $RACELENGTH[$rn] ) ) );
         echo "<table width=\"100%\"><tr>";
         if ( $left > 0 ) {
                 echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $r["tail"] . "</td>";
