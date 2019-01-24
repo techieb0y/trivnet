@@ -7,55 +7,25 @@ somewhat more dynamic database design and provides some extra features.
 Setup instructions:
 
 * Required Packages (for Debian Squeeze/6.0; names for other distros may vary)
-	apache2.2-bin
-	postgresql-8.4
-	postgresql-client-8.4
-	postgresql-contrib-8.4
-	php5
-	php5-cli
-	php5-gd
-	php5-pgsql
+	httpd
+	postgresql96-server
+	postgresql96-contrib
+	php
+	php-cli
+	php-pgsql
 
-Postgres 9.x is also known to work, but uses different processes for installing the tablefunc add-ons.
-	
 Base install:
 -----------------------------------
 
-* Create a 'trivnet' databse, owned by a PostgreSQL user of 'trivnet'. Set a password.
-* Add a line to /etc/postgresql/8.4/main/pg_hba.conf:
-	local   trivnet         trivnet                         md5
-* Restart postgres
+The RPM will handle:
 
-* Extract trivnet.tar.bz2 into /var/www/trivnet/.
-* Edit /var/www/trivnet/includes/config.php with the password set above (under $DB_PASS)
-
-* Run:
-	psql -U trivnet trivnet < /var/www/trivnet/setup.sql
-	psql -U trivnet trivnet < /usr/share/postgresql/8.4/contrib/tablefunc.sql
-
-Populate the FCC database:
------------------------------------
-
-* Download:
-	http://wireless.fcc.gov/uls/data/complete/l_amat.zip
-	..and extract the EN.dat and HD.dat files. Copy these into /tmp
-	Run: php /var/www/trivnet/util/fcc-util.php /tmp
-	Note the output filename (/tmp/load-xxxx)
-
-* Run (as the postgres user):
-	psql trivnet
-		set client_encoding latin1;
-		copy "part97" from file "/tmp/load-xxxx";
-
-
-Additional database setup specific to the Twin Cities Marathon is in mtcm.sql.
-
-Set up the batch process crontab:
------------------------------------
-
-* Create a crontab entry (www-data for a default install of mod_php; a specific trivnet user if suPHP is in use.)
-	* * * * * /usr/bin/php /var/www/trivnet/async.php --runonce
-
+* Creation of the 'trivnet' databse, owned by a PostgreSQL user of 'trivnet',
+  with a random password.
+* Addition of a line to pg_hba.conf:
+	host   trivnet         trivnet         127.0.0.1/32            md5
+* Addition of the tablefunc extensions to the DB
+* Population of the FCC database
+* Setup of the batch-processer cron job.
 
 Log into the system
 -----------------------------------
