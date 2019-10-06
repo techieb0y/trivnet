@@ -10,7 +10,7 @@ $begin = 0;
 
 include("head.inc");
 
-echo "<table width=\"100%\">
+echo "<table width=\"100%\">";
 $races = query("select * from race");
 foreach ( $races as $r ) {
     echo "<tr>";
