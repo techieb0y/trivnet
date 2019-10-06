@@ -78,6 +78,15 @@ if ( !has_session() ) {
 	</tr>
 	</table>
 
+<form action="message_send.php" method="POST">
+	<table><tr>
+	<td>From:</td><td><?php echo $mycall; ?></td></tr>
+	<tr><td>To:</td><td><input name="sendto" id="sendto" size=12> ("all" or "*" for broadcast message)</td></tr>
+	<tr><td>Message:</td><td><input name="text" size=96 maxlength=255></td></tr>
+	<tr><td>Send: </td><td><input type="submit" value="send"></td></tr>
+	</table>
+</form>
+
 <?php
 	// Time and messages window
 	echo "<div class=\"messages messagesBig\">\n";
@@ -108,16 +117,10 @@ if ( !has_session() ) {
 		} // end foreach
 		} // end if
 	?>
-</table><hr>
+</table>
 
-<form action="message_send.php" method="POST">
-	<table><tr>
-	<td>From:</td><td><?php echo $mycall; ?></td></tr>
-	<tr><td>To:</td><td><input name="sendto" id="sendto" size=12> ("all" or "*" for broadcast message)</td></tr>
-	<tr><td>Message:</td><td><input name="text" size=96 maxlength=255></td></tr>
-	<tr><td>Send: </td><td><input type="submit" value="send"></td></tr>
-	</table>
-</form>
+<hr>
+
 <?php require_once("include/foot.inc"); ?>
 </body>
 </html>
