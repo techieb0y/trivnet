@@ -12,6 +12,7 @@ a:hover { color: blue; }
 input[disabled="disabled"] { text-color: #000000; }
 .topRight { top: 1px; right: 0px; position: absolute; }
 .tome { background-color: yellow; }
+.fromme { background-color: #00fcfc; }
 img { border: 0px; }
 .messages {
 	position: relative;
