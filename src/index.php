@@ -11,11 +11,12 @@ $begin = 0;
 include("head.inc");
 
 echo "<table width=\"100%\">";
-$races = query("select * from race");
+$races = query("select raceid from race");
 foreach ( $races as $r ) {
     echo "<tr>";
-    $done = query("SELECT count(value) AS done FROM persondata WHERE datatype=" . $config["status"] . " AND value='" . $config["finishstatus"] . "' AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='$r')")[0]["done"];
-    $total = query("select count(id) as total from people")[0]["total"];
+    $q = "SELECT count(value) AS done FROM persondata WHERE datatype=" . $config["status"] . " AND value='" . $config["finishstatus"] . "' AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')";  
+    $done = query($q)[0]["done"];
+    $total = query("select count(personid) as total from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')")[0]["total"];
     $percent = floor(100 * ($done/$total));
     echo "<td style=\"background-color: green;\" width=\"$percent%\">$percent% Crossed Finish Line</td>";
     echo "<td style=\"background-color: black\">&nbsp;</td>";
