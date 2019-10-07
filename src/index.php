@@ -10,47 +10,60 @@ $begin = 0;
 
 include("head.inc");
 
-echo "<table width=\"100%\">";
-$races = query("select raceid from race");
-foreach ( $races as $r ) {
+echo "<table width=\"100%\" border=2>";
+$races = query("select * from race");
+foreach ($races as $r) {
+    $rn = $r["raceid"];
+    
+    $left = floor((100 * ($r["tail"] / $RACELENGTH[$rn])));
+    $right = floor(100 - (100 * ($r["head"] / $RACELENGTH[$rn])));
+    
     echo "<tr>";
-    $q = "SELECT count(value) AS done FROM persondata WHERE datatype=" . $config["status"] . " AND value='" . $config["finishstatus"] . "' AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')";  
+    echo "<td colspan=2 style=\"width: 100%; background: yellow;\">" . $RACENAME[$rn] . "</td></tr>\n";
+    
+    $q = "SELECT count(value) AS done FROM persondata WHERE datatype=" . $config["status"] . " AND value='" . $config["finishstatus"] . "' AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')";
     $done = query($q)[0]["done"];
     $total = query("select count(personid) as total from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')")[0]["total"];
-    $percent = floor(100 * ($done/$total));
-    echo "<td style=\"background-color: green;\" width=\"$percent%\">$percent% Crossed Finish Line</td>";
+    $percent = floor(100 * ($done / $total));
+    echo "<tr><td width=\"25%\">$percent% Crossed Finish Line<br>\n";
+    
+    if ($r["raceid"] == 4) {
+        echo "Lead wheeler past mile " . $r["head"];
+        if ($left > 0) {
+            echo "; End of race sweep past mile " . $r["tail"] . "; ";
+        }
+    } else {
+        if ($left > 0) {
+            echo "End of race sweep past mile " . $r["tail"] . "; ";
+        }
+        echo "Lead runner past mile " . $r["head"];
+    }
+    
+    echo "</td><td>";
+    
+    echo "<table width=\"100%\"><tr>";
+    echo "<td style=\"background-color: green;\" width=\"$percent%\">&nbsp;</td>";
     echo "<td style=\"background-color: black\">&nbsp;</td>";
+    echo "</tr></table>";
+    
+    echo "<table width=\"100%\"><tr>";
+    if ($left > 0) {
+        echo "<td width=\"$left%\" style=\"background-color: red;\">&nbsp;</td>";
+    }
+    echo "<td style=\"width: 16px;\">&#x1F9F9;</td>\n";
+    echo "<td style=\"background-color: grey;\">&nbsp;</td>\n";
+    if ($r["raceid"] == 4) {
+        echo "<td style=\"width: 16px;\">&#x267F;</td>\n";
+        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">&nbsp;</td>";
+    } else {
+        echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
+        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">&nbsp;</td>";
+    }
+    echo "</tr></table>\n";
+    echo "</td>";
     echo "</tr>";
 }
- echo "</table>\n";
-
-
-echo "Per-race Head and Tail locations:<br>\n";
-$races = query("select * from race");
-foreach ( $races as $r ) {
-        echo "<table width=\"100%\">";
-        echo "<tr>";
-        $rn = $r["raceid"];
-        echo "<td style=\"width: 72px;\">" . $RACENAME[$rn] . "</td><td>";
-        $left = floor( ( 100 * ( $r["tail"] / $RACELENGTH[$rn] ) ) );
-        $right = floor( 100 - ( 100 * ( $r["head"] / $RACELENGTH[$rn] ) ) );
-        echo "<table width=\"100%\"><tr>";
-        if ( $left > 0 ) {
-                echo "<td width=\"$left%\" style=\"background-color: red;\">End of race past mile " . $r["tail"] . "</td>";
-        }
-        echo "<td style=\"width: 16px;\">&#x1F693;</td>\n";
-        echo "<td style=\"background-color: grey;\">&nbsp;</td>\n";
-	if ( $r["raceid"] == 4 ) {
-        	echo "<td style=\"width: 16px;\">&#x267F;</td>\n";
-        	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead wheeler past mile " . $r["head"] . "</td>";
-	} else {
-        	echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
-        	echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">Lead runner past mile " . $r["head"] . "</td>";
-	}
-        echo "</tr>\n";
-        echo "</table>\n";
-        echo "</td></tr></table>\n";
-}
+echo "</table>\n";
 
 // Overall summery
 $sdt = $config["status"];
