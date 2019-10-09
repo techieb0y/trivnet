@@ -244,7 +244,7 @@ function runJob($jobId) {
 					$q .= "COMMIT;\n";
 				} // end if
 
-				echo $q;
+				// echo $q;
 				$r = query($q);
 			} else {
 				fwrite($errlog, "No match found for $personid\n");
