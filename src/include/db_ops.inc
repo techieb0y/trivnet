@@ -127,7 +127,7 @@ $before = microtime(true);
 		}
 $after = microtime(true);
 $delta = $after - $before;
-syslog(LOG_DEBUG, "Query performed in $delta msec");
+// syslog(LOG_DEBUG, "Query performed in $delta msec");
 sendFullMetric("trivnet.psql.time", $delta);
 
 	} else {
