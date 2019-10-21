@@ -16,7 +16,7 @@ Directions:
 <img width=32 height=32 src="images/blank.png" id="demostatusIcon">
 </td>
 <td id="demosearch_td">
-<input name="demosearch[]" id="demosearch" size=6 value="Box 1">
+<input name="demosearch[]" id="demosearch" disabled="disabled" size=6 value="Box 1">
 </td>
 <td id="demodisplay_td">
 <input name="demodiplayName[]" id="demodisplayName" size=50 disabled="disabled" value="Box 2: Check Name Here">
