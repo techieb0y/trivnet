@@ -7,38 +7,6 @@
 <script type="text/javascript" src="common/domTraverse.js"></script>
 <script type="text/javascript" src="common/batchmode.js"></script>
 
-
-Directions:
-<form name=demo id=demo method=post action="" enctype="multipart/form-data">
-<table>
-<tr id="demo">
-<td id="demo_icon_td">
-<img width=32 height=32 src="images/blank.png" id="demostatusIcon">
-</td>
-<td id="demosearch_td">
-<input name="demosearch[]" id="demosearch" disabled="disabled" size=6 value="Box 1">
-</td>
-<td id="demodisplay_td">
-<input name="demodiplayName[]" id="demodisplayName" size=50 disabled="disabled" value="Box 2: Check Name Here">
-</td>
-<td id="status_td">
-<input name="demostatus[]" id="demostatus" size=50 disabled="disabled" value="Box 3: Status Update Goes Here">
-</td>
-<td id="go_td">
-<img type="image" src="images/save_button.png" name="demoinfoIcon" id="demoinfoIcon">
-</td>
-</tr>
-</table>
-<ol>
-<li>Type search critera in box 1. Press tab.
-<li>Verify name against box 2.
-<li>Type status message into box 3. Press tab.
-<li>Verify status message is correct.
-<li>Click "Save"
-<li>Enter new search criter for next update in newly-created entry box in the next row.
-</ol>
-</form>
-
 <form name=batchupdates id=output method=post action="" enctype="multipart/form-data">
 
 <input type=hidden id="counter" value=0>
@@ -88,6 +56,37 @@ Directions:
 <div id="outParent">
 </div>
 </table>
+</form>
+
+Directions:
+<form name=demo id=demo method=post action="" enctype="multipart/form-data">
+<table>
+<tr id="demo">
+<td id="demo_icon_td">
+<img width=32 height=32 src="images/blank.png" id="demostatusIcon">
+</td>
+<td id="demosearch_td">
+<input name="demosearch[]" id="demosearch" disabled="disabled" size=6 value="Box 1">
+</td>
+<td id="demodisplay_td">
+<input name="demodiplayName[]" id="demodisplayName" size=50 disabled="disabled" value="Box 2: Check Name Here">
+</td>
+<td id="status_td">
+<input name="demostatus[]" id="demostatus" size=50 disabled="disabled" value="Box 3: Status Update Goes Here">
+</td>
+<td id="go_td">
+<img type="image" src="images/save_button.png" name="demoinfoIcon" id="demoinfoIcon">
+</td>
+</tr>
+</table>
+<ol>
+<li>Type search critera in box 1. Press tab.
+<li>Verify name against box 2.
+<li>Type status message into box 3. Press tab.
+<li>Verify status message is correct.
+<li>Click "Save"
+<li>Enter new search criter for next update in newly-created entry box in the next row.
+</ol>
 </form>
 
 <hr>
