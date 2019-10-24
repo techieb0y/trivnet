@@ -91,8 +91,10 @@ Directions:
 
 <hr>
 
-<input name=bogus size=32 onFocus="javascript:fixFocus()" value="This space intentionally left blank">
+<script>
+makeClone();
+fixFocus();
+</script>
 
-<script>makeClone();</script>
 <?php require_once("include/foot.inc"); ?>
 </body></html>
