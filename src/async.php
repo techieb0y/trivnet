@@ -274,7 +274,7 @@ function runJob($jobId) {
 		fclose($errlog);
 	} // end if - bulk-import special case
 
-	touch($_SERVER["SCRIPT_NAME"] .  "/jobs/asyncEngine.stat");
+	touch("./jobs/asyncEngine.stat");
 } // end runJob
 
 function housekeeping() {
@@ -289,7 +289,7 @@ function housekeeping() {
 			} // end if
 		} // end foreach
 	} // enf if
-	touch($_SERVER["SCRIPT_NAME"] .  "/jobs/asyncEngine.stat");
+	touch("./jobs/asyncEngine.stat");
 } // end housekeeping
 
 ?>
