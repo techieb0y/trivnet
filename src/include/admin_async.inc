@@ -44,8 +44,8 @@
 
 	echo "<br>\n";
 
-	if ( file_exists($_SERVER["SCRIPT_PATH"] . "/jobs/asyncEngine.stat") ) {
-		$info = stat($_SERVER["SCRIPT_PATH"] . "/jobs/asyncEngine.stat");
+	if ( file_exists($_SERVER["SCRIPT_NAME"] . "/jobs/asyncEngine.stat") ) {
+		$info = stat($_SERVER["SCRIPT_NAME"] . "/jobs/asyncEngine.stat");
 		$tm = $info["atime"];
 		$delta = time() - $tm;
 		echo "Last Async Engine checkin was $delta seconds ago.<br>\n";

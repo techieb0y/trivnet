@@ -148,7 +148,7 @@ function tn_batch($line) {
 
 		// Create job file
 		fflush($tmp);
-		$jobfile = $_SERVER["SCRIPT_PATH"] . "/jobs/" . $mycall . "-" . $async_id;
+		$jobfile = $_SERVER["SCRIPT_NAME"] . "/jobs/" . $mycall . "-" . $async_id;
 		$h2 = fopen($jobfile, "w+");
 		fseek($tmp, 0);
 		stream_copy_to_stream($tmp, $h2);
