@@ -9,7 +9,7 @@ require_once("include/head.inc");
 
 if ( $_FILES["searchkey_file"]["size"] > 0 ) {
 	// uploaded file, instead of entering data into textarea
-	$filename = "/var/www/trivnet/jobs/" . basename($_FILES['searchkey_file']['name']);
+	$filename = $_SERVER["SCRIPT_NAME"] . "/jobs/" . basename($_FILES['searchkey_file']['name']);
 	if ( file_exists($filename) ) { copy($filename, $filename . ".old"); }
 	move_uploaded_file($_FILES['searchkey_file']['tmp_name'], $filename);
 	echo "Overriding textarea with " . filesize($filename) . " bytes of file content";
@@ -98,7 +98,7 @@ foreach ( $types as $k => $t ) {
 	$r_id = query($q_id);
 	$jobid = $r_id[0]["jobid"];
 
-	$jobfile = "/var/www/trivnet/jobs/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
+	$jobfile = $_SERVER["SCRIPT_NAME"] . "/jobs/" . str_replace(" ", "_", $mycall) . "-" . $jobid;
 	$fh = fopen($jobfile, "w+");
 	fseek($tmp, 0);
 	stream_copy_to_stream($tmp, $fh);

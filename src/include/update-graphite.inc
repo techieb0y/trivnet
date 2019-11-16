@@ -1,7 +1,7 @@
 <?php
-require_once("/var/www/trivnet/include/db_ops.inc");
-require_once("/var/www/trivnet/include/config.inc");
-require_once("/var/www/trivnet/include/send-metric.inc");
+require_once("./db_ops.inc");
+require_once("./config.inc");
+require_once("./send-metric.inc");
 
 function updateMT() {
 	global $config;
