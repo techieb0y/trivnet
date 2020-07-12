@@ -98,15 +98,26 @@ if ( !has_session() ) {
 	?>
 	</div>
 	<script>var callsign = <?php echo "'$call'" ?></script>
+
 	<table class="menu">
 	<tr class="menu">
-		<td> <a class="menu" href="index.php">Home</a> </td>
-		<td> <a class="menu" href="query.php">Search</a> </td>
-		<td> <a class="menu" href="multiedit.php">Multi-Edit</a> </td>
-		<td> <a class="menu" href="turboedit.php">Turbo Edit</a> </td>
-		<td> <a class="menu" href="batch.php">Batch Edit</a> </td>
-		<td> <a class="menu" href="messaging.php">Messaging</a> </td>
-		<td> <a class="menu" href="admin.php">Admin</a> </td>
+	<?php
+		$tabs["index.php"] = "Home";
+		$tabs["query.php"] = "Search";
+		$tabs["multiedit.php"] = "Multi-Edit";
+		$tabs["turboedit.php"] = "Turbo Edit";
+		$tabs["batch.php"] = "Turbo Edit";
+		$tabs["messaging.php"] = "Messaging";
+		$tabs["admin.php"] = "Admin";
+
+		foreach ( $tabs as $taburl => $tabname ) {
+			if ( strpos( $_SERVER["PHP_SELF"], $taburl ) ) { 
+				echo "<td> <a class=\"menu activetab\" href=\"$taburl\">$tabname</a></td>";
+			} else {
+				echo "<td> <a class=\"menu\" href=\"$taburl\">$tabname</a></td>";
+			}
+		}
+	?>
 	</tr>
 	</table>
 
