@@ -157,17 +157,20 @@ function runJob($jobId) {
 			$qq .= "INSERT INTO people VALUES ( " . $id . " );\n";
 
 			// Break the line up
-			$lineparts = str_getcsv($line, $delim, "\"");
+			$lineparts = str_getcsv($line, $delim, "\"")
+				
 
 			foreach ( $lineparts as $key => $val ) {	
 				// Remove quote-mark separators, and trailing whitespace
-				$trueVal = trim($val);
+				$intermediateVal = trim($val);
+				// TODO: This is a hack; replace with proper paramaterized queries.
+				$trueVal = str_replace("'", "''", $intermediateVal);
 
 				if ( "NULL" != $fields[$key] ) {
 					if ( $bibNum_dataType[0]["typeid"] == $fields[$key] ) {
-						$qq .= sprintf("INSERT INTO persondata VALUES ( %d, %d, '%s' );\n", $id, $fields[$key], strtoupper(addslashes($trueVal))  );
+						$qq .= sprintf("INSERT INTO persondata VALUES ( %d, %d, '%s' );\n", $id, $fields[$key], strtoupper($trueVal) );
 					} else {
-						$qq .= sprintf("INSERT INTO persondata VALUES ( %d, %d, '%s' );\n", $id, $fields[$key], addslashes($trueVal) );
+						$qq .= sprintf("INSERT INTO persondata VALUES ( %d, %d, '%s' );\n", $id, $fields[$key], $trueVal );
 					} // end if
 					$abort = 0;
 				} // end if (handle 'ignore' choice)
