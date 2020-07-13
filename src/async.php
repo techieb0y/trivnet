@@ -157,8 +157,7 @@ function runJob($jobId) {
 			$qq .= "INSERT INTO people VALUES ( " . $id . " );\n";
 
 			// Break the line up
-			$lineparts = str_getcsv($line, $delim, "\"")
-				
+			$lineparts = str_getcsv($line, $delim, "\"");
 
 			foreach ( $lineparts as $key => $val ) {	
 				// Remove quote-mark separators, and trailing whitespace
