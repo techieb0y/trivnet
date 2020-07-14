@@ -79,7 +79,7 @@ $r = query($q);
 
 // Pretty-print
 echo "<form action=\"import3.php?delim=$delim\" method=\"POST\">";
-echo "<table>\n<tr>";
+echo "<table width=\"100%\">\n<tr>";
 for ( $i=0; $i < $fields; $i++ ) {
 	echo "<td><select name=\"field$i\">";
 	echo "<option value=\"NULL\">Ignore\n";
