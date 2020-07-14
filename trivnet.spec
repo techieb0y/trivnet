@@ -43,7 +43,7 @@ mkdir -p %{buildroot}/tmp/
 mkdir -p %{buildroot}/var/www/trivnet/
 mv %{_sourcedir}/trivnet-fcc.out %{buildroot}/tmp/
 rsync -arv %{_builddir}/trivnet/ %{buildroot}/var/www/trivnet/
-mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet php /var/www/trivnet/async.php --runonce" > %{buildroot}/etc/cron.d/trivnet
+mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet /opt/rh/rh-php73/root/usr/bin/php /var/www/trivnet/async.php --runonce" > %{buildroot}/etc/cron.d/trivnet
 
 # Set up apache
 mkdir -p %{buildroot}/etc/httpd/conf.d/ && mv %{_sourcedir}/httpd.conf %{buildroot}/etc/httpd/conf.d/trivnet.conf
@@ -118,7 +118,8 @@ EOF
 
 	echo "Starting Apache"
 	systemctl enable httpd
-	systemctl start httpd
+	systemctl start httpd 
+        rm -f /tmp/$$.awk
 else
   echo "Not doing DB setup as this is an upgrde"
 fi
@@ -149,6 +150,9 @@ fi
 /etc/httpd/conf.d/trivnet.conf
 
 %changelog
+* Mon Jul 13 2020 kd8gbl - 1.1
+- Updates for compatibility with PHP7 via FPM
+
 * Sat Sep 01 2018 kd8gbl - 1.0b2
 - Splitting static content into sub-package for CDN
 
