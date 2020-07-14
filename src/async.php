@@ -53,9 +53,11 @@ switch ($argv[0]) {
 		if ( $r[0]["num"] < $config["async_count"] ) {
 			$q = "SELECT jobid from async WHERE state=1 ORDER BY jobid ASC";
 			$r = query($q);
-			if ( count($r) > 0 ) {
-				$once_id = $r[0]["jobid"];
-				runJob($once_id);
+			if ( ! empty($r) ) {
+				if ( count($r) > 0 ) {
+					$once_id = $r[0]["jobid"];
+					runJob($once_id);
+				} // end if
 			} // end if
 		} // end if
 		// We also do some housekeeping functions within runOnce
@@ -110,7 +112,7 @@ function runJob($jobId) {
 	$updatetype = $r[0]["updatetype"];
 	$data = $r[0]["data"];
 	$state = $r[0]["state"];
-	if ( $state != 1 ) { echo "Cannot run job $id\n"; break; }
+	if ( $state != 1 ) { echo "Cannot run job $id\n"; return(0); }
 
 	$workingJob = $jobId;
 	$q = query("UPDATE async SET state=3, timestamp=" . time() . " WHERE jobid=$jobId");
