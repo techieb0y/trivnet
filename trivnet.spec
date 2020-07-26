@@ -150,8 +150,8 @@ fi
 /var/www/trivnet/agents
 /var/www/trivnet/include
 /tmp/trivnet-fcc.out
-/etc/cron.d/trivnet
-#/etc/httpd/conf.d/trivnet.conf
+#/etc/cron.d/trivnet
+/etc/httpd/conf.d/trivnet.conf
 /etc/systemd/system/trivnet-async.service
 
 %changelog
