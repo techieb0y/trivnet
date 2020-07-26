@@ -5,7 +5,7 @@ After=postgresql-9.6.service
 Wants=postgresql-9.6.service
 
 [Service]
-ExecStart=/opt/rh/rh-php73/root/bin/php async.php --daemon
+ExecStart=/opt/rh/rh-php73/root/bin/php /var/www/trivnet/async.php --daemon
 Restart=always
 Type=simple
 User=trivnet
