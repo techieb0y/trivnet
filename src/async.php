@@ -47,6 +47,79 @@ switch ($argv[0]) {
 	break;
 
 	case "--runonce":
+		runOnce();
+	break;
+
+	case "--detail":
+		$q = "SELECT * from async WHERE jobid=$id";
+		$r = query($q);
+		$file = $r[0]["filename"];
+		$callsign = $r[0]["callsign"];
+		$searchtype = $r[0]["searchtype"];
+		$updatetype = $r[0]["updatetype"];
+		$data = $r[0]["data"];
+		$state = $r[0]["state"];
+	
+		$qst = "SELECT * from datatypes WHERE typeid=$searchtype";
+		$qut = "SELECT * from datatypes WHERE typeid=$updatetype";
+		$rst = query($qst); $rut = query($qut);
+		$search = $rst[0]["name"];
+		$update = $rut[0]["name"];
+	
+		$lines = count( file($file) );
+	
+		printf("%d: [%s] set %s to '%s' for %d %s's, submiteed by %s\n", $id, $jobstate[$state], $update, $data, $lines, $search, $callsign );
+	break;
+
+	case "--hold":
+		$q = "UPDATE async SET state=4, timestamp=" . time() . " WHERE jobid=$id";
+	$r = query($q);
+	break;
+
+	case "--release":
+		$q = "UPDATE async SET state=1, timestamp=" . time() . " WHERE jobid=$id";
+	$r = query($q);
+	break;
+
+	case "--daemon":
+		$scaleFactor = 1;
+		$idleLastRun = false;
+		$stop = 0;
+
+		while ( $stop == 0 ) {
+			housekeeping();
+			echo "Sleeping for $scaleFactor seconds\n";
+			sleep($scaleFactor);
+
+			$q = "SELECT count(jobid) as num from async WHERE state=1";
+			$r = query($q);
+			$num = $r[0]["num"];
+			echo "$num jobs available to run\n";
+
+			if ( $num > 0 ) {				
+							$idleLastRun = false;
+							$scaleFactor = 1;
+							echo "Running a job\n";
+							runOnce();
+			} else {
+				echo "No jobs available\n";
+				if ( $idleLastRun ) {
+					echo "Consequtive idle periods, doing exponential backoff\n";
+					if ( $scaleFactor < 31 ) {
+						$scaleFactor = 2*$scaleFactor;
+					}
+				}
+				$idleLastRun = true;
+			}
+		}
+	break;
+
+	default:
+	echo "Usage: [ --list | --detail JOBID  | --hold JOBID | --release JOBID | --runonce ]\n";
+	break;
+}
+
+function runOnce() {
 		global $config;
 		$q = "SELECT count(jobid) as num from async WHERE state=3";
 		$r = query($q);
@@ -62,43 +135,7 @@ switch ($argv[0]) {
 		} // end if
 		// We also do some housekeeping functions within runOnce
 		housekeeping();
-	break;
-
-	case "--detail":
-		$q = "SELECT * from async WHERE jobid=$id";
-	$r = query($q);
-	$file = $r[0]["filename"];
-	$callsign = $r[0]["callsign"];
-	$searchtype = $r[0]["searchtype"];
-	$updatetype = $r[0]["updatetype"];
-	$data = $r[0]["data"];
-	$state = $r[0]["state"];
-
-	$qst = "SELECT * from datatypes WHERE typeid=$searchtype";
-	$qut = "SELECT * from datatypes WHERE typeid=$updatetype";
-	$rst = query($qst); $rut = query($qut);
-	$search = $rst[0]["name"];
-	$update = $rut[0]["name"];
-
-	$lines = count( file($file) );
-
-	printf("%d: [%s] set %s to '%s' for %d %s's, submiteed by %s\n", $id, $jobstate[$state], $update, $data, $lines, $search, $callsign );
-	break;
-
-	case "--hold":
-		$q = "UPDATE async SET state=4, timestamp=" . time() . " WHERE jobid=$id";
-	$r = query($q);
-	break;
-
-	case "--release":
-		$q = "UPDATE async SET state=1, timestamp=" . time() . " WHERE jobid=$id";
-	$r = query($q);
-	break;
-
-	default:
-	echo "Usage: [ --list | --detail JOBID  | --hold JOBID | --release JOBID | --runonce ]\n";
-	break;
-}
+}	
 
 function runJob($jobId) {
 	declare(ticks = 1);
@@ -297,3 +334,4 @@ function housekeeping() {
 } // end housekeeping
 
 ?>
+
