@@ -28,6 +28,12 @@ function showFields() {
 	// echo "<form action=\"agents/search.php\" method=POST>\n";
 	echo "<form action=\"query.php\" method=POST>\n";
 	echo "<table>\n";
+	echo "<tr><td style=\"border-right: 1px dashed black\">\n";	
+	echo "<input checked type=\"radio\" name=\"type\" value=\"AND\"> Match all (AND search)<br>\n";
+	echo "<input type=\"radio\" name=\"type\" value=\"OR\"> Match any (OR search)\n";
+	echo "</td><td>\n";
+	echo "<table>\n";
+
 	if ( count($r) > 0 ) {
 		foreach ( $r as $row ) {
 			$label = $row["label"];
@@ -48,13 +54,11 @@ function showFields() {
 			} // end if
 		} // end foreach
 	} // end if
-	echo "<tr><td><input checked type=\"radio\" name=\"type\" value=\"AND\"> Match all (AND search)</td>";
-	echo "<td><input type=\"radio\" name=\"type\" value=\"OR\"> Match any (OR search)</td></tr>\n";
 	echo "<tr><td>or by status message:</td><td><input name=\"statusmesg\"></td></tr>\n";
 	echo "<tr><td><input type=\"reset\"></td><td><input type=\"submit\"></td></tr>\n";
+	echo "</table>\n";
 	echo "</table></form>\n";
 } // end showFields
-
 
 showFields();
 
