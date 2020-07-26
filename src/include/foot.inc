@@ -5,7 +5,7 @@
 		$tabs["index.php"] = "Home";
 		$tabs["query.php"] = "Search";
 		$tabs["multiedit.php"] = "Multi-Edit";
-		$tabs["turboedit.php"] = "Turbo Edit";
+		// $tabs["turboedit.php"] = "Turbo Edit";
 		$tabs["batch.php"] = "Turbo Edit";
 		$tabs["messaging.php"] = "Messaging";
 		$tabs["admin.php"] = "Admin";
