@@ -43,10 +43,11 @@ mkdir -p %{buildroot}/tmp/
 mkdir -p %{buildroot}/var/www/trivnet/
 mv %{_sourcedir}/trivnet-fcc.out %{buildroot}/tmp/
 rsync -arv %{_builddir}/trivnet/ %{buildroot}/var/www/trivnet/
-mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet /opt/rh/rh-php73/root/usr/bin/php /var/www/trivnet/async.php --runonce" > %{buildroot}/etc/cron.d/trivnet
+# mkdir -p %{buildroot}/etc/cron.d/ && echo "* * * * * trivnet /opt/rh/rh-php73/root/usr/bin/php /var/www/trivnet/async.php --runonce" > %{buildroot}/etc/cron.d/trivnet
 
 # Set up apache
 mkdir -p %{buildroot}/etc/httpd/conf.d/ && mv %{_sourcedir}/httpd.conf %{buildroot}/etc/httpd/conf.d/trivnet.conf
+mkdir -p %{buildroot}/etc/systemd/system/ && mv %{_sourcedir}/trivnet-async.service %{buildroot}/etc/systemd/system/trivnet-async.service
 
 %clean
 rm -f /tmp/trivnet-fcc.out
@@ -119,6 +120,9 @@ EOF
 	echo "Starting Apache"
 	systemctl enable httpd
 	systemctl start httpd 
+	systemctl daemon-reload
+	systemctl enable trivnet-async
+	systemctl start trivnet-async
         rm -f /tmp/$$.awk
 else
   echo "Not doing DB setup as this is an upgrde"
@@ -147,9 +151,13 @@ fi
 /var/www/trivnet/include
 /tmp/trivnet-fcc.out
 /etc/cron.d/trivnet
-/etc/httpd/conf.d/trivnet.conf
+#/etc/httpd/conf.d/trivnet.conf
+/etc/systemd/system/trivnet-async.service
 
 %changelog
+* Sun Jul 26 2020 kd8gbl - 1.2
+- Switch to a SystemD unit file to start the async engine versus a cron job
+
 * Mon Jul 13 2020 kd8gbl - 1.1
 - Updates for compatibility with PHP7 via FPM
 

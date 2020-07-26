@@ -37,6 +37,7 @@ rpmbuild:
     - rsync -rv src/ rpmbuild/BUILD/trivnet/
     - rsync -rv util/ rpmbuild/BUILD/util/
     - mv httpd.conf rpmbuild/SOURCES/
+    - mv trivnet-async.service rpmbuild/SOURCES/
     - mv fcc/trivnet-fcc.out rpmbuild/SOURCES/
     - mv trivnet.spec rpmbuild/SPECS/
     - echo "SetEnv TRIVNET-SHA ${CI_COMMIT_SHA}" > rpmbuild/BUILD/trivnet/.htaccess

@@ -1,0 +1,14 @@
+[Unit]
+Description=trivnet async jobs
+After=network.target
+After=postgresql-9.6.service
+Wants=postgresql-9.6.service
+
+[Service]
+ExecStart=/opt/rh/rh-php73/root/bin/php async.php --daemon
+Restart=always
+Type=simple
+User=trivnet
+
+[Install]
+WantedBy=multi-user.target
