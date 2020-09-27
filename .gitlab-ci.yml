@@ -1,4 +1,5 @@
 stages:
+  - test
   - preflight
   - assets
   - package
@@ -13,10 +14,8 @@ php-lint:
     - find ./ -name \*.php -print0 | xargs -I '{}' -n1 -0 php -l '{}'
     - find ./ -name \*.inc -print0 | xargs -I '{}' -n1 -0 php -l '{}'
 
-sast:
-  stage: preflight
-  include:
-    - template: Security/SAST.gitlab-ci.yml
+include:
+  - template: Security/SAST.gitlab-ci.yml
 
 get-fcc-db:
   stage: assets
