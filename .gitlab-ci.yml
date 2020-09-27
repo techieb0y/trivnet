@@ -14,10 +14,11 @@ php-lint:
     - find ./ -name \*.php -print0 | xargs -I '{}' -n1 -0 php -l '{}'
     - find ./ -name \*.inc -print0 | xargs -I '{}' -n1 -0 php -l '{}'
 
+tags:
+  - docker
+
 include:
   - template: Security/SAST.gitlab-ci.yml
-  tags:
-    - docker
 
 get-fcc-db:
   stage: assets
