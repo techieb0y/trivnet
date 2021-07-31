@@ -61,7 +61,7 @@ if [ $1 -eq 1 ]; then
 	chown -R trivnet /var/www/trivnet/
 
 	echo "Checking PostgreSQL setup"
-	[ -d /var/lib/pgsql/9.6/data/base ] || /usr/pgsql-9.6/bin/postgresql96-setup initdb
+	[ -d /var/lib/pgsql/13/data/base ] || /usr/pgsql-13/bin/postgresql13-setup initdb
 
 	echo "Insert ACL into pg_hba.conf"
 	cat << EOF > /tmp/$$.awk
@@ -69,14 +69,14 @@ if [ $1 -eq 1 ]; then
 /.*/            { print \$0 }
 EOF
 
-	PREFIX="/var/lib/pgsql/9.6/data"
+	PREFIX="/var/lib/pgsql/13/data"
 
 	mv ${PREFIX}/pg_hba.conf ${PREFIX}/pg_hba.orig
 	awk -f /tmp/$$.awk ${PREFIX}/pg_hba.orig > ${PREFIX}/pg_hba.conf && rm -f ${PREFIX}/pg_hba.orig
 	
 	echo "Starting PostgreSQL"
-	systemctl enable postgresql-9.6
-	systemctl start postgresql-9.6
+	systemctl enable postgresql-13
+	systemctl start postgresql-13
 
 	echo "Create 'trivnet' database objects"
 	su -c "createuser -l -S -R -D trivnet" postgres
@@ -155,6 +155,9 @@ fi
 /etc/systemd/system/trivnet-async.service
 
 %changelog
+* Sun Jul 31 2021 kd8gbl - 1.3
+- Update PostgreSQL version references to bump from 9.6 to 13
+
 * Sun Jul 26 2020 kd8gbl - 1.2
 - Switch to a SystemD unit file to start the async engine versus a cron job
 
