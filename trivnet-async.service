@@ -5,7 +5,7 @@ After=postgresql-13.service
 Wants=postgresql-13.service
 
 [Service]
-ExecStart=/opt/rh/rh-php73/root/bin/php /var/www/trivnet/async.php --daemon
+ExecStart=cd /var/www/trivnet && /opt/rh/rh-php73/root/bin/php /var/www/trivnet/async.php --daemon
 Restart=always
 Type=simple
 User=trivnet

@@ -330,7 +330,7 @@ function housekeeping() {
 			} // end if
 		} // end foreach
 	} // enf if
-	touch("./jobs/asyncEngine.stat");
+	touch("/var/www/trivnet/jobs/asyncEngine.stat");
 } // end housekeeping
 
 ?>
