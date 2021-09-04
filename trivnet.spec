@@ -56,20 +56,20 @@ rm -f /tmp/trivnet-fcc.out
 echo "Running with \$1 of: $1"
 if [ $1 -eq 1 ]; then
 	PASSWORD=`head -c12 /dev/urandom | base64`
+	PREFIX="/var/lib/pgsql/13/data"
 
 	adduser -r trivnet -M -d /var/www/trivnet/
 	chown -R trivnet /var/www/trivnet/
 
 	echo "Checking PostgreSQL setup"
-	[ -d /var/lib/pgsql/13/data/base ] || /usr/pgsql-13/bin/postgresql13-setup initdb
+	chsh -s /bin/bash postgres
+	[ -d ${PREFIX} ] || /usr/pgsql-13/bin/postgresql13-setup initdb
 
 	echo "Insert ACL into pg_hba.conf"
 	cat << EOF > /tmp/$$.awk
 /^host( )+all( )+all( )+127/    { print "host   trivnet         trivnet         127.0.0.1/32            md5" }
 /.*/            { print \$0 }
 EOF
-
-	PREFIX="/var/lib/pgsql/13/data"
 
 	mv ${PREFIX}/pg_hba.conf ${PREFIX}/pg_hba.orig
 	awk -f /tmp/$$.awk ${PREFIX}/pg_hba.orig > ${PREFIX}/pg_hba.conf && rm -f ${PREFIX}/pg_hba.orig
