@@ -63,7 +63,7 @@ if [ $1 -eq 1 ]; then
 
 	echo "Checking PostgreSQL setup"
 	chsh -s /bin/bash postgres
-	[ -d ${PREFIX} ] || /usr/pgsql-13/bin/postgresql13-setup initdb
+	/usr/pgsql-13/bin/postgresql13-setup initdb
 
 	echo "Insert ACL into pg_hba.conf"
 	cat << EOF > /tmp/$$.awk
