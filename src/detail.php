@@ -18,7 +18,7 @@ echo "	function doUpdate() {\n";
 echo "		var boxes = document.forms['personinfo'].getElementsByTagName(\"input\");\n";
 echo "		var sboxes = document.forms['personinfo'].getElementsByTagName(\"select\");\n";
 echo "		var update = '';\n";
-echo "		Array.from(boxes)forEach(function(box) {\n";
+echo "		Array.from(boxes).forEach(function(box) {\n";
 echo "			if ( '' != box.style.backgroundColor) {;\n";
 echo "				update += box.id + ':' + box.value + ',';\n";
 echo "			}\n";
