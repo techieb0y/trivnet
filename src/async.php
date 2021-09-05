@@ -1,5 +1,6 @@
 #!/usr/bin/php
 <?php
+$asyncpath = "/var/www/trivnet/";
 
 require_once("include/db_ops.inc");
 require_once("include/config.inc");
@@ -315,7 +316,7 @@ function runJob($jobId) {
 		fclose($errlog);
 	} // end if - bulk-import special case
 
-	touch("./jobs/asyncEngine.stat");
+	touch($asyncpath . "/jobs/asyncEngine.stat");
 } // end runJob
 
 function housekeeping() {
@@ -330,7 +331,7 @@ function housekeeping() {
 			} // end if
 		} // end foreach
 	} // enf if
-	touch("/var/www/trivnet/jobs/asyncEngine.stat");
+	touch($asyncpath . "/jobs/asyncEngine.stat");
 } // end housekeeping
 
 ?>
