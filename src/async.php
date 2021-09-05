@@ -249,7 +249,8 @@ function runJob($jobId) {
 
 		foreach ($workingSet as $row) {
 			global $config;
-
+			global $asyncpath;
+			
 			if ( trim($row )== "END" ) { break; }
 			// Marathon special-case handling for bib numbers, which will almost always be the multi-edit default type.
 			if ( $searchtype == $config["multidefault"] ) {
@@ -321,6 +322,8 @@ function runJob($jobId) {
 
 function housekeeping() {
 	global $config;
+	global $asyncpath;
+	
 	// Clean up timed-out sessions
 	$sdb = list_sessions();
 	if ( count($sdb) > 0 ) {
