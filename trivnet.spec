@@ -134,6 +134,7 @@ fi
 	ln -s /var/www/trivnet/js/jquery-1.10.2.min.js /var/www/trivnet/js/jquery.js
 
 %preun static
+    /bin/systemctl stop trivnet-async
 	[ -h /var/www/trivnet/js/jquery.js ] && rm -f /var/www/trivnet/js/jquery.js
 
 %files static
