@@ -45,6 +45,7 @@ rpmbuild:
   artifacts:
     paths:
       - rpmbuild/RPMS/
+      - Dockerfile
   dependencies:
     - get-fcc-db
 
@@ -59,7 +60,7 @@ deploy-stage:
   script:
     - sudo yum -y remove postgresql-libs trivnet trivnet-static postgresql96-libs postgresql13-libs
     - sudo rm -rf /var/lib/pgsql
-    - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
+    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
   after_script:
     - find ./ -name \*.rpm -delete
   environment:
@@ -68,15 +69,23 @@ deploy-stage:
 
 deploy-macbookair:
   stage: deploy
+  image: centos
+  dependecies:
+    - rpmbuild
   tags:
     - trivnet-macbookair
   script:
-    - echo "Hello World"
+    - pwd
+    - ls -al
+    - echo docker build .
+    - echo docker run -p 8080:80 
+  after_script:
+    - find ./ -name \*.rpm -delete
   variables:
     GIT_STRATEGY: none
   environment:
     name: UTM
-    url: http://192.168.64.2/trivnet/
+    url: http://192.168.64.2:8080/trivnet/
 
 .deploy-thin:
   stage: deploy
@@ -89,7 +98,7 @@ deploy-macbookair:
   script:
     - sudo yum -y remove postgresql-libs trivnet trivnet-static postgresql96-libs postgresql13-libs
     - sudo rm -rf /var/lib/pgsql
-    - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
+    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
   after_script:
     - find ./ -name \*.rpm -delete
   environment:
@@ -106,7 +115,7 @@ deploy-prod:
   dependencies:
     - rpmbuild
   script:
-    - sudo yum -y localinstall rpmbuild/RPMS/x86_64/trivnet*.rpm
+    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
   after_script:
     - find ./ -name \*.rpm -delete      
   environment:

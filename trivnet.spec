@@ -7,6 +7,7 @@ Group:          ham
 License:        Unspecified
 Source:        trivnet.tar.gz
 
+BuildArch:      noarch
 BuildRoot:      %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 Requires:       postgresql13-server postgresql13-contrib rh-php73-php-pgsql rh-php73-php-gd rh-php73-php-cli rh-php73-php-fpm rh-php73-php-opcache trivnet-static
