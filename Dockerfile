@@ -1,2 +1,3 @@
 FROM centos:7
-RUN yum -y localinstall rpmbuild/noarch/trivnet*.rpm
+COPY rpmbuild/RPMS/noarch/trivnet-*.rpm /tmp/
+RUN yum -y localinstall /tmp/trivnet*.rpm

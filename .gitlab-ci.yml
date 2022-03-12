@@ -69,7 +69,6 @@ deploy-stage:
 
 deploy-macbookair:
   stage: deploy
-  image: centos
   dependencies:
     - rpmbuild
   tags:
@@ -77,7 +76,7 @@ deploy-macbookair:
   script:
     - pwd
     - find ./ -type f
-    - docker build .
+    - docker build - < Dockerfile
     - docker run -p 8080:80 
   after_script:
     - find ./ -name \*.rpm -delete
