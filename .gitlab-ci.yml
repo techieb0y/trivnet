@@ -66,7 +66,19 @@ deploy-stage:
     name: Stage
     url: http://172.16.104.76/trivnet/
 
-deploy-thin:
+deploy-macbookair:
+  stage: deploy
+  tags:
+    - trivnet-macbookair
+  script:
+    - echo "Hello World"
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: UTM
+    url: http://192.168.64.2/trivnet/
+
+.deploy-thin:
   stage: deploy
   tags:
     - trivnet-thin
