@@ -77,8 +77,8 @@ deploy-macbookair:
   script:
     - pwd
     - ls -al
-    - echo docker build .
-    - echo docker run -p 8080:80 
+    - docker build .
+    - docker run -p 8080:80 
   after_script:
     - find ./ -name \*.rpm -delete
   variables:
