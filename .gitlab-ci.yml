@@ -70,7 +70,7 @@ deploy-stage:
 deploy-macbookair:
   stage: deploy
   image: centos
-  dependecies:
+  dependencies:
     - rpmbuild
   tags:
     - trivnet-macbookair
