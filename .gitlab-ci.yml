@@ -76,7 +76,7 @@ deploy-macbookair:
     - trivnet-macbookair
   script:
     - pwd
-    - ls -al
+    - find ./ -type f
     - docker build .
     - docker run -p 8080:80 
   after_script:
