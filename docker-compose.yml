@@ -1,0 +1,27 @@
+---
+version: '3.2'
+
+services:
+  postgresql:
+    image: postgres:12-alpine
+    restart: unless-stopped
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${PG_PASS}
+      - POSTGRES_USER=trivnet
+      - POSTGRES_DB=trivnet
+  trivnet:
+    image: trivnet
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: postgresql
+      POSTGRES_USER: trivnet
+      POSTGRES_DB: trivnet
+      POSTGRES_PASSWORD: ${PG_PASS}
+    ports:
+      - "0.0.0.0:80:80"
+
+volumes:
+  database:
+    driver: local
