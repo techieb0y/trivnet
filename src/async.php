@@ -317,6 +317,7 @@ function runJob($jobId) {
 		fclose($errlog);
 	} // end if - bulk-import special case
 
+	global $asyncpath;
 	touch($asyncpath . "/jobs/asyncEngine.stat");
 } // end runJob
 
