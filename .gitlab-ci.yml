@@ -27,7 +27,7 @@ get-fcc-db:
     paths:
       - fcc/trivnet-fcc.out
 
-.rpmbuild:
+rpmbuild:
   stage: package
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   tags:
@@ -49,7 +49,7 @@ get-fcc-db:
   dependencies:
     - get-fcc-db
 
-.deploy-stage:
+deploy-stage:
   stage: deploy
   tags:
     - trivnet-stage
@@ -67,7 +67,7 @@ get-fcc-db:
     name: Stage
     url: http://172.16.104.76/trivnet/
 
-.deploy-macbookair:
+deploy-macbookair:
   stage: deploy
   dependencies:
     - rpmbuild

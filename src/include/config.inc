@@ -16,8 +16,8 @@ global $DB_PASS;
 $DB_TYPE = "pgsql";
 $DB_NAME = "trivnet";
 $DB_USER = "trivnet";
-$DB_PASS = $_ENV["POSTGRES_PASS"];
-$DB_HOST = "postgresql";
+$DB_PASS = "trivnet";
+$DB_HOST = "127.0.0.1";
 
 // Network-topolgy-aware page display parameters
 $config["localnets"] = array( "192.168.54.0/24", "172.16.104.0/24" );
