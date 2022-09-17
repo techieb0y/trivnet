@@ -3,7 +3,6 @@
 include("include/config.inc");
 include("include/sessions.inc");
 include("include/db_ops.inc");
-include("include/update-graphite.inc");
 
 session_start();
 $tac = $_SESSION["tactical"];
@@ -46,8 +45,6 @@ $q = "BEGIN;\n INSERT INTO updatesequence VALUES ( $id, $time, '$mycall', $msgdt
 $r = query($q);
 
 // echo "<pre>" . $q . "</pre>";
-
-updateMT();
 
 header("Location: detail.php?id=$id");
 ?>
