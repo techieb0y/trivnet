@@ -81,7 +81,7 @@ deploy-macbookair:
   script:
     - docker compose down
     - chown gitlab-runner -R src/
-    - docker compose up -d
+    - docker-compose up -d
 
 stop-macbookair:
   stage: deploy
@@ -96,7 +96,7 @@ stop-macbookair:
     name: MacBook Air
     action: stop
   script:
-    - docker compose down
+    - docker-compose down
 
 
 .deploy-thin:
