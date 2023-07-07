@@ -69,22 +69,35 @@ deploy-stage:
 
 deploy-macbookair:
   stage: deploy
-  dependencies:
-    - rpmbuild
   tags:
     - trivnet-macbookair
+  only:
+    - master  
+  variables:
+    GIT_STRATEGY: clone
+  environment:
+    name: MacBook Air
+    url: http://192.168.64.2:8080/
   script:
-    - pwd
-    - find ./ -type f
-    - docker build .
-    - docker run -p 8080:80 
-  after_script:
-    - find ./ -name \*.rpm -delete
+    - docker compose down
+    - chown gitlab-runner -R src/
+    - docker compose up -d
+
+stop-macbookair:
+  stage: deploy
+  tags:
+    - trivnet-macbookair
   variables:
     GIT_STRATEGY: none
+  only:
+    - master
+  when: manual
   environment:
-    name: UTM
-    url: http://192.168.64.2:8080/trivnet/
+    name: MacBook Air
+    action: stop
+  script:
+    - docker compose down
+
 
 .deploy-thin:
   stage: deploy

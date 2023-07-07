@@ -1,0 +1,8 @@
+services:
+  trivnet:
+    image: trivnet:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - "./src/:/var/www/html/"
