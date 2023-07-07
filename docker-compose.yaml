@@ -1,6 +1,6 @@
 services:
   trivnet:
-    image: trivnet:latest
+    image: php:fpm
     restart: unless-stopped
     ports:
       - "80:80"
