@@ -79,7 +79,7 @@ deploy-macbookair:
     name: MacBook Air
     url: http://192.168.64.2:8080/
   script:
-    - docker compose down
+    - docker-compose down
     - chown gitlab-runner -R src/
     - docker-compose up -d
 
