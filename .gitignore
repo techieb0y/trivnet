@@ -17,3 +17,4 @@ tags
 [._]*.un~
 
 .DS_Store
+.project
