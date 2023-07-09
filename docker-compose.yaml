@@ -1,8 +1,17 @@
 services:
   trivnet:
     image: dockreg.corbettdigital.net/trivnet/trivnet:master
+    depends_on:
+      - database
     restart: unless-stopped
     ports:
       - "8080:80"
     volumes:
       - "./src/:/var/www/html/"
+  database:
+    image: postgres:15-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: trivnet
+      POSTGRES_USER: trivnet
+      POSTGRES_DB: trivnet
