@@ -19,5 +19,5 @@ CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varch
 INSERT INTO messages VALUES ( extract(epoch from now() )::integer, 'SysOp', 'Database Setup Complete', 'all' );
 CREATE TABLE enumtypes ( id int not null, datatype int not null, value varchar not null, constraint datatype_fk foreign key (datatype) references datatypes(typeid) );
 CREATE TABLE race ( raceid int not null primary key, head real check (head >= 0) check (head < 27), tail real check (tail <= head) check ( tail < 27 )  );
-copy "part97" from '/tmp/trivnet-fcc.out';
+copy "part97" from '/docker-entrypoint-initdb.d/trivnet-fcc.out';
 COMMIT;

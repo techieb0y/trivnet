@@ -96,7 +96,7 @@ deploy-macbookair:
     name: MacBook Air
     url: http://192.168.64.2:8080/
   script:
-    - mv fcc/trivnet-fcc.out /tmp/
+    - mv fcc/trivnet-fcc.out docker/postgres/
     - docker-compose down
     - chown gitlab-runner -R src/
     - docker-compose up -d
