@@ -1,7 +1,6 @@
 stages:
   - preflight
   - assets
-  - package
   - deploy
 
 php-lint:
@@ -43,7 +42,7 @@ create-web-container:
     - docker tag trivnetphp $IMAGE_TAG
     - docker push $IMAGE_TAG
 
-rpmbuild:
+.rpmbuild:
   stage: package
   image: dockreg.corbettdigital.net/trivnet/buildenv:master
   tags:
@@ -65,7 +64,7 @@ rpmbuild:
   dependencies:
     - get-fcc-db
 
-deploy-stage:
+.deploy-stage:
   stage: deploy
   tags:
     - trivnet-stage
@@ -91,10 +90,13 @@ deploy-macbookair:
     - master  
   variables:
     GIT_STRATEGY: clone
+  dependencies:
+    - get-fcc-db
   environment:
     name: MacBook Air
     url: http://192.168.64.2:8080/
   script:
+    - mv fcc/trivnet-fcc.out /tmp/
     - docker-compose down
     - chown gitlab-runner -R src/
     - docker-compose up -d
@@ -133,7 +135,7 @@ stop-macbookair:
     name: Thin Client
     url: http://10.254.10.111/trivnet/
 
-deploy-prod:
+.deploy-prod:
   stage: deploy
   when: manual
   tags:

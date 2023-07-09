@@ -1,4 +1,6 @@
 BEGIN;
+set client_encoding to latin1;
+CREATE EXTENSION tablefunc;
 CREATE TABLE people ( id int NOT NULL PRIMARY KEY );
 CREATE TABLE part97 ( callsign varchar(10) primary key, name varchar(200) not null, symbol int not null default 0 );
 CREATE TABLE datatypes ( typeid int PRIMARY KEY, name varchar(12) unique, label varchar(32), exact boolean default false, enum boolean default false );
@@ -17,4 +19,5 @@ CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varch
 INSERT INTO messages VALUES ( extract(epoch from now() )::integer, 'SysOp', 'Database Setup Complete', 'all' );
 CREATE TABLE enumtypes ( id int not null, datatype int not null, value varchar not null, constraint datatype_fk foreign key (datatype) references datatypes(typeid) );
 CREATE TABLE race ( raceid int not null primary key, head real check (head >= 0) check (head < 27), tail real check (tail <= head) check ( tail < 27 )  );
+copy "part97" from '/tmp/trivnet-fcc.out';
 COMMIT;
