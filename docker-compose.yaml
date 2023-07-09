@@ -12,7 +12,7 @@ services:
     image: postgres:15-bookworm
     restart: unless-stopped
     volumes:
-      - "./postgres/:/docker-entrypoint-initdb.d/"
+      - "./docker/postgres/:/docker-entrypoint-initdb.d/"
     environment:
       POSTGRES_PASSWORD: trivnet
       POSTGRES_USER: trivnet
