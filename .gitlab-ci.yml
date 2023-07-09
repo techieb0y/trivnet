@@ -27,6 +27,21 @@ get-fcc-db:
     paths:
       - fcc/trivnet-fcc.out
 
+create-web-container:
+  stage: assets
+  tags:
+    - trivnet-macbookair
+  only:
+    - master  
+  variables:
+    GIT_STRATEGY: clone
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+  before_script:
+    - /bin/docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  script:
+    - pushd docker/web/ && docker build -t trivnetphp . && popd
+    - docker push $IMAGE_TAG
+
 rpmbuild:
   stage: package
   image: dockreg.corbettdigital.net/trivnet/buildenv:master

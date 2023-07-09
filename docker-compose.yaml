@@ -1,6 +1,6 @@
 services:
   trivnet:
-    image: php:apache
+    image: dockreg.corbettdigital.net/trivnet/trivnet:latest
     restart: unless-stopped
     ports:
       - "8080:80"
