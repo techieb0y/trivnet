@@ -31,17 +31,6 @@ function connect() {
 		} else {
 			return $db;
 		} // end if
-
-	} else if ( "mysql" == $DB_TYPE ) {
-		// MySQL is simple, and uses fixed ordering of connect params: host, user, pass; then 'select' the db
-		$db = mysql_connect( $DB_HOST, $DB_USER, $DB_PASS );
-		if ( !isset($db) ) {
-			die("Could not connect to the database\n");
-		} else {
-			mysql_select_db($DB_NAME);
-			return $db;
-		} // end if
-
 	} else {
 		die("Did not understand database type of $DB_TYPE\n");
 	} // end if
@@ -54,7 +43,7 @@ function query($string) {
 	// Returns: result array. rows as first index; associative array of fields under that
 
 	// echo "*** $string\n";
-	// error_log("Q: " . $string, 0);
+	error_log("Q: " . $string, 0);
 
 	// Make sure we're connected. This lets us get away with being lazy.
 	if ( !isset($db) ) {
@@ -77,7 +66,7 @@ function query_simple($string) {
 	// Returns: result array. rows as first index; associative array of fields under that
 
 //	echo "*** $string\n";
-//	error_log("QS: " . $string, 0);
+error_log("QS: " . $string, 0);
 
 	// Make sure we're connected. This lets us get away with being lazy.
 	//if ( !isset($db) ) {
@@ -114,8 +103,7 @@ $before = microtime(true);
 
 	$return = array();
 
-	// $res = pg_query( $db, $string );
-	$res = pg_query( $string );
+	$res = pg_query( connect(), $string );
 	if ( $res ) {
 		unset($return);
 		while ( $z = pg_fetch_assoc($res) ) {
@@ -136,28 +124,3 @@ sendFullMetric("trivnet.psql.time", $delta);
 	} // end if
 
 } // end query_pgsql
-
-/************************* Functions for MySQL **************************/
-
-function query_mysql( $string ) {
-	//require("config.inc");
-	//if ( !isset($db) ) {
-	//	connect();
-	//} // end if
-
-	$return = array();
-
-	$res = mysql_query( $string, $db );
-	if ( isset($res) ) {
-		unset($return);
-		while ( $z = mysql_fetch_assoc($res) ) {
-			$return[] = $z;
-		} // end while
-
-		return($return);
-
-	} else {
-		error_log("DB Query Error - query was <<$string>>", 0);
-	} // end if
-
-} // end query_mysql
