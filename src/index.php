@@ -127,17 +127,22 @@ foreach ( $rh as $row ) {
 	$theBigArray[$typeid] = $name; 
 } // end foreach
 
-
 $theQuery = "SELECT personid,bibnum,firstname,lastname FROM crosstab('SELECT * from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype=''" . $config["status"] . "'' AND value=''" . $config["medtentstatus"] . "'')', 'SELECT typeid FROM datatypes ORDER BY typeid') as ( personid int";
 foreach ( $theBigArray as $fieldName ) {
 	$theQuery .= ", " . $fieldName . " varchar ";
 } // end foreach
 $theQuery .= ") WHERE firstname IS NOT NULL AND lastname IS NOT NULL";
 
-$inmed = query($theQuery);
+$res = pg_query( connect(), $theQuery );
 
-if ( count($inmed) > 0 ) {
-echo "<ul>";
+if ( pg_num_rows($res) > 0 ) {
+    $r_sum = array();
+    while ( $z = pg_fetch_assoc($res) ) {
+        $r_sum[] = $z;
+    } // end while
+    $inmed = query($theQuery);
+
+    echo "<ul>";
 	foreach($inmed as $m) {
 		$pid = $m["personid"];
 		$fn = $m["firstname"];
@@ -150,17 +155,6 @@ echo "<ul>";
 	echo "Med tent is empty.";
 } // end if
 
-
-if ( $config["use_graphite"] ) {
-	if ( getenv("slownet") == "true" ) {
-		syslog(LOG_DEBUG, "Skipping display of graph for DSTAR network");
-		echo "<td>&nbsp;</td>\n";
-	} else {
-		$num = count($inmed);
-		echo "<td><img src=\"mtgraph.php?num=$num\"></td>\n";
-	} // end if
-}
-
 echo "</td>\n";
 echo "</tr></table>";
 
@@ -171,12 +165,21 @@ echo "Message summary:<br>\n";
 $msgdt = $config["message"];
 
 // $q_summary = "select value, count(value) as num from updatesequence where datatype=0 and value ilike '%out at%' group by message";
-$q_summary = "select value, count(value) as num from updatesequence where datatype=$msgdt and value not like '%Search performed%' group by value";
 
 //$q_summary = "select message,count(message) as num from updatesequence where message not ilike '%out%'  and message not like '%bed%' group by message order by message;";
 
-$r_summary = query($q_summary);
-if ( count( $r_summary) > 0 ) {
+$q_summary = 'select value, count(value) as num from updatesequence where datatype = $1 and value not like "%Search performed%" group by value;'";
+$p_summary[] = $msgdt;
+
+$res = pg_query_params( connect(), $q_summary, $p_summary );
+
+if (pg_num_rows($res) > 0 ) {
+    $r_summary = array();
+    while ( $z = pg_fetch_assoc($res) ) {
+        $r_summary[] = $z;
+    } // end while
+
+
 	echo "<table>\n";
 	foreach ($r_summary as $row_summary) {
 		$v = $row_summary["value"];
