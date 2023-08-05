@@ -112,11 +112,11 @@ function doAjax(rowNum) {
 	if ( 1 == rslt.result ) {
 		resultN.value = rslt.displayname;
 		pidN.value = rslt.personid;
-		icon.setAttribute('innerHTML', '');
+		icon.innerHTML='';
 	} else {
 		goBtn = document.getElementById("infoIcon" + boxNum);
 		goBtn.style.display = "none";
-		icon.setAttribute('innerHTML', '⚠️');
+		icon.innerHTML = '⚠️';
 	} // end if
 } // end doAjax
 
@@ -134,11 +134,11 @@ function postStatus(where) {
 	rslt = JSON.parse( req.responseText );
 	if ( 1 == rslt.result ) {
 		icon = document.getElementById("infoIcon" + boxNum);
-		icon.setAttribute('innerHTML', '');
+		icon.innerHTML = '';
 		searchN.disabled = true;
 		statusN.disabled = true;
 	} else {
 		icon = document.getElementById("infoIcon" + boxNum);
-		icon.setAttribute('innerHTML', '⚠️');
+		icon.innerHTML = '⚠️';
 	} // end if
 } // end postStatus	
