@@ -107,7 +107,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 		if ( ($key !== "type" ) && isset($param) && ( strlen($param) > 0 ) ) {
 
-			$p = pg_escape_string($param);
+			$p = pg_escape_string(connect(), $param);
 
 			if ( "t" == $exactness[$key] ) {
 				$q .= $prefix . "( datatype=''$key'' AND value = ''" . trim($p) . "'' ) ";

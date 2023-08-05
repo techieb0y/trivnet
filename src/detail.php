@@ -194,8 +194,10 @@ echo "</table>\n";
 		echo "<hr>\n";
 	}
 
-$raceid = $RACEID[ $rid ];
-echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
+if ( isset( $RACEID[$rid]) ) { 
+	$raceid = $RACEID[ $rid ];
+	echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
+}
 
 echo "</form>";
 
