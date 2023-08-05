@@ -168,7 +168,7 @@ $msgdt = $config["message"];
 
 //$q_summary = "select message,count(message) as num from updatesequence where message not ilike '%out%'  and message not like '%bed%' group by message order by message;";
 
-$q_summary = 'select value, count(value) as num from updatesequence where datatype = $1 and value not like "%Search performed%" group by value;'";
+$q_summary = 'select value, count(value) as num from updatesequence where datatype = $1 and value not like "%Search performed%" group by value;';
 $p_summary[] = $msgdt;
 
 $res = pg_query_params( connect(), $q_summary, $p_summary );
