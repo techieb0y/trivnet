@@ -1,31 +1,41 @@
 <?php
 
 function has_session() {
-	return true;
 	require_once("db_ops.inc");
 	require("config.inc");
 
-	$q = "SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid='" . session_id() . "';";
-	$r = query($q);
-	if ( count($r) > 0 ) {
-		$age = $r[0]["age"];
-		if ( $age > $config["idle_timeout"] ) {
-			// They have an old session, most likely disconnected.
-			$qn = "SELECT callsign FROM sessions WHERE sessionid='" . session_id() . "'";
-			$rn = query($qn);
-			$call = $rn[0]["callsign"];
+	$q = 'SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid="$1";';
+	$p[] = session_id();
+	$res = pg_query_params( connect(), $q, $p );
 
-			$q = "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
-			$r = query($q);
-			error_log("Disconnected timed-out ($age secs)  session for $call", 0);
-			return false;
+	if ( pg_num_rows($res) > 0 ) {
+		$r = array();
+		while ( $z = pg_fetch_assoc($res) ) {
+			$r[] = $z;
+		} // end while
+
+		if ( count($r) > 0 ) {
+			$age = $r[0]["age"];
+			if ( $age > $config["idle_timeout"] ) {
+				// They have an old session, most likely disconnected.
+				$qn = "SELECT callsign FROM sessions WHERE sessionid='" . session_id() . "'";
+				$rn = query($qn);
+				$call = $rn[0]["callsign"];
+
+				$q = "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
+				$r = query($q);
+				error_log("Disconnected timed-out ($age secs)  session for $call", 0);
+				return false;
+			} else {
+				return true;
+				error_log("Detected duplicate session for " . session_id(), 0);
+			} // end if - idle timeout
 		} else {
-			return true;
-			error_log("Detected duplicate session for " . session_id(), 0);
-		} // end if - idle timeout
+			return false;
+		} // end if	-- has session
 	} else {
 		return false;
-	} // end if	-- has session
+	}
 } // end has_session
 
 function start_session() {
