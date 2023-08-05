@@ -3,12 +3,7 @@ function makeClone() {
 	var newRow = document.createElement("tr");
 
 	var newIconTd = document.createElement("td");
-	var newIconImg = document.createElement("iconImg");
-	newIconImg.setAttribute("src", "images/blank.png");
-	newIconImg.setAttribute("width", "32");
-	newIconImg.setAttribute("height", "32");
-	newIconImg.setAttribute("id", "statusIcon");
-	newIconTd.appendChild(newIconImg);
+	newIconTd.innerHTML = "";
 
 	var newSearchTd = document.createElement("td");
 	var newSearchInput = document.createElement("input");
@@ -41,13 +36,10 @@ function makeClone() {
 	newStatusTd.appendChild(newStatusInput);
 
 	var newGoTd = document.createElement("td");
-	var newGoImg = document.createElement("img");
-	newGoImg.setAttribute("name", "infoIcon");
-	newGoImg.setAttribute("onClick", "javascript:postStatus(this)");
-	newGoImg.setAttribute("src", "images/save_button.png");
-	newGoImg.style.display = "none";
-	newGoImg.setAttribute("id", "infoIcon");
-	newStatusTd.appendChild(newGoImg);
+	newGoTd.innerHTML = "ℹ️";
+
+	var newStatusTd = document.createElement("td");
+	newStatusTd.innerHTML = "▶️";
 
 	newRow.appendChild(newIconTd);
 	newRow.appendChild(newSearchTd);
@@ -120,11 +112,11 @@ function doAjax(rowNum) {
 	if ( 1 == rslt.result ) {
 		resultN.value = rslt.displayname;
 		pidN.value = rslt.personid;
-		icon.setAttribute('src', 'images/blank.png');
+		icon.setAttribute('innerHTML', '');
 	} else {
 		goBtn = document.getElementById("infoIcon" + boxNum);
 		goBtn.style.display = "none";
-		icon.setAttribute('src', 'images/warning.png');
+		icon.setAttribute('innerHTML', '⚠️');
 	} // end if
 } // end doAjax
 
@@ -142,11 +134,11 @@ function postStatus(where) {
 	rslt = JSON.parse( req.responseText );
 	if ( 1 == rslt.result ) {
 		icon = document.getElementById("infoIcon" + boxNum);
-		icon.setAttribute('src', 'images/blank.png');
+		icon.setAttribute('innerHTML', '');
 		searchN.disabled = true;
 		statusN.disabled = true;
 	} else {
 		icon = document.getElementById("infoIcon" + boxNum);
-		icon.setAttribute('src', 'images/warning.png');
+		icon.setAttribute('innerHTML', '⚠️');
 	} // end if
 } // end postStatus	

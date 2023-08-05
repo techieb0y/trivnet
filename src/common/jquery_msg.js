@@ -1,5 +1,5 @@
 	function getMessages() {
-		$("#mesgLoad").attr("src", "/trivnet/images/spinner-small.gif");
+		$("#mesgLoad").attr("innerHTML", "📡");
 		$(".msgItem").remove();
 		$rowNum = 0;
 		$.getJSON("/trivnet/agents/messages.php?limit=18", null, function(data) { 
@@ -16,7 +16,7 @@
 				$rowNum++;
 			})
 		})
-		$("#mesgLoad").attr("src", "/trivnet/images/refresh.png");
+		$("#mesgLoad").attr("innerHTML", "🔄");
 		setTimeout(getMessages, 60000);
 	} // end getMessages
 

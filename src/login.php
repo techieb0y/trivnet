@@ -30,7 +30,7 @@ function hamSearch() {
 		realname.innerHTML = rslt.name;
 		setSymbol(rslt.symbol);
 	} else {
-		realname.innerHTML = '<img src=images/warning.png> Error fetching name';
+		realname.innerHTML = '⚠️ Error fetching name';
 	} // end if
 } // end doAjax
 

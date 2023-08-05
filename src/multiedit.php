@@ -24,7 +24,7 @@
 <table style="display: none;">
 <tr id="template">
 <td id="icon_td">
-<img width=32 height=32 src="images/blank.png" id="statusIcon">
+<span id="statusIcon">
 </td>
 <td id="search_td">
 <input name="search[]" id="search" size=6 onBlur="javascript:personSearch(this)">
@@ -46,7 +46,7 @@
 </select>
 </td>
 <td id="go_td">
-<img type="image" src="images/save_button.png" style="display: none" name="infoIcon" id="infoIcon" onClick="javascript:postStatus(this)">
+<span style="display: none" name="infoIcon" id="infoIcon" onClick="javascript:postStatus(this)">▶️</span>
 </td>
 </tr>
 </table>
@@ -63,7 +63,7 @@ Directions:
 <table>
 <tr id="demo">
 <td id="demo_icon_td">
-<img width=32 height=32 src="images/blank.png" id="demostatusIcon">
+<span id="demostatusIcon"><span>
 </td>
 <td id="demosearch_td">
 <input name="demosearch[]" id="demosearch" disabled="disabled" size=6 value="Box 1">
@@ -75,7 +75,7 @@ Directions:
 <input name="demostatus[]" id="demostatus" size=50 disabled="disabled" value="Box 3: Status Update Goes Here">
 </td>
 <td id="go_td">
-<img type="image" src="images/save_button.png" name="demoinfoIcon" id="demoinfoIcon">
+<span name="demoinfoIcon" id="demoinfoIcon">▶️</span>
 </td>
 </tr>
 </table>
