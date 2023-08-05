@@ -123,15 +123,11 @@ if ( !has_session() ) {
 
 <?php
 	// Time and messages window
-	if ( "true" != getenv("slownet") ) {
-		echo "<div class=\"messages\">\n";
-		echo "<table id=\"messages\">\n";
-		echo "<a href=\"#\">🔄</a>\n";
-		echo "</table>\n";
-		echo "</div>\n";
-	} else {
-		include("mesgslow.inc");
-	} // end if
+	echo "<div class=\"messages\">\n";
+	echo "<table id=\"messages\">\n";
+	echo "<span id=\"mesgLoad\"><a href=\"#\">🔄</a></span>\n";
+	echo "</table>\n";
+	echo "</div>\n";
 	
 	// echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
 
