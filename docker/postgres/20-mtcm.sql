@@ -39,10 +39,10 @@ INSERT INTO quickmesg VALUES ( 'Transported to St. Joseph''s' );
 INSERT INTO quickmesg VALUES ( 'Transported to Southdale' );
 INSERT INTO quickmesg VALUES ( 'Transported to North Memorial' );
 
-CREATE TABLE latchtypes ( id int not null, label varchar not null );
+CREATE TABLE latchtypes ( id int not null primary key, label varchar not null );
 INSERT INTO latchtypes VALUES ( 1, 'Runner has crossed finish line' );
 INSERT INTO latchtypes VALUES ( 2, 'Runner has entered Med Tent' );
 
-CREATE TABLE latchlog ( personid int not null, latchid int not null, primary key (personid, latchid) constraint latchtype_fk foreign key (latchid) references latchtypes(id), constraint personid_fk foreign key (personid) references people(id) );
+CREATE TABLE latchlog ( personid int not null, latchid int not null, primary key (personid, latchid), constraint latchtype_fk foreign key (latchid) references latchtypes(id), constraint personid_fk foreign key (personid) references people(id) );
 
 COMMIT;
