@@ -85,7 +85,7 @@ Directions:
 <li>Type status message into box 3. Press tab.
 <li>Verify status message is correct.
 <li>Click "Save"
-<li>Enter new search criter for next update in newly-created entry box in the next row.
+<li>Enter new search critera for next update in newly-created entry box in the next row.
 </ol>
 </form>
 

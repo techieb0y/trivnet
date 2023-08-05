@@ -82,7 +82,42 @@ create-web-container:
     name: Stage
     url: http://172.16.104.76/trivnet/
 
-deploy-macbookair:
+deploy-stage:
+  stage: deploy
+  tags:
+    - docker-shell
+  only:
+    - master  
+  variables:
+    GIT_STRATEGY: clone
+  dependencies:
+    - get-fcc-db
+  environment:
+    name: Stage
+    url: http://docker.corbettdigital.net:8080/
+  script:
+    - mv fcc/trivnet-fcc.out docker/postgres/
+    - docker compose down
+    - chown gitlab-runner -R src/
+    - docker compose up -d
+
+stop-stage:
+  stage: deploy
+  tags:
+    - docker-shell
+  variables:
+    GIT_STRATEGY: none
+  only:
+    - master
+  when: manual
+  environment:
+    name: Stage
+    action: stop
+  script:
+    - docker compose down
+
+
+.deploy-macbookair:
   stage: deploy
   tags:
     - trivnet-macbookair
@@ -101,7 +136,7 @@ deploy-macbookair:
     - chown gitlab-runner -R src/
     - docker-compose up -d
 
-stop-macbookair:
+.stop-macbookair:
   stage: deploy
   tags:
     - trivnet-macbookair
@@ -116,24 +151,6 @@ stop-macbookair:
   script:
     - docker-compose down
 
-
-.deploy-thin:
-  stage: deploy
-  tags:
-    - trivnet-thin
-  variables:
-    GIT_STRATEGY: none
-  dependencies:
-    - rpmbuild
-  script:
-    - sudo yum -y remove postgresql-libs trivnet trivnet-static postgresql96-libs postgresql13-libs
-    - sudo rm -rf /var/lib/pgsql
-    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
-  after_script:
-    - find ./ -name \*.rpm -delete
-  environment:
-    name: Thin Client
-    url: http://10.254.10.111/trivnet/
 
 .deploy-prod:
   stage: deploy
