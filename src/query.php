@@ -20,11 +20,16 @@ foreach( $r_enum as $k => $v ) {
 
 function showFields() {
 	// Display the search field stuff
-	$db = connect();
 	global $config;
-	$q = "SELECT label, typeid, enum FROM datatypes WHERE typeid <> " . $config["message"] . " ORDER BY typeid";
-	syslog(LOG_DEBUG, $q);
-	$r = query($q);
+	$q = 'SELECT name, label, typeid, enum FROM datatypes WHERE typeid <> $1 ORDER BY typeid;';
+	$p[0] = $config["message"];
+
+    $res = pg_query_params( connect(), $q, $p );
+    $r = array();
+    while ( $z = pg_fetch_assoc($res) ) {
+        $r[] = $z;
+    } // end while
+
 	// echo "<form action=\"agents/search.php\" method=POST>\n";
 	echo "<form action=\"query.php\" method=POST>\n";
 	echo "<table>\n";

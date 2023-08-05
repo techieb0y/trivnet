@@ -1,4 +1,5 @@
 	function getMessages() {
+		console.log("Updating chat messages");
 		$("#mesgLoad").innerHTML = "📡";
 		$(".msgItem").remove();
 		$rowNum = 1;
