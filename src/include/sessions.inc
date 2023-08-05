@@ -1,6 +1,7 @@
 <?php
 
 function has_session() {
+	return true;
 	require_once("db_ops.inc");
 	require("config.inc");
 
