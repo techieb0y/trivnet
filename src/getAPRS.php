@@ -12,7 +12,7 @@ $left = $whc[0];
 $top = $whc[1];
 
 $dstimage=imagecreate(16,16);
-$srcimage=imagecreatefrompng("images/allicons.png");
+$srcimage=@imagecreatefrompng("images/allicons.png");
 imagecopy($dstimage,$srcimage, 0,0, $left, $top, 16,16);
 imagepng($dstimage);
 
