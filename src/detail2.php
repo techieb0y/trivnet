@@ -25,7 +25,7 @@ if ( isset($_GET["str"]) ) {
 
 	<script>
 		function detailCtrl($scope,$http) {
-			$http.get("/trivnet/agents/search.php?<?php echo $str; ?>").success(function(response) { $scope.names = response;});
+			$http.get("/agents/search.php?<?php echo $str; ?>").success(function(response) { $scope.names = response;});
 		}
 	</script>
 </head>

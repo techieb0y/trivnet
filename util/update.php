@@ -1,6 +1,6 @@
 <?php
 
-require_once("/var/www/trivnet/include/update-graphite.inc");
+require_once("/var/www/html/include/update-graphite.inc");
 
 updateMT();
 updateFinished();

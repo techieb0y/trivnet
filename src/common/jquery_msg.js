@@ -2,7 +2,7 @@
 		$("#mesgLoad").attr("innerHTML", "📡");
 		$(".msgItem").remove();
 		$rowNum = 0;
-		$.getJSON("/trivnet/agents/messages.php?limit=18", null, function(data) { 
+		$.getJSON("/agents/messages.php?limit=18", null, function(data) { 
 		$.each( data, function(idx) {
 				if ( data[idx].dest == callsign ) {
 				$("#messages").append( '<tr class=\"msgItem tome\"><td><img class=mesgSymbol src=symbol/' + data[idx].symbol + '></td><td class=msgLeft>' + data[idx].callsign + ' &rarr; ' + data[idx].dest + '<br>' + data[idx].tactical + '</td><td class=msgCenter> ' + data[idx].message + '</td><td class=msgRight>' + data[idx].timestamp + '</td></tr>' );

@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-$asyncpath = "/var/www/trivnet/";
+$asyncpath = "/var/www/html/";
 
 require_once("include/db_ops.inc");
 require_once("include/config.inc");

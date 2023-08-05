@@ -50,7 +50,7 @@ if ( !has_session() ) {
 	<link rel="stylesheet" href="css/flick/jquery-ui-1.8.24.custom.css" />
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui-1.8.24.custom.min.js"></script>
-	<script src="/trivnet/common/jquery_msg.js"></script>
+	<script src="/common/jquery_msg.js"></script>
 </head>
 
 <body>
