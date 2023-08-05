@@ -11,7 +11,15 @@ $begin = 0;
 include("head.inc");
 
 echo "<table width=\"100%\" border=2>";
-$races = query("select * from race");
+$races = array();
+
+$q = "select * from race";
+$res = pg_query( connect(), $q );
+
+while ( $z = pg_fetch_assoc($res) ) {
+    $races[] = $z;
+} // end while
+
 foreach ($races as $r) {
     $rn = $r["raceid"];
     
@@ -33,7 +41,6 @@ foreach ($races as $r) {
     } // end while
 
     $done = $r[0]["done"];
-
 
     $q_total = 'select count(personid) as total from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = "race") AND value = $1;';
     $p_total[0] = $r["raceid"];
@@ -168,7 +175,7 @@ $msgdt = $config["message"];
 
 //$q_summary = "select message,count(message) as num from updatesequence where message not ilike '%out%'  and message not like '%bed%' group by message order by message;";
 
-$q_summary = 'select value, count(value) as num from updatesequence where datatype = $1 and value not like "%Search performed%" group by value;';
+$q_summary = "select value, count(value) as num from updatesequence where datatype = \$1 and value not like '%Search performed%' group by value;";
 $p_summary[] = $msgdt;
 
 $res = pg_query_params( connect(), $q_summary, $p_summary );
