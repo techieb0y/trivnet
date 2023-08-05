@@ -1,5 +1,5 @@
 	function getMessages() {
-		$("#mesgLoad").attr("src", "/images/spinner-small.gif");
+		$("#mesgLoad").attr("innerHTML", "📡");
 		$(".msgItem").remove();
 		$rowNum = 1;
 		$.getJSON("/agents/messages.php?limit=5", null, function(data) { 
@@ -14,7 +14,7 @@
 				$rowNum++;
 			})
 		})
-		$("#mesgLoad").attr("src", "/images/refresh.png");
+		$("#mesgLoad").attr("innerHTML", "🔄");
 		setTimeout(getMessages, 60000);
 	} // end getMessages
 
