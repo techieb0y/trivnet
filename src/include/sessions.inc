@@ -4,7 +4,7 @@ function has_session() {
 	require_once("db_ops.inc");
 	require("config.inc");
 
-	$q = 'SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid="$1";';
+	$q = 'SELECT timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid = $1;';
 	$p[] = session_id();
 	$res = pg_query_params( connect(), $q, $p );
 
