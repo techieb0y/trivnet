@@ -29,7 +29,7 @@
 				$p[1] = $row["data"];
 			    $res = pg_query_params( connect(), $q, $p );
 				$r = array();
-				if ( pg_num_rows($red) > 0 ) {
+				if ( pg_num_rows($res) > 0 ) {
 					while ( $z = pg_fetch_assoc($res) ) {
 						$r[] = $z;
 					} // end while
