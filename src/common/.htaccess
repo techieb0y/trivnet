@@ -1,2 +1,6 @@
 ExpiresActive On
 ExpiresDefault "now plus 1 week"
+
+RewriteEngine On
+RewriteBase "/"
+RewriteRule "^symbol/(.*)" getAPRS.php?sym=$1
