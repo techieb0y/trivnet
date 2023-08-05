@@ -99,6 +99,7 @@ deploy-stage:
     - mv fcc/trivnet-fcc.out docker/postgres/
     - docker compose down
     - chown gitlab-runner -R src/
+    - chmod a+rX -R docker/
     - docker compose up -d
 
 stop-stage:
