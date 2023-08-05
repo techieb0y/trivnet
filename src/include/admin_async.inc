@@ -24,7 +24,20 @@
 			$stat = $row["status"];
 
 			if ( "t" == $isenum[ $row["updatetype"] ] ) {
-				$data = query( "SELECT value from enumtypes WHERE datatype=" . $row["updatetype"] . " AND id=" . $row["data"] )[0]["value"];
+				$q = 'SELECT value from enumtypes WHERE datatype = $1 AND id = $2;';
+				$p[0] = $row["updatetype"];
+				$p[1] = $row["data"];
+			    $res = pg_query_params( connect(), $q, $p );
+				$r = array();
+				if ( pg_num_rows($red) > 0 ) {
+					while ( $z = pg_fetch_assoc($res) ) {
+						$r[] = $z;
+					} // end while
+					$data = $r[0]["value"];
+				} else {
+					$data = array();
+					syslog(LOG_ERROR, "Unexpected lack of datatype definition.");
+				}
 			} else {
 				$data = $row["data"];
 			} // end if
