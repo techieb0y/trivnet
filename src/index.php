@@ -20,10 +20,32 @@ foreach ($races as $r) {
     
     echo "<tr>";
     echo "<td colspan=2 style=\"width: 100%; background: yellow;\">" . $RACENAME[$rn] . "</td></tr>\n";
-    
-    $q = "SELECT count(value) AS done FROM persondata WHERE datatype=" . $config["status"] . " AND value='" . $config["finishstatus"] . "' AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')";
-    $done = query($q)[0]["done"];
-    $total = query("select count(personid) as total from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value='" . $r["raceid"] . "')")[0]["total"];
+
+    $q = 'SELECT count(value) AS done FROM persondata WHERE datatype = $1 AND value= $2 AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value = $3)';
+    $p[0] = $config["status"];
+    $p[1] = $config["finishstatus"];
+    $p[2] = $r["raceid"];
+
+    $res = pg_query_params( connect(), $q, $p );
+    $r = array();
+    while ( $z = pg_fetch_assoc($res) ) {
+        $r[] = $z;
+    } // end while
+
+    $done = $r[0]["done"];
+
+
+    $q_total = 'select count(personid) as total from persondata WHERE personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = "race") AND value = $1;';
+    $p_total[0] = $r["raceid"];
+
+    $res = pg_query_params( connect(), $q_total, $p_total );
+    $r = array();
+    while ( $z = pg_fetch_assoc($res) ) {
+        $r[] = $z;
+    } // end while
+
+    $total = $r[0]["done"];
+
     $percent = floor(100 * ($done / $total));
     echo "<tr><td width=\"25%\">$percent% Crossed Finish Line<br>\n";
     
@@ -69,7 +91,15 @@ echo "</table>\n";
 $sdt = $config["status"];
 echo "Status summary:<br>\n";
 
-$r_sum = query("select count(persondata.value) as num, enumtypes.value as option from persondata,enumtypes where persondata.datatype=$sdt and enumtypes.id=persondata.value::integer and enumtypes.datatype=persondata.datatype group by persondata.value, enumtypes.value order by option");
+
+$q_sum = 'select count(persondata.value) as num, enumtypes.value as option from persondata,enumtypes where persondata.datatype = $1 and enumtypes.id=persondata.value::integer and enumtypes.datatype=persondata.datatype group by persondata.value, enumtypes.value order by option;';
+$p_sum[] = $sdt;
+
+$res = pg_query_params( connect(), $q_sum, $p_sum );
+$r_sum = array();
+while ( $z = pg_fetch_assoc($res) ) {
+    $r_sum[] = $z;
+} // end while
 
 // $r_sum = query("select datatypes.label, enumtypes.value as option, count(persondata.value) as num from persondata, datatypes, enumtypes where persondata.datatype=datatypes.typeid and enumtypes.id=persondata.value::integer and persondata.datatype in ( select typeid from datatypes where enum='t' ) group by label, option");
 
