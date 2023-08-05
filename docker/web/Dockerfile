@@ -4,3 +4,4 @@ RUN apt-get install -y postgresql-server-dev-15 && docker-php-ext-configure pgsq
 RUN apt-get install -y libfreetype-dev libjpeg62-turbo-dev libpng-dev && docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install -j$(nproc) gd
 RUN a2enmod expires && a2enmod rewrite
 COPY --chown=33:33 ./src/ /var/www/html/
+RUN mkdir /var/www/html/jobs /var/www/html/csvdata && chown 33:33 /var/www/html/jobs /var/www/html/csvdata
