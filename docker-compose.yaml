@@ -1,6 +1,7 @@
 services:
   trivnet:
     image: dockreg.corbettdigital.net/trivnet/trivnet:master
+    hostname: trivnet-web
     depends_on:
       - database
     restart: unless-stopped
@@ -10,6 +11,7 @@ services:
       - "./src/:/var/www/html/"
   database:
     image: postgres:15-bookworm
+    hostname: trivnet-database
     restart: unless-stopped
     volumes:
       - "./docker/postgres/:/docker-entrypoint-initdb.d/"
