@@ -18,11 +18,22 @@ function has_session() {
 			$age = $r[0]["age"];
 			if ( $age > $config["idle_timeout"] ) {
 				// They have an old session, most likely disconnected.
-				$qn = "SELECT callsign FROM sessions WHERE sessionid='" . session_id() . "'";
-				$rn = query($qn);
+				$qn = 'SELECT callsign FROM sessions WHERE sessionid = $1;';
+				$res = pg_query_params( connect(), $qn, $p );
+				$r = array();
+				while ( $z = pg_fetch_assoc($res) ) {
+					$rn[] = $z;
+				} // end while
+
 				$call = $rn[0]["callsign"];
 
-				$q = "UPDATE sessions SET timestamp=0 WHERE sessionid='" . session_id() . "';";
+				$q = 'UPDATE sessions SET timestamp=0 WHERE sessionid =  $1;';
+				$res = pg_query_params( connect(), $qn, $p );
+				$r = array();
+				while ( $z = pg_fetch_assoc($res) ) {
+					$r[] = $z;
+				} // end while
+
 				$r = query($q);
 				error_log("Disconnected timed-out ($age secs)  session for $call", 0);
 				return false;
