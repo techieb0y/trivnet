@@ -38,7 +38,7 @@ create-web-container:
   before_script:
     - /bin/docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
-    - pushd docker/web/ && docker build -t trivnetphp . && popd
+    - docker build -t trivnetphp -f docker/web/Dockerfile . 
     - docker tag trivnetphp $IMAGE_TAG
     - docker push $IMAGE_TAG
 
