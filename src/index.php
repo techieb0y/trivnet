@@ -21,7 +21,7 @@ foreach ($races as $r) {
     echo "<tr>";
     echo "<td colspan=2 style=\"width: 100%; background: yellow;\">" . $RACENAME[$rn] . "</td></tr>\n";
 
-    $q = 'SELECT count(value) AS done FROM persondata WHERE datatype = $1 AND value= $2 AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name = 'race') AND value = $3)';
+    $q = 'SELECT count(value) AS done FROM persondata WHERE datatype = $1 AND value= $2 AND personid IN (SELECT personid FROM persondata WHERE datatype IN (SELECT typeid FROM datatypes WHERE name="race") AND value = $3)';
     $p[0] = $config["status"];
     $p[1] = $config["finishstatus"];
     $p[2] = $r["raceid"];
