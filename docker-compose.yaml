@@ -1,7 +1,8 @@
 services:
   trivnet:
     image: dockreg.corbettdigital.net/trivnet/trivnet:master
-    hostname: trivnet-web
+    networks:
+     - trivnet
     depends_on:
       - database
     restart: unless-stopped
@@ -9,7 +10,8 @@ services:
       - "8080:80"
   database:
     image: postgres:15-bookworm
-    hostname: trivnet-database
+    networks:
+     - trivnet
     restart: unless-stopped
     volumes:
       - "./docker/postgres/:/docker-entrypoint-initdb.d/"
@@ -17,3 +19,6 @@ services:
       POSTGRES_PASSWORD: trivnet
       POSTGRES_USER: trivnet
       POSTGRES_DB: trivnet
+
+networks:
+ - trivnet

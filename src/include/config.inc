@@ -17,7 +17,7 @@ $DB_TYPE = "pgsql";
 $DB_NAME = "trivnet";
 $DB_USER = "trivnet";
 $DB_PASS = "trivnet";
-$DB_HOST = "trivnet-database-1";
+$DB_HOST = "database";
 
 // Network-topolgy-aware page display parameters
 $config["localnets"] = array( "192.168.54.0/24", "172.16.104.0/24" );
