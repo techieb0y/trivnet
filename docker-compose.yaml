@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:80"
   database:
-    image: postgres:15-bookworm
+    image: postgres:15-alpine
     networks:
      - trivnet
     restart: unless-stopped
