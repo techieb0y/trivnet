@@ -29,7 +29,7 @@ get-fcc-db:
 create-web-container:
   stage: assets
   tags:
-    - trivnet-macbookair
+    - docker-shell
   only:
     - master  
   variables:
