@@ -21,7 +21,7 @@
 		echo "<tr><th>Job ID</th><th>Filename</th><th>Owner</th><th>Search on</th><th>Update</th><th>Data</th><th>Job State</th><th>Progress</th><th>Timestamp</th></tr>\n";
 		foreach ($r as $row) {
 			$ts = date("r", $row["timestamp"]);
-			$stat = $row["status"];
+			$state = $row["state"];
 
 			if ( "t" == $isenum[ $row["updatetype"] ] ) {
 				$q = 'SELECT value from enumtypes WHERE datatype = $1 AND id = $2;';
