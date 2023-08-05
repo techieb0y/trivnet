@@ -125,7 +125,7 @@ if ( !has_session() ) {
 	// Time and messages window
 	echo "<div class=\"messages\">\n";
 	echo "<table id=\"messages\">\n";
-	echo "<span id=\"mesgLoad\"><a href=\"#\">🔄</a></span>\n";
+	echo "<a href=\"#\" id=\"mesgLoad\">📡</a>\n";
 	echo "</table>\n";
 	echo "</div>\n";
 	

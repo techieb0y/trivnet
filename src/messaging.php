@@ -90,7 +90,7 @@ if ( !has_session() ) {
 <?php
 	// Time and messages window
 	echo "<div class=\"messages messagesBig\">\n";
-	echo "<a id=\"mesgLoad\" href=\"#\">🔄</a>\n";
+	echo "<a id=\"mesgLoad\" href=\"#\">📡</a>\n";
 	echo "<table id=\"messages\">";
 	echo "</table>";
 	echo "</div>\n";
