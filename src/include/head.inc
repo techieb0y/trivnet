@@ -126,7 +126,7 @@ if ( !has_session() ) {
 	if ( "true" != getenv("slownet") ) {
 		echo "<div class=\"messages\">\n";
 		echo "<table id=\"messages\">\n";
-		echo "<a href=\"#\"><img class=\"topRight\" id=\"mesgLoad\" src=\"images/refresh.png\"></a>\n";
+		echo "<a href=\"#\">🔄</a>\n";
 		echo "</table>\n";
 		echo "</div>\n";
 	} else {
