@@ -252,11 +252,30 @@ function runJob($jobId) {
 			if ( trim($row )== "END" ) { break; }
 			// Marathon special-case handling for bib numbers, which will almost always be the multi-edit default type.
 			if ( $searchtype == $config["multidefault"] ) {
-				$r = query("SELECT personid FROM persondata WHERE datatype=$searchtype AND value='" . strtoupper(trim($row)) . "'");
+				$q = 'SELECT personid FROM persondata WHERE datatype = $1 AND value = $2;';
+
+				$p[0] = $searchtype;
+				$p[1] = strtoupper(trim($row));
+
+				$res = pg_query_params( connect(), $q, $p );
+				$r = array();
+				while ( $z = pg_fetch_assoc($res) ) {
+					$r[] = $z;
+				} // end while			
 			} else {
-				$r = query("SELECT personid FROM persondata WHERE datatype=$searchtype AND value='" . trim($row) . "'");
+				$q = 'SELECT personid FROM persondata WHERE datatype = $1 AND value = $2;';
+
+				$p[0] = $searchtype;
+				$p[1] = trim($row);
+
+				$res = pg_query_params( connect(), $q, $p );
+				$r = array();
+				while ( $z = pg_fetch_assoc($res) ) {
+					$r[] = $z;
+				} // end while
 			} // end if
-			if ( count($r) > 1 ) {
+
+			if ( (pg_num_rows($res) > 0) && (count($r) > 1) ) {
 				fwrite($errlog, "Duplicate entry for $personid\n");
 				$err++;
 			} else if ( count($r) == 1 ) {
