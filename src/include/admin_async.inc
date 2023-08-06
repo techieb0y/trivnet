@@ -23,7 +23,7 @@
 			$ts = date("r", $row["timestamp"]);
 			$state = $row["state"];
 
-			if ( ( !preg_match("/^IMPORT/", $row["data"] ) && "t" == $isenum[ $row["updatetype"] ] ) {
+			if ( ( !preg_match("/^IMPORT/", $row["data"] ) ) && ( "t" == $isenum[ $row["updatetype"] ] ) ) {
 				$q = 'SELECT value from enumtypes WHERE datatype = $1 AND id = $2;';
 				$p[0] = $row["updatetype"];
 				$p[1] = $row["data"];
