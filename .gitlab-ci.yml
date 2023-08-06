@@ -41,7 +41,7 @@ create-web-container:
     - mkdir src/js/
     - curl -o src/js/jquery.js -L https://code.jquery.com/jquery-3.7.0.min.js
     - curl -LO https://jqueryui.com/resources/download/jquery-ui-1.13.2.zip && unzip jquery-ui-1.13.2.zip
-    - mv jquery-ui-1.13.2/jquery-ui.min.js src/js/jquery-ui.js && jquery-ui-1.13.2/jquery-ui.min.css src/css/jquery-ui.css
+    - mv jquery-ui-1.13.2/jquery-ui.min.js src/js/jquery-ui.js && mv jquery-ui-1.13.2/jquery-ui.min.css src/css/jquery-ui.css
     - docker build -t trivnetphp -f docker/web/Dockerfile . 
     - docker tag trivnetphp $IMAGE_TAG
     - docker push $IMAGE_TAG
