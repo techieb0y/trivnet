@@ -38,7 +38,7 @@ create-web-container:
   before_script:
     - /bin/docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
-    - mkdir src/js/
+    - mkdir src/js/ src/css/
     - curl -o src/js/jquery.js -L https://code.jquery.com/jquery-3.7.0.min.js
     - curl -LO https://jqueryui.com/resources/download/jquery-ui-1.13.2.zip && unzip jquery-ui-1.13.2.zip
     - mv jquery-ui-1.13.2/jquery-ui.min.js src/js/jquery-ui.js && mv jquery-ui-1.13.2/jquery-ui.min.css src/css/jquery-ui.css
