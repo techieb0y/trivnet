@@ -12,9 +12,9 @@ if ( isset($_GET["mode"]) ) {
     // No mode, show the form
     require_once("include/head.inc");
 
-    echo "<link rel=\"stylesheet\" href=\"/css/flick/jquery-ui-1.8.24.custom.css\">\n";
+    echo "<link rel=\"stylesheet\" href=\"/css/jquery-ui.css\">\n";
     echo "<script src=\"/js/jquery.js\"></script>\n";
-    echo "<script src=\"/js/jquery-ui-1.8.24.custom.min.js\"></script>\n";
+    echo "<script src=\"/js/jquery-ui.js\"></script>\n";
 
     echo "
         <script>
