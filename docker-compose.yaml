@@ -1,13 +1,25 @@
 services:
-  trivnet:
+  web:
     image: dockreg.corbettdigital.net/trivnet/trivnet:master
     networks:
      - trivnet
     depends_on:
       - database
+    volumes:
+      - asyncdata:/var/www/html/jobs/
     restart: unless-stopped
     ports:
       - "8080:80"
+  async:
+    image: dockreg.corbettdigital.net/trivnet/trivnet:master
+    command: php /var/www/html/async.php --daemon
+    networks:
+     - trivnet
+    depends_on:
+      - database
+    volumes:
+      - asyncdata:/var/www/html/jobs/
+    restart: unless-stopped
   database:
     image: postgres:15-alpine
     networks:
@@ -20,5 +32,7 @@ services:
       POSTGRES_USER: trivnet
       POSTGRES_DB: trivnet
 
+volumes:
+  asyncdata:
 networks:
- trivnet:
+  trivnet:

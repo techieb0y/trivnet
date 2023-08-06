@@ -1,6 +1,5 @@
 #!/usr/bin/php
 <?php
-$asyncpath = "/var/www/html/";
 
 require_once("include/db_ops.inc");
 require_once("include/config.inc");
@@ -140,8 +139,8 @@ function runOnce() {
 
 function runJob($jobId) {
 	declare(ticks = 1);
-	pcntl_signal(SIGTERM, function ($signo) use (&$jobId) { $r = query("UPDATE async SET state=2, timestamp=" . time() . " WHERE jobid=$jobId"); syslog(LOG_NOTICE, "Got SIGTERM"); die("Aborting\n");} );
-	pcntl_signal(SIGINT, function ($signo) use (&$jobId) { $r = query("UPDATE async SET state=2, timestamp=" . time() . " WHERE jobid=$jobId"); syslog(LOG_NOTICE, "Got SIGINT"); die("Aborting\n"); } );
+	// pcntl_signal(SIGTERM, function ($signo) use (&$jobId) { $r = query("UPDATE async SET state=2, timestamp=" . time() . " WHERE jobid=$jobId"); syslog(LOG_NOTICE, "Got SIGTERM"); die("Aborting\n");} );
+	// pcntl_signal(SIGINT, function ($signo) use (&$jobId) { $r = query("UPDATE async SET state=2, timestamp=" . time() . " WHERE jobid=$jobId"); syslog(LOG_NOTICE, "Got SIGINT"); die("Aborting\n"); } );
 
 	$r = query("SELECT * from async WHERE jobid=$jobId");
 	$file = $r[0]["filename"];
@@ -249,7 +248,6 @@ function runJob($jobId) {
 
 		foreach ($workingSet as $row) {
 			global $config;
-			global $asyncpath;
 			
 			if ( trim($row )== "END" ) { break; }
 			// Marathon special-case handling for bib numbers, which will almost always be the multi-edit default type.
@@ -317,12 +315,11 @@ function runJob($jobId) {
 		fclose($errlog);
 	} // end if - bulk-import special case
 
-	touch($asyncpath . "/jobs/asyncEngine.stat");
+	touch("/var/www/html/jobs/asyncEngine.stat");
 } // end runJob
 
 function housekeeping() {
 	global $config;
-	global $asyncpath;
 	
 	// Clean up timed-out sessions
 	$sdb = list_sessions();
@@ -334,7 +331,7 @@ function housekeeping() {
 			} // end if
 		} // end foreach
 	} // enf if
-	touch($asyncpath . "/jobs/asyncEngine.stat");
+	touch("/var/www/html/jobs/asyncEngine.stat");
 } // end housekeeping
 
 ?>
