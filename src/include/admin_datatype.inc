@@ -56,9 +56,7 @@
 					$query = "SELECT COUNT(persondata) FROM persondata WHERE datatype='$dt' AND value='$id'";
 					$q = query($query);
 					if ( ( $dt == $config["status"] ) && ( $id == $config["medtentstatus"] ) ) {
-						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td>⚕️</td></tr>";
-					} else if ( ( $dt == $config["status"] ) && ( $id == $config["finishstatus"] ) ) {
-						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td>🏁</td></tr>";
+						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td><img src=\"symbol/11\"></td></tr>";
 					} else if ( $q[0]["count"] > 0 ) {
 						echo "<tr><td>" . $_enum["id"] . "</td><td>" . $_enum["value"] . "</td><td>[in use]</td></tr>";
 					} else {

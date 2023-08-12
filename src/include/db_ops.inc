@@ -48,13 +48,16 @@ error_log("QS: " . $string, 0);
 
 	$result = 0;
 
-	$result = query( $string );
-
-	// query will return an array with one row (one result) which itself is
-	// and array of one row (the single column of the output)
-
-	return( $result[0][0] );
-
+	$res = pg_query( connect(), $string );
+	if ( pg_num_rows($res) == 1 ) {
+		while ( $z = pg_fetch_assoc($res) ) {
+			$r[] = $z;
+		} // end while
+		$result = $r[0][0]);
+		return($result);
+	} else {
+		return null;
+	}
 } // end query
 
 function query( $string ) {
@@ -69,7 +72,7 @@ function query( $string ) {
 	$return = array();
 
 	$res = pg_query( connect(), $string );
-	if ( $res ) {
+	if ( pg_num_rows($res) > 0 ) {
 		unset($return);
 		while ( $z = pg_fetch_assoc($res) ) {
 			$return[] = $z;
