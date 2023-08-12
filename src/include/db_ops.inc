@@ -53,7 +53,7 @@ error_log("QS: " . $string, 0);
 		while ( $z = pg_fetch_assoc($res) ) {
 			$r[] = $z;
 		} // end while
-		$result = $r[0][0]);
+		$result = $r[0][0];
 		return($result);
 	} else {
 		return null;
