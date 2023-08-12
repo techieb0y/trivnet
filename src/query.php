@@ -168,11 +168,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 		echo "<tr>";
 		foreach ( $r[0] as $k => $f ) {
 			if ( ($k != "personid") && ($k != "status") && ($k != "message") ) {
-				if ( $k == "bibnum") {
-					echo "<td><a href=\"detail.php?id=$pers\">";
-				} else {
-					echo "<td>";
-				}
+				echo "<td><a href=\"detail.php?id=$pers\">";
 				$tid = $reverseArray[$k];
 				if ( isset( $enums[$tid] ) ) {
 					$which = $row[$k];
@@ -180,11 +176,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 				} else {
 					echo $row[$k];
 				} // end if
-				if ( $k == "bibnum") {
-					echo "</a></td>";
-				} else {
-					echo "</td>";
-				}
+				echo "</a></td>";
 			} // end if
 		} // end foreach
 		echo "</tr>\n";
@@ -201,9 +193,11 @@ echo "...or <a href=\"addPerson.php\">Add New Person Manually</a><br>";
 echo "<hr>\n";
 showFields();
 
-echo "<script>\n";
-echo "  new DataTable('#searchResults');\n";
-echo "</script>\n";
+echo "<script>
+$('#searchResults').dataTable( {
+	"pageLength": 50
+  } );
+";
 
 require_once("include/foot.inc");
 echo "</body></html>";
