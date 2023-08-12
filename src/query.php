@@ -194,8 +194,8 @@ echo "<hr>\n";
 showFields();
 
 echo "<script>
-$('#searchResults').dataTable( {
-	"pageLength": 50
+\$('#searchResults').dataTable( {
+	\"pageLength\": 50
   } );
 ";
 
