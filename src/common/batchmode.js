@@ -6,6 +6,7 @@ function makeClone() {
 	// Spinner space
 	var newIconTd = document.createElement("td");
 	newIconTd.innerHTML = "";
+	newIconTd.setAttribute("id", "statusIcon" + counter);
 
 	// Enter a probably-a-bib-number
 	var newSearchTd = document.createElement("td");
@@ -53,6 +54,8 @@ function makeClone() {
 	var parent = document.getElementById("outParent");
 	parent.appendChild(newRow);
 
+	counter.value++;
+
 	newSearchInput.focus();
 } // end makeClone
 
@@ -73,22 +76,22 @@ function personSearch(where) {
 	icon = document.getElementById("statusIcon" + boxNum);
 	if ( searchM.value.length > 0 ) {
 		// Do magic
-		icon.setAttribute('src', 'images/throbber.gif');
+		icon.innerHTML = "&nbsp;";
 		doAjax(boxNum);
 	} else {
-		icon.setAttribute('src', 'images/warning.png');
+		icon.innerHTML = '⚠️';
 	} // end validate
 
 	// Add more rows
 	oneLess = counter-1;
 	searchN = document.getElementById("search" + oneLess);
 	statusN = document.getElementById("status" + oneLess);
-	if ( icon.getAttribute('src') != 'images/warning.png') {
-	if ( ( statusN.value.length > 0 ) && ( searchN.value.length > 0 )) {
-		goBtn = document.getElementById("infoIcon" + boxNum);
-		goBtn.style.display = "inherit";
-		makeClone();
-	} // end if
+	if ( icon.innerHTML != '⚠️') {
+		if ( ( statusN.value.length > 0 ) && ( searchN.value.length > 0 )) {
+			goBtn = document.getElementById("infoIcon" + boxNum);
+			goBtn.style.display = "inherit";
+			makeClone();
+		} // end if
 	} // enf if
 } // end pretendDoStuff
 
@@ -109,7 +112,7 @@ function doAjax(rowNum) {
 	if ( 1 == rslt.result ) {
 		resultN.value = rslt.displayname;
 		pidN.value = rslt.personid;
-		icon.innerHTML='';
+		icon.innerHTML = "&nbsp;";
 	} else {
 		goBtn = document.getElementById("infoIcon" + boxNum);
 		goBtn.style.display = "none";

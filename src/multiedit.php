@@ -4,7 +4,6 @@
 	require_once("include/db_ops.inc");
 ?>
 
-<script type="text/javascript" src="common/domTraverse.js"></script>
 <script type="text/javascript" src="common/batchmode.js"></script>
 
 <form name=batchupdates id=output method=post action="" enctype="multipart/form-data">
@@ -19,38 +18,6 @@
 	echo "Search on <b>$searchtype</b> only.\n";
 ?>
 <br>
-
-<div>
-<table style="display: none;">
-<tr id="template">
-<td id="icon_td">
-<span id="statusIcon">
-</td>
-<td id="search_td">
-<input name="search[]" id="search" size=6 onBlur="javascript:personSearch(this)">
-</td>
-<td id="display_td">
-<input name="diplayName[]" id="displayName" size=50 disabled="disabled">
-<input name="personID[]" type=hidden id="personID">
-</td>
-<td id="status_td">
-<input name="status[]" id="status" size=50 onBlur="javascript:personSearch(this)">
-<?php
-	// <select size=5 class="magicBox" name="presetStatus0" id="presetStatus0">
-	// $r = query("SELECT text from quickmesg");
-	// foreach ($r as $row) {
-	//	$text = $row["text"];
-	//	echo "<option value=\"$text\">$text</option>\n";
-	// } // end foreach
-?>
-</select>
-</td>
-<td id="go_td">
-<span style="display: none" name="infoIcon" id="infoIcon" onClick="javascript:postStatus(this)">▶️</span>
-</td>
-</tr>
-</table>
-</div>
 
 <table>
 <div id="outParent">
