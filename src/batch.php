@@ -47,9 +47,10 @@ foreach($r as $row) {
 Update Data values: 
 <table>
 <tr>
-<td><input type=\"checkbox\" id="updateType[999]" name="updateType[999]" value="true"></td>
+<td><input type="checkbox" id="updateLatchEnable" name="updateType[999]" value="true"></td>
 <td>Latching Status</td>
-<td><select name="latch">
+<td><select name="latch" id="updateLatchSelect">
+<option selected disabled>Select One</option>";
 <?php
 $q_latch = 'select * from latchtypes';
 
