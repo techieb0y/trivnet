@@ -24,7 +24,7 @@ $inmed = query($q);
 foreach($inmed as $m) {
         $id = $m["value"];
         $label = $theBigArray[$id];
-        echo "trivnet_status{label=\"${label}\"}        " . $m["cnt"]  . "\n";
+        echo "trivnet_status{label=\"" . $label . "\"}        " . $m["cnt"]  . "\n";
 }
 
 $q_latch = 'select label,count(personid) as num from latchlog full outer join latchtypes on latchtypes.id=latchlog.latchid group by label;';
