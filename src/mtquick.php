@@ -40,8 +40,9 @@ if ( count($pre) == 0 ) {
 	$qq = "UPDATE persondata SET value='$dir' WHERE personid=$id AND datatype=$mtdt;";
 } // end if
 
-$q = "BEGIN;\n INSERT INTO updatesequence VALUES ( $id, $time, '$mycall', $msgdt, '$text' );\n" . $qq . "COMMIT;";
+$medTentLatchID = $config["medtendlatchid"];
 
+$q = "BEGIN;\n INSERT INTO updatesequence VALUES ( $id, $time, '$mycall', $msgdt, '$text' );\n INSERT INTO latchlog VALUES ($id, $medTentLatchID) on conflict do nothing;\n" . $qq . "COMMIT;";
 $r = query($q);
 
 // echo "<pre>" . $q . "</pre>";

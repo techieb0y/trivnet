@@ -171,7 +171,7 @@ echo "<table>\n";
 
 $q_latch = 'select label,count(personid) as num from latchlog full outer join latchtypes on latchtypes.id=latchlog.latchid group by label;';
 
-$res = pg_query_params( connect(), $q_latch );
+$res = pg_query( connect(), $q_latch );
 $r = array();
 while ( $z = pg_fetch_assoc($res) ) {
 	echo "<tr><td>" . $z["label"] . "</td><td>" . $z["num"] . "</td></tr>\n";
