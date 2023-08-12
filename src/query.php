@@ -7,6 +7,9 @@ require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
 
+echo "<link rel="stylesheet" href="common/datatables.min.css" />";
+echo "<script src=\"js/datatables.min.js\"></script>\n";
+
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes order by datatype, id";
 $r_enum = query($q_enum);
@@ -95,7 +98,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	// echo "<pre>"; print_r($exactness); echo "</pre>";
 	// echo "<pre>"; print_r($_POST); echo "</pre>";
 
-	echo "<table width=\"100%\">\n";
+	echo "<table width=\"100%\" id=\"searchResults\">\n";
 
 	$q = $q_base;
 
@@ -191,6 +194,10 @@ echo "...or <a href=\"addPerson.php\">Add New Person Manually</a><br>";
 
 echo "<hr>\n";
 showFields();
+
+echo "<script>\n";
+echo "  new DataTable('#searchResults');";
+echo "</script>\n";
 
 require_once("include/foot.inc");
 echo "</body></html>";
