@@ -35,7 +35,7 @@
 	foreach ($tuples as $pair) {
 		$parts = explode(":", $pair);
 		$what = $parts[0];
-		$value = pg_escape_string($parts[1]);
+		$value = pg_escape_string(connect(), $parts[1]);
 
 		if ( strlen($what) > 0 ) {
 			$t = query("SELECT typeid,enum FROM datatypes WHERE name='$what'");
@@ -52,7 +52,17 @@
 				} // end foreach
 			} // end if
 
-			$w = query("SELECT value FROM persondata WHERE personid=$who AND datatype=$typeid");
+			$q_who = 'SELECT value FROM persondata WHERE personid = $1 AND datatype = $2;';
+			$p[0] = $who;
+			$p[1] = $typeid;
+			$res = pg_query_params( connect(), $q_who, $p );
+			if ( pg_num_rows($res) == 1) {
+				$w = array();
+				while ( $z = pg_fetch_assoc($res) ) {
+					$w[] = $z;
+				} // end while
+			} // end row-count
+
 			$was = $w[0]["value"];
 
 			if ( count($was) > 0 ) {
