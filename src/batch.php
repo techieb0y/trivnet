@@ -46,6 +46,21 @@ foreach($r as $row) {
 <td>
 Update Data values: 
 <table>
+<tr>
+<td><input type=\"checkbox\" id="updateType[999]" name="updateType[999]" value="true"></td>
+<td>Latching Status</td>
+<td><select name="latch">
+<?php
+$q_latch = 'select * from latchtypes';
+
+$res = pg_query( connect(), $q_latch );
+$r = array();
+while ( $z = pg_fetch_assoc($res) ) {
+	echo "<option value=\"" . $z["id"] . "\">" . $z["label"] . "</option>\n";
+} // end while
+?>
+</select></td></tr>
+
 <?php
 $_dts = query("SELECT * from datatypes order by typeid");
 
