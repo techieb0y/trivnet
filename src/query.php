@@ -159,7 +159,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	echo "<table>\n";
 	echo "<tr>";
 	foreach ( $theBigArray as $fieldName ) {
-		if ( $fieldName != "status" ) {
+		if ( $fieldName != "status" && $fieldName != "message") {
 			echo "<th>$fieldName</th>";
 		} // end if
 	} // end foreach
