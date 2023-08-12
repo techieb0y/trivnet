@@ -98,8 +98,6 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	// echo "<pre>"; print_r($exactness); echo "</pre>";
 	// echo "<pre>"; print_r($_POST); echo "</pre>";
 
-	echo "<table width=\"100%\" id=\"searchResults\">\n";
-
 	$q = $q_base;
 
 	if ( strlen($_POST["statusmesg"]) > 0 ) {
@@ -156,7 +154,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	
 	// echo "<pre>" . print_r($r) . "</pre>";
 
-	echo "<table>\n";
+	echo "<table width=\"100%\" id=\"searchResults\">\n";
 	echo "<tr>";
 	foreach ( $theBigArray as $fieldName ) {
 		if ( $fieldName != "status" && $fieldName != "message") {
