@@ -7,8 +7,8 @@ require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
 
-echo "<link rel=\"stylesheet\" href=\"common/datatables.min.css\" />";
-echo "<script src=\"js/datatables.min.js\"></script>\n";
+echo "<link rel=\"stylesheet\" href=\"common/datatables.css\" />";
+echo "<script src=\"js/datatables.js\"></script>\n";
 
 // Pre-load the enumerated data value sets for display
 $q_enum = "SELECT * FROM enumtypes order by datatype, id";

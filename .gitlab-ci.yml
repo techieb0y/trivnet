@@ -40,8 +40,8 @@ create-web-container:
   script:
     - mkdir src/js/ src/css/
     - curl -L -o src/js/jquery.js -L https://code.jquery.com/jquery-3.7.0.min.js
-    - curl -L -o src/js/datatables.min.js https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.js
-    - curl -L -o src/common/datatables.min.css https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.min.css
+    - curl -L -o src/js/datatables.js https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.js
+    - curl -L -o src/common/datatables.css https://cdn.datatables.net/v/dt/dt-1.13.6/datatables.css
     - curl -LO https://jqueryui.com/resources/download/jquery-ui-1.13.2.zip && unzip jquery-ui-1.13.2.zip
     - mv jquery-ui-1.13.2/jquery-ui.min.js src/js/jquery-ui.js && mv jquery-ui-1.13.2/jquery-ui.min.css src/css/jquery-ui.css
     - echo -e "<?php\n\$sha=\"${CI_COMMIT_SHA}\";\n?>\n" > src/include/sha.inc
