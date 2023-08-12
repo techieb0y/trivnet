@@ -169,8 +169,12 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 		$pers = $row["personid"];
 		echo "<tr>";
 		foreach ( $r[0] as $k => $f ) {
-			if ( ($k != "personid") && ($k != "status") ) {
-				echo "<td><a href=\"detail.php?id=$pers\">";
+			if ( ($k != "personid") && ($k != "status") && ($k != "message") ) {
+				if ( $k == "bibnum") {
+					echo "<td><a href=\"detail.php?id=$pers\">";
+				} else {
+					echo "<td>";
+				}
 				$tid = $reverseArray[$k];
 				if ( isset( $enums[$tid] ) ) {
 					$which = $row[$k];
@@ -178,7 +182,11 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 				} else {
 					echo $row[$k];
 				} // end if
-			echo "</a></td>";
+				if ( $k == "bibnum") {
+					echo "</a></td>";
+				} else {
+					echo "</td>";
+				}
 			} // end if
 		} // end foreach
 		echo "</tr>\n";
@@ -196,7 +204,7 @@ echo "<hr>\n";
 showFields();
 
 echo "<script>\n";
-echo "  new DataTable('#searchResults');";
+echo "  new DataTable('#searchResults');\n";
 echo "</script>\n";
 
 require_once("include/foot.inc");
