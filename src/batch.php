@@ -75,8 +75,7 @@ foreach( $_dts as $_dt ) {
 	} else {
 		echo "<td><input type=\"checkbox\" id=\"updateType[$typeid]\" name=\"updateType[$typeid]\" value=\"true\"></td>\n";
 	} // end if
-	echo "<td><label for=\"updateType[$typeid]\">$label</label></td>\n<td>";
-
+	echo "<td><label for=\"updateType[$typeid]\">$label</label></td>\n";
 
 	echo "<td><label for=\"updateType[$typeid]\">";
 	// Messages can be enum or custom, so they're a bit of a special case.
