@@ -182,8 +182,29 @@ foreach ( $r as $key => $row ) {
 
 echo "</table>\n";
 
+// Latching statuses
 
-	$mt = array( "11", "27", "65", "72" );
+echo "<table>\n";
+
+$q_latch = 'select label from latchlog,latchtypes where latchtypes.id=latchlog.latchid and latchlog.personid = $1;';
+$p_latch[0] = $id;
+
+$res = pg_query_params( connect(), $q_latch, $p_latch );
+$r = array();
+while ( $z = pg_fetch_assoc($res) ) {
+	echo "<td><td>" . $z["label"] . "</td></tr>\n";
+} // end while
+
+echo "</table>\n";
+
+
+	// 11 = Red Cross
+	// 27 = Tent
+	// 65 = Ambulance
+	// 72 = Hospital
+	// 31 = SysOp
+
+	$mt = array( "11", "27", "65", "72", "31" );
 	if ( in_array( $_SESSION["symbol"], $mt ) ) {
 		echo "<table><tr>\n";
 		echo "<th colspan=2>Med-tent specific options</th>\n";

@@ -56,8 +56,8 @@
 			$p[0] = $who;
 			$p[1] = $typeid;
 			$res = pg_query_params( connect(), $q_who, $p );
+			$w = array();
 			if ( pg_num_rows($res) == 1) {
-				$w = array();
 				while ( $z = pg_fetch_assoc($res) ) {
 					$w[] = $z;
 				} // end while

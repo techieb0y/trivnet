@@ -165,6 +165,22 @@ if ( pg_num_rows($res) > 0 ) {
 echo "</td>\n";
 echo "</tr></table>";
 
+// Latching statuses
+
+echo "<table>\n";
+
+$q_latch = 'select label,count(personid) as num from latchlog full outer join latchtypes on latchtypes.id=latchlog.latchid group by label;';
+
+$res = pg_query_params( connect(), $q_latch );
+$r = array();
+while ( $z = pg_fetch_assoc($res) ) {
+	echo "<tr><td>" . $z["label"] . "</td><td>" . $z["num"] . "</td></tr>\n";
+} // end while
+
+echo "</table>\n";
+
+
+
 echo "<hr>\n";
 
 echo "Message summary:<br>\n";
