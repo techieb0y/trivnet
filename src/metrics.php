@@ -27,4 +27,12 @@ foreach($inmed as $m) {
         echo "trivnet_status{label=\"${label}\"}        " . $m["cnt"]  . "\n";
 }
 
+$q_latch = 'select label,count(personid) as num from latchlog full outer join latchtypes on latchtypes.id=latchlog.latchid group by label;';
+
+$res = pg_query( connect(), $q_latch );
+$r = array();
+while ( $z = pg_fetch_assoc($res) ) {
+	echo "latching_status{label=\"" . $z["label"] . "\"}    " . $z["num"] . "\n";
+} // end while
+
 ?>
