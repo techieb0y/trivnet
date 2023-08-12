@@ -154,14 +154,14 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 	
 	// echo "<pre>" . print_r($r) . "</pre>";
 
-	echo "<table width=\"100%\" id=\"searchResults\">\n";
-	echo "<tr>";
+	echo "<table id=\"searchResults\">\n";
+	echo "<thead>\n<tr>\n";
 	foreach ( $theBigArray as $fieldName ) {
 		if ( $fieldName != "status" && $fieldName != "message") {
-			echo "<th>$fieldName</th>";
+			echo "<th>$fieldName</th>\n";
 		} // end if
 	} // end foreach
-	echo "</tr>\n";
+	echo "</tr>\n</thead>\n<tbody>\n";
 
 	foreach ( $r as $key => $row ) {
 		$pers = $row["personid"];
@@ -192,7 +192,7 @@ if ( isset($_SESSION["criteria"] ) || ( isset($_POST) && ( count($_POST) > 1 ) )
 
 } // end if
 
-echo "</table>\n";
+echo "</tbody></table>\n";
 if ( isset($r) ) { $numRows = count($r); } else { $numRows = 0; }
 echo "<b>" . $numRows . " rows</b><br>\n";
 
