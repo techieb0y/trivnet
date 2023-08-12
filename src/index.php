@@ -222,7 +222,10 @@ if (pg_num_rows($res) > 0 ) {
 echo "<br><hr>";
 echo "<a href=\"help.html\" target=\"_new\">TrivnetDB Documentation</a>";
 echo "<br>";
-$sha = getenv('TRIVNET-SHA'); 
+
+
+@include "include/sha.inc";
+
 echo "Trivnetdb v2.6 ($sha) - by KD8GBL<br>\n";
 
 require_once("include/foot.inc");
