@@ -7,7 +7,7 @@ require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
 
-echo "<link rel="stylesheet" href="common/datatables.min.css" />";
+echo "<link rel=\"stylesheet\" href=\"common/datatables.min.css\" />";
 echo "<script src=\"js/datatables.min.js\"></script>\n";
 
 // Pre-load the enumerated data value sets for display
