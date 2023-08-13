@@ -194,9 +194,10 @@ echo "<hr>\n";
 showFields();
 
 echo "<script>
-\$('#searchResults').dataTable( {
-	\"pageLength\": 50
+  \$('#searchResults').dataTable( {
+    \"pageLength\": 50
   } );
+</script>
 ";
 
 require_once("include/foot.inc");
