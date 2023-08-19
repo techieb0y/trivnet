@@ -58,7 +58,7 @@
 			$res = pg_query_params( connect(), $q_who, $p );
 			$w = array();
 			if ( pg_num_rows($res) == 1) {
-				$z = pg_fetch_assoc($res) ) {
+				$z = pg_fetch_assoc($res);
 				$was = $z["value"];
 
 				$q .= "UPDATE persondata SET value='$value' WHERE ( datatype=$typeid AND personid=$who );\n";
