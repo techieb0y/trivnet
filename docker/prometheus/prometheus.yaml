@@ -4,7 +4,7 @@ global:
 
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: '515'
+  - job_name: 'trivnet'
     static_configs:
       - targets: ['trivnet-web-1:80']
     metrics_path: /metrics.php
