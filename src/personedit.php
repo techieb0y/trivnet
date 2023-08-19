@@ -35,9 +35,10 @@
 	foreach ($tuples as $pair) {
 		$parts = explode(":", $pair);
 		$what = $parts[0];
-		$value = pg_escape_string(connect(), $parts[1]);
 
 		if ( strlen($what) > 0 ) {
+			$value = pg_escape_string(connect(), $parts[1]);
+
 			$t = query("SELECT typeid,enum FROM datatypes WHERE name='$what'");
 			$typeid = $t[0]["typeid"];
 			$isenum = $t[0]["enum"];
