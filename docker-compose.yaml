@@ -31,6 +31,15 @@ services:
       POSTGRES_PASSWORD: trivnet
       POSTGRES_USER: trivnet
       POSTGRES_DB: trivnet
+  prometheus:
+    image: prom/prometheus
+    networks:
+     - trivnet
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    volumes:
+      - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
 
 volumes:
   asyncdata:

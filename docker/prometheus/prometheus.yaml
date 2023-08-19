@@ -1,0 +1,10 @@
+global:
+  scrape_interval:     1m # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 1m # Evaluate rules every 15 seconds. The default is every 1 minute.
+
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: '515'
+    static_configs:
+      - targets: ['trivnet-web-1:8080']
+    metrics_path: /metrics.php
