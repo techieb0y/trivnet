@@ -41,6 +41,13 @@ services:
     restart: unless-stopped
     volumes:
       - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
+  grafana:
+    image: grafana/grafana
+    networks:
+     - trivnet
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
 
 volumes:
   asyncdata:
