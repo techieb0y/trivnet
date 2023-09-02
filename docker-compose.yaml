@@ -27,6 +27,7 @@ services:
     restart: unless-stopped
     volumes:
       - "./docker/postgres/:/docker-entrypoint-initdb.d/"
+      - pgdatadata:/var/lib/postgresql/data/
     environment:
       POSTGRES_PASSWORD: trivnet
       POSTGRES_USER: trivnet
@@ -43,5 +44,6 @@ services:
 
 volumes:
   asyncdata:
+  pgdata:
 networks:
   trivnet:
