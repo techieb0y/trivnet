@@ -104,7 +104,7 @@ foreach ( $types as $k => $t ) {
 	stream_copy_to_stream($tmp, $fh);
 	fclose($fh);
 
-	if ( $k != $msgtype && $k != 999 ) { $data = $values[$k]; } else { $data = $mesg; }
+	if ( $k != $msgtype ) { $data = $values[$k]; } else { $data = $mesg; }
 	$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$k', '$data', 1, 0, '" . time() . "');";
 	echo "<pre>" . $q_submit . "</pre><br>\n";
 	$r_submit = query($q_submit);
