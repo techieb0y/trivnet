@@ -62,7 +62,8 @@ foreach( $_dts as $_dt ) {
 	echo "<tr>";
 //	if ( $typeid == $config["message"] || $typeid == $config["status"] ) {
 	if ( $typeid == 999 ) {
-		echo "<td><input type=\"checkbox\" id=\"updateLatchEnable\" name=\"updateType[999]\" value=\"true\"></td>\n";
+		echo "<td><input type=\"checkbox\" checked id=\"updateLatchEnable\" name=\"updateType[999]\" value=\"true\"></td>\n";
+		echo "<td>Latching Status</td>\n";
 		echo "<td><select name=\"latch\" id=\"updateLatchSelect\">\n";
 		echo "<option selected disabled>Select One</option>\n";
 
