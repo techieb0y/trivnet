@@ -290,6 +290,8 @@ function runJob($jobId) {
 					// We're updating the status message, but no actual data values
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
+				} elseif ( 999 == $updatetype ) {
+					$q .= "INSERT INTO latchlog VALUES ('$personid', '$data');\n";
 				} else {
 					// We're updating a data value, and generating a status message to say we did so
 					$_dt = query("SELECT name,enum FROM datatypes WHERE typeid=$updatetype");
