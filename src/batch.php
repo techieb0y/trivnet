@@ -24,8 +24,6 @@ foreach($r as $row) {
 	$dt[$typeid] = $name;
 }
 
-$dt[999] = "Latching Status";
-
 	echo "Enter a <select name=\"datatype\">\n";
 
 		foreach($dt as $i => $j) {
@@ -52,6 +50,10 @@ Update Data values:
 
 <?php
 $_dts = query("SELECT * from datatypes order by typeid");
+
+$_dts[999]["label"] = "Latching Status";
+$_dts[999]["typeid"] = 999;
+$_dts[999]["enum"] = 't';
 
 foreach( $_dts as $_dt ) {
 	$typeid = $_dt["typeid"];
