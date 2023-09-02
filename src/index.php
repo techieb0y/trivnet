@@ -9,25 +9,6 @@
 $begin = 0;
 
 include("head.inc");
-    
-    echo "<table width=\"100%\"><tr>";
-    if ($left > 0) {
-        echo "<td width=\"$left%\" style=\"background-color: red;\">&nbsp;</td>";
-    }
-    echo "<td style=\"width: 16px;\">&#x1F9F9;</td>\n";
-    echo "<td style=\"background-color: grey;\">&nbsp;</td>\n";
-    if ($r["raceid"] == 4) {
-        echo "<td style=\"width: 16px;\">&#x267F;</td>\n";
-        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">&nbsp;</td>";
-    } else {
-        echo "<td style=\"width: 16px;\">&#x1F3C3;</td>\n";
-        echo "<td width=\"$right%\" style=\"background-color: blue; color: white;\">&nbsp;</td>";
-    }
-    echo "</tr></table>\n";
-    echo "</td>";
-    echo "</tr>";
-}
-echo "</table>\n";
 
 // Overall summery
 $sdt = $config["status"];
