@@ -17,6 +17,8 @@
 			$isenum[$id] = $row_dt["enum"];
 		}
 
+		$types[999] = "Latching state";
+
 		echo "<table width=\"80%\" border=0>\n";
 		echo "<tr><th>Job ID</th><th>Filename</th><th>Owner</th><th>Search on</th><th>Update</th><th>Data</th><th>Job State</th><th>Progress</th><th>Timestamp</th></tr>\n";
 		foreach ($r as $row) {
