@@ -291,8 +291,18 @@ function runJob($jobId) {
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
 				} elseif ( 999 == $updatetype ) {
+
+					$q_latch = 'SELECT label FROM latchtypes WHERE id = $1';
+					$p_latch[0] = $data;
+					$r_latch = pg_query_params( connect(), $q_latch, $p_latch );
+
+					$latchData = array();
+					while ( $z = pg_fetch_assoc($r_latch) ) {
+						$latchData[] = $z;
+					} // end while
+
 					$q .= "INSERT INTO latchlog VALUES ('$personid', '$data');\n";
-					$text = "Set latch #{$data}";
+					$text = "Set latch " . $latchData[0]["label"];
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$text');\n";
 					$q .= "COMMIT;\n";
 				} else {
