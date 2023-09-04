@@ -24,10 +24,11 @@ function makeClone() {
 	newDisplayInput.setAttribute("size", "50");
 	newDisplayInput.setAttribute("disabled", "disabled");
 	newDisplayInput.setAttribute("id", "displayName" + counter);
+
 	var newPidInput = document.createElement("input");
 	newPidInput.setAttribute("name", "personId[]");
 	newPidInput.setAttribute("type", "hidden");
-	newPidInput.setAttribute("id", "personId" + counter);
+	newPidInput.setAttribute("id", "personID" + counter);
 
 	newSearchTd.appendChild(newDisplayInput);
 	newSearchTd.appendChild(newPidInput);
@@ -127,7 +128,7 @@ function doAjax(rowNum) {
 
 
 function postStatus(where) {
-	boxNum = where.id.replace("infoIcon", "");
+	boxNum = where.id.replace("saveButton", "");
 	
 	idN = document.getElementById("personID" + boxNum);
 	searchN = document.getElementById("search" + boxNum);
@@ -138,12 +139,12 @@ function postStatus(where) {
 	req.send();
 	rslt = JSON.parse( req.responseText );
 	if ( 1 == rslt.result ) {
-		icon = document.getElementById("infoIcon" + boxNum);
+		icon = document.getElementById("statusIcon" + boxNum);
 		icon.innerHTML = '';
 		searchN.disabled = true;
 		statusN.disabled = true;
 	} else {
-		icon = document.getElementById("infoIcon" + boxNum);
+		icon = document.getElementById("statusIcon" + boxNum);
 		icon.innerHTML = '⚠️';
 	} // end if
 } // end postStatus	
