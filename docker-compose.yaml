@@ -49,7 +49,6 @@ services:
       - "3000:3000"
     restart: unless-stopped
     volumes:
-      - "./docker/grafana/grafana.ini:/etc/grafana/grafana.ini"
       - "./docker/grafana/prometheus.yml:/etc/grafana/provisioning/datasource/prometheus.yml"
 
 volumes:
