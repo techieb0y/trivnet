@@ -42,8 +42,12 @@ function makeClone() {
 	newStatusTd.appendChild(newStatusInput);
 
 	// Save button
+	var newSaveButton = document.createElement("button");
+	newSaveButton.setAttribute("label", "▶️");
+	newSaveButton.setAttribute("onClick", "postStatus(this)");
+
 	var newSaveTd = document.createElement("td");
-	newSaveTd.innerHTML = "▶️";
+	newSaveTd.appendChild(newSaveButton);
 
 	newRow.appendChild(newIconTd);
 	newRow.appendChild(newSearchTd);
