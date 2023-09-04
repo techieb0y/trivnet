@@ -42,7 +42,8 @@ function makeClone() {
 	newStatusTd.appendChild(newStatusInput);
 
 	// Save button
-	var newSaveButton = document.createElement("button");
+	var newSaveButton = document.createElement("input");
+	newSaveButton.setAttribute("type", "button");
 	newSaveButton.setAttribute("label", "▶️");
 	newSaveButton.setAttribute("onClick", "postStatus(this)");
 
