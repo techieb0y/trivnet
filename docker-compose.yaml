@@ -50,7 +50,8 @@ services:
     restart: unless-stopped
     volumes:
       - "./docker/grafana/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml"
-      - "./docker/grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json"
+      - "./docker/grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml"
+      - "./docker/grafana/tcm.json:/etc/grafana/dashboards/tcm.json"
 
 volumes:
   asyncdata:
