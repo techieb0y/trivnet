@@ -154,8 +154,8 @@ function runJob($jobId) {
 	$workingJob = $jobId;
 	$q = query("UPDATE async SET state=3, timestamp=" . time() . " WHERE jobid=$jobId");
 
-	$ut = query("SELECT * from datatypes WHERE typeid=$updatetype");
-	$what = $ut[0]["name"];
+	// $ut = query("SELECT * from datatypes WHERE typeid=$updatetype");
+	// $what = $ut[0]["name"];
 
 	// Read the data file
 	$workingSet = file($file);
