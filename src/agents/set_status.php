@@ -11,7 +11,7 @@ $ok = 0;
 global $config;
 $msgtyp = $config["message"];
 
-$status = pg_escape_string( $_GET["status"] );
+$status = pg_escape_string( connect(), $_GET["status"] );
 $id = $_GET["personid"];
 
 session_start();

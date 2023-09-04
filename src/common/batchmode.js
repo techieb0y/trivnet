@@ -45,7 +45,7 @@ function makeClone() {
 	// Save button
 	var newSaveButton = document.createElement("button");
 	newSaveButton.setAttribute("id", "saveButton" + counter);
-	newSaveButton.setAttribute("value", "▶️");
+	newSaveButton.innerHTML = "▶️";
 	newSaveButton.setAttribute("onClick", "javascript:postStatus(this)");
 
 	var newSaveTd = document.createElement("td");
