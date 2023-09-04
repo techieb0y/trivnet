@@ -23,7 +23,7 @@ function makeClone() {
 	newDisplayInput.setAttribute("name", "displayName[]");
 	newDisplayInput.setAttribute("size", "50");
 	newDisplayInput.setAttribute("disabled", "disabled");
-	newDisplayInput.setAttribute("id", "displayName");
+	newDisplayInput.setAttribute("id", "displayName" + counter);
 	var newPidInput = document.createElement("input");
 	newPidInput.setAttribute("name", "personId[]");
 	newPidInput.setAttribute("type", "hidden");
