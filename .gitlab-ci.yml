@@ -48,6 +48,10 @@ create-web-container:
     - docker build -t trivnetphp -f docker/web/Dockerfile . 
     - docker tag trivnetphp $IMAGE_TAG
     - docker push $IMAGE_TAG
+    - docker save trivnetphp:$IMAGE_TAG -o trivnetphp.tar
+  artifacts:
+    paths:
+      - trivnetphp.tar
 
 .rpmbuild:
   stage: package
@@ -160,20 +164,25 @@ stop-stage:
     - docker-compose down
 
 
-.deploy-prod:
+deploy-prod:
   stage: deploy
   when: manual
   tags:
     - trivnet-prod
+  only:
+    - master  
   variables:
-    GIT_STRATEGY: none
+    GIT_STRATEGY: clone
   dependencies:
-    - rpmbuild
+    - get-fcc-db
+    - create-web-container
   script:
-    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
-  after_script:
-    - find ./ -name \*.rpm -delete      
+    - docker load trivnetphp.tar && rm -f trivnetphp.tar
+    - mv fcc/trivnet-fcc.out docker/postgres/
+    - docker compose down
+    - chown gitlab-runner -R src/
+    - chmod a+rX -R docker/
+    - docker compose up -d
   environment:
     name: Production
-    url: http://10.145.67.1/trivnet/
-            
+    url: https://trivnet.corbettdigital.net/trivnet/
