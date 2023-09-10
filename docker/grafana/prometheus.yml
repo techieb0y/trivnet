@@ -7,6 +7,7 @@ datasources:
   # <string, required> Sets the name you use to refer to
   # the data source in panels and queries.
   - name: Prometheus
+    uid: PBFA97CFB590B2093
     # <string, required> Sets the data source type.
     type: prometheus
     # <string, required> Sets the access mode, either
