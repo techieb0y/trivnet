@@ -1,6 +1,6 @@
 services:
   web:
-    image: dockreg.corbettdigital.net/trivnet/trivnet:master
+    image: trivnetphp
     networks:
      - trivnet
     depends_on:
@@ -11,7 +11,7 @@ services:
     ports:
       - "8080:80"
   async:
-    image: dockreg.corbettdigital.net/trivnet/trivnet:master
+    image: trivnetphp
     command: php /var/www/html/async.php --daemon
     networks:
      - trivnet

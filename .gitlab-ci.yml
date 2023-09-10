@@ -177,7 +177,7 @@ deploy-prod:
     - get-fcc-db
     - create-web-container
   script:
-    - docker load trivnetphp.tar && rm -f trivnetphp.tar
+    - docker load < trivnetphp.tar && rm -f trivnetphp.tar
     - mv fcc/trivnet-fcc.out docker/postgres/
     - docker compose down
     - chown gitlab-runner -R src/
