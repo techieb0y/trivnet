@@ -48,7 +48,7 @@ create-web-container:
     - docker build -t trivnetphp -f docker/web/Dockerfile . 
     - docker tag trivnetphp $IMAGE_TAG
     - docker push $IMAGE_TAG
-    - docker save trivnetphp:$IMAGE_TAG -o trivnetphp.tar
+    - docker save trivnetphp -o trivnetphp.tar
   artifacts:
     paths:
       - trivnetphp.tar
