@@ -24,6 +24,7 @@ $config["localnets"] = array( "192.168.54.0/24", "172.16.104.0/24" );
 $config["slownets"] = array("10.0.1.0/24");
 $config["default"] = "fancy";
 
+// ID numbers for statuses that get special handling within the UI
 $config["multidefault"] = 2;
 $config["status"] = 0;
 $config["message"] = 1;

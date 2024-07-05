@@ -53,46 +53,6 @@ create-web-container:
     paths:
       - trivnetphp.tar
 
-.rpmbuild:
-  stage: package
-  image: dockreg.corbettdigital.net/trivnet/buildenv:master
-  tags:
-    - docker
-  script:
-    - for i in SOURCES BUILD BUILDROOT SPECS RPMS; do mkdir -p rpmbuild/${i}; done
-    - rsync -rv src/ rpmbuild/BUILD/trivnet/
-    - rsync -rv util/ rpmbuild/BUILD/util/
-    - mv httpd.conf rpmbuild/SOURCES/
-    - mv trivnet-async.service rpmbuild/SOURCES/
-    - mv fcc/trivnet-fcc.out rpmbuild/SOURCES/
-    - mv trivnet.spec rpmbuild/SPECS/
-    - echo "SetEnv TRIVNET-SHA ${CI_COMMIT_SHA}" > rpmbuild/BUILD/trivnet/.htaccess
-    - rpmbuild --define "now `date +%s`" --define "_topdir `pwd`/rpmbuild/" -bb rpmbuild/SPECS/trivnet.spec
-  artifacts:
-    paths:
-      - rpmbuild/RPMS/
-      - Dockerfile
-  dependencies:
-    - get-fcc-db
-
-.deploy-stage:
-  stage: deploy
-  tags:
-    - trivnet-stage
-  variables:
-    GIT_STRATEGY: none
-  dependencies:
-    - rpmbuild
-  script:
-    - sudo yum -y remove postgresql-libs trivnet trivnet-static postgresql96-libs postgresql13-libs
-    - sudo rm -rf /var/lib/pgsql
-    - sudo yum -y localinstall rpmbuild/RPMS/noarch/trivnet*.rpm
-  after_script:
-    - find ./ -name \*.rpm -delete
-  environment:
-    name: Stage
-    url: http://172.16.104.76/trivnet/
-
 deploy-stage:
   stage: deploy
   tags:
@@ -127,42 +87,6 @@ stop-stage:
     action: stop
   script:
     - docker compose down
-
-
-.deploy-macbookair:
-  stage: deploy
-  tags:
-    - trivnet-macbookair
-  only:
-    - master  
-  variables:
-    GIT_STRATEGY: clone
-  dependencies:
-    - get-fcc-db
-  environment:
-    name: MacBook Air
-    url: http://192.168.64.2:8080/
-  script:
-    - mv fcc/trivnet-fcc.out docker/postgres/
-    - docker-compose down
-    - chown gitlab-runner -R src/
-    - docker-compose up -d
-
-.stop-macbookair:
-  stage: deploy
-  tags:
-    - trivnet-macbookair
-  variables:
-    GIT_STRATEGY: none
-  only:
-    - master
-  when: manual
-  environment:
-    name: MacBook Air
-    action: stop
-  script:
-    - docker-compose down
-
 
 deploy-prod:
   stage: deploy
