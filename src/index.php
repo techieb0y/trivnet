@@ -142,7 +142,7 @@ echo "<br>";
 
 @include "include/sha.inc";
 
-echo "Trivnetdb v2.6 ($sha) - by KD8GBL<br>\n";
+echo "Trivnetdb v2.7 ($sha) - by KD8GBL<br>\n";
 
 require_once("include/foot.inc");
 
