@@ -36,7 +36,7 @@ Previusly, this repo's pipeline generated an RPM for deployment on CentOS 7.
 
 When you browse to the trivnet site, you'll be prompted to log in. Use an FCC-issued callsign, or the word 'guest'.
 
-## Set up the dataase fields
+## Set up the database fields
 
 On the admin page, under the Datatypes tab, you can add fields to the system. Each data type (field name) has a short name and a long name -- the short name should be one word, preferably all lower case; this is used for the packet side of things.  The web interface uses the long name ('label') everywhere. Exact Match is for things like marathon bib numbers; without it, searches will also return a partial/substring match. Pre-loaded are several fields useful for marathons and similar events, but they can be adjusted as needed.
 
