@@ -4,11 +4,6 @@
 	require("include/db_ops.inc");
 	require("include/sessions.inc");
 
-// Trivnetdb 2.0 was designed and built by KD8GBL 
-
-//	The original trivnetdb author has a web page with more inforamtion at:
-//	http://msuarc.egr.msu.edu/kb8zqz/packet/
-
 // Make sure we know who we're talking to
 session_start();
 // session_register("lastmsg");

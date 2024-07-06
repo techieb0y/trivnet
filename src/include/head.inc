@@ -9,10 +9,7 @@
 
 date_default_timezone_set("America/Chicago");
 
-// Trivnetdb 2.0 was designed and built by KD8GBL 
-
-//	The original trivnetdb author used to have web page with more information at:
-//	http://msuarc.egr.msu.edu/kb8zqz/packet/
+// Trivnetdb 2.x was designed and built by KD8GBL
 
 // Make sure we know who we're talking to
 session_start();

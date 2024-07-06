@@ -1,6 +1,6 @@
 ## Trivnet 2.8 by KD8GBL (Peter Corbett, peter@corbettdigital.net)
 
-This software traces its roots to an ARESdata packet application, from which KB8ZQZ based his trivnetdb.
+This software traces its roots to an ARESdata packet application, from which KB8ZQZ based [his trivnetdb](https://www.kb8zqz.org/trivnetdb/).
 The 145.67 / MN Packet Network group adapted this for use at the Twin Cities Marathon.
 
 In 2009, this version using PHP and uses PostgreSQL was started as ground-up rewrite, preserving only the general web UI layout.
@@ -42,9 +42,12 @@ On the admin page, under the Datatypes tab, you can add fields to the system. Ea
 
 If you have a field like a bib number that's a guarenteed-present, guarenteed-unique value, you can take the ID number and put it in the `$config["multidefault"]` line in `includes/config.inc``. This is used for the multi-edit mode, and as a default for batch edit. You'll see a key icon on that line in the Data Types tab when that's set.
 
-
-## Populating the dataase (marathon runners or similar roster)
+## Populating the database (marathon runners or similar roster)
 
 In typical applications, a CSV file is imported using the Bulk Import section (again under Admin on the top-level menu). You can upload a file here, or you can pick a file that's been copied manually to the .../csvdata/ folder on the server. Either way, it'll guess if it's comma-separated or tab-separted, and move onto to matching input columns with the data types you set up above. You'll be shown the first few lines of the file, and a drop-down menu for each column it extracted from the data file.  Once you've got things matched up, click Import. That sets up an import job -- you should have a Bulk Data Import job visible under the 'Async Jobs' tab on the admin screen. These are processed by the async.php script via the crontab entry set above.
 
 On the Async Jobs page, the 'filename' link returns the input file; clicking the link under Job State provides an error log for that job.
+
+## Design
+
+Initially, the web UI was kept lightweight to be usable over Icom D-STAR 1.2GHz DD mode (~128kbps on a good day). In practice, usage is now almost entirly over WiFi or 4G paths, so some complexity (in the form of the jQuery JavaScript libraries) as crept in, but keeping things usable over slower/lossy connections remains a goal.
