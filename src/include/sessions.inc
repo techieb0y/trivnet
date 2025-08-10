@@ -61,7 +61,7 @@ function start_session() {
 		$q3 = "BEGIN;";
 		$t = time();
 		$q3 .= "INSERT INTO sessions VALUES ('" . session_id() . "','$call', '$t', '$sym', '$tac');";
-		$q3 .= "INSERT INTO messages VALUES ('$t', '$call', 'logged on', 'Sysop' );";
+		$q3 .= "INSERT INTO messages VALUES ('$t', '$call', '$sym', '$tac', 'logged on', 'Sysop' );";
 		$q3 .= "INSERT INTO pidmap VALUES (" . getmypid() . ",'" . $call . "');";
 		$q3 .= "COMMIT;";
 		query_simple($q3);
@@ -71,15 +71,17 @@ function start_session() {
 
 function stop_session() {
 	require_once("db_ops.inc");
-	$qn = "SELECT callsign FROM sessions WHERE sessionid='" . session_id() . "'";
+	$qn = "SELECT callsign, tactical, symbol FROM sessions WHERE sessionid='" . session_id() . "'";
 	$rn = query($qn);
 	$call = $rn[0]["callsign"];
+	$sum = $rn[0]["symbol"];
+	$tac = $rn[0]["tactical"];
 
 	$newid = substr( "VOID-" . md5( time() . session_id() ), 0, 32 );
 
 	$q = "BEGIN;";
 	$q .= "UPDATE sessions SET timestamp=0,sessionid='$newid' WHERE sessionid='" . session_id() . "';";
-	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged off', 'Sysop' );";
+	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', '$sym', '$tac', 'logged off', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
 	query_simple($q);
@@ -111,7 +113,7 @@ function adminDeleteSession($s) {
 
 	$q = "BEGIN;";
 	$q .= "DELETE FROM sessions WHERE sessionid='" . $s . "';";
-	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 'logged out due to inactivity', 'Sysop' );";
+	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 31, 'N/A' , 'logged out due to inactivity', 'Sysop' );";
 	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
 	query_simple($q);
