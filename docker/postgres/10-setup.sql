@@ -16,7 +16,7 @@ CREATE TABLE pidmap ( pid int, callsign varchar(12) );
 INSERT INTO people VALUES ( 0 );
 CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varchar(8) not null, searchtype int REFERENCES datatypes(typeid), updatetype int, data varchar(255) not null, state int DEFAULT 0, progress int DEFAULT 0, timestamp int NOT NULL);
 -- setval('async_jobid_seq', 1);
-INSERT INTO messages VALUES ( extract(epoch from now() )::integer, 'SysOp', 'Database Setup Complete', 'all' );
+INSERT INTO messages VALUES ( extract(epoch from now() )::integer, 'SysOp', 31, 'SysOp', 'Database Setup Complete', 'all' );
 CREATE TABLE enumtypes ( id int not null, datatype int not null, value varchar not null, constraint datatype_fk foreign key (datatype) references datatypes(typeid) );
 CREATE TABLE race ( raceid int not null primary key, head real check (head >= 0) check (head < 27), tail real check (tail <= head) check ( tail < 27 )  );
 copy "part97" from '/docker-entrypoint-initdb.d/trivnet-fcc.out';
