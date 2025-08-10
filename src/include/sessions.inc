@@ -74,7 +74,7 @@ function stop_session() {
 	$qn = "SELECT callsign, tactical, symbol FROM sessions WHERE sessionid='" . session_id() . "'";
 	$rn = query($qn);
 	$call = $rn[0]["callsign"];
-	$sum = $rn[0]["symbol"];
+	$sym = $rn[0]["symbol"];
 	$tac = $rn[0]["tactical"];
 
 	$newid = substr( "VOID-" . md5( time() . session_id() ), 0, 32 );
