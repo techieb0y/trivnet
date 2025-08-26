@@ -5,11 +5,11 @@
 require_once("include/db_ops.inc");
 require_once("include/config.inc");
 
-header("Content-Type: text/plain")
+header("Content-Type: text/plain");
 
 if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
-        echo "OK"
+        echo "OK";
 
         $postbody = stream_get_contents(STDIN);
         $data = fgetcsv($postbody);
@@ -18,9 +18,11 @@ if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
 
     } else {
         header("HTTP/415 Unsupported Media Type");
-        echo "Unexpected conent type"
+        echo "Unexpected conent type";
     }
 } else {
     header("HTTP/400 Bad Request");
-    echo "Missig content type"
+    echo "Missig content type";
 }
+
+?>
