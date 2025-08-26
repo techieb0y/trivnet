@@ -9,20 +9,20 @@ header("Content-Type: text/plain");
 
 if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
-        echo "OK";
+        echo "OK\n";
 
-        $postbody = stream_get_contents(STDIN);
+        $postbody = file_get_contents('php://input');
         $data = fgetcsv($postbody);
 
         print_r($data);
 
     } else {
-        header("HTTP/415 Unsupported Media Type");
-        echo "Unexpected conent type";
+        http_response_code(415);
+        echo "Unexpected conent type\n";
     }
 } else {
-    header("HTTP/400 Bad Request");
-    echo "Missig content type";
+    http_response_code(400);
+    echo "Missig content type\n";
 }
 
 ?>
