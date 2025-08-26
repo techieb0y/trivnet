@@ -2,8 +2,8 @@
 
 // Test page for handling CSV uploads
 
-require_once("include/db_ops.inc");
-require_once("include/config.inc");
+require_once("../../include/db_ops.inc");
+require_once("../../include/config.inc");
 
 header("Content-Type: text/plain");
 
