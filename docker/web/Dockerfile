@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:apache-bookworm
 RUN apt-get update
 RUN apt-get install -y vim
 RUN apt-get install -y postgresql-server-dev-15 && docker-php-ext-configure pgsql && docker-php-ext-install pgsql
