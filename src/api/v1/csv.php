@@ -11,8 +11,7 @@ if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         echo "OK\n";
 
-        $postbody = file_get_contents('php://input');
-        $data = fgetcsv($postbody);
+        $data = fgetcsv(php://input);
 
         print_r($data);
 
