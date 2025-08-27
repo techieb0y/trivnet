@@ -10,11 +10,13 @@ header("Content-Type: text/plain");
 if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         $file = fopen("php://input", "r");
-        while ( $row = fgets($file) ) {
+        while ( $row = trim(fgets($file)) ) {
             echo "Got row: {$row}\n";
-            $data[] = $row;
+            if ( strlen($row) > 0 ) {
+                $data[] = $row;
+            }
         }
-        var_dump($data);
+        print_r($data);
     } else {
         http_response_code(415);
         echo "Unexpected conent type\n";
