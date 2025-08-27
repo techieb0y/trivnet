@@ -11,9 +11,12 @@ if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         echo "OK\n";
 
-        $data = fgetcsv('php://input');
-        print_r($data);
+        $file = fopen("php://input", "r");
+        while ( $row = fgetcsv($file); ) {
+            $data[] = $row;
+        }
 
+        print_r($data);
     } else {
         http_response_code(415);
         echo "Unexpected conent type\n";
