@@ -10,8 +10,8 @@ header("Content-Type: text/plain");
 if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         $file = fopen("php://input", "r");
-        while ( $row = fgetcsv($file) ) {
-            echo "Got row: ${row}";
+        while ( $row = fgets($file) ) {
+            echo "Got row: {$row}";
             $data[] = $row;
         }
         print_r($data);
