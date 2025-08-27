@@ -12,7 +12,7 @@ if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
         echo "OK\n";
 
         $file = fopen("php://input", "r");
-        while ( $row = fgetcsv($file); ) {
+        while ( $row = fgetcsv($file) ) {
             $data[] = $row;
         }
 
