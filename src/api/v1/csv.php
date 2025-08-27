@@ -1,5 +1,7 @@
 <?php 
 
+ini_set("auto_detect_line_endings", true);
+
 // Test page for handling CSV uploads
 
 require_once("../../include/db_ops.inc");
