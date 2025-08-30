@@ -1,4 +1,4 @@
-## Trivnet 2.9 by KD8GBL (Peter Corbett, peter@corbettdigital.net)
+## Trivnet 2.10 by KD8GBL (Peter Corbett, peter@corbettdigital.net)
 
 This software traces its roots to an ARESdata packet application, from which KB8ZQZ based [his trivnetdb](https://www.kb8zqz.org/trivnetdb/).
 The 145.67 / MN Packet Network group adapted this for use at the Twin Cities Marathon.
