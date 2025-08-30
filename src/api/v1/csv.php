@@ -24,7 +24,7 @@ if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
         $r_id = query($q_id);
         $jobid = $r_id[0]["jobid"];
 
-        $jobfile = "../../jobs/API-" . $jobid;
+        $jobfile = "/var/www/html/jobs/API-" . $jobid;
         $fh = fopen($jobfile, "w+");
         fseek($tmp, 0);
         stream_copy_to_stream($tmp, $fh);
