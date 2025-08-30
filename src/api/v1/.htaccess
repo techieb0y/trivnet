@@ -1,0 +1,4 @@
+AuthName API
+AuthType Basic
+AuthUserFile passwd
+Require valid-user
