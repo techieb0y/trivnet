@@ -301,8 +301,7 @@ function runJob($jobId) {
 						$latchData[] = $z;
 					} // end while
 
-					// $q .= "INSERT INTO latchlog VALUES ('$personid', '$data') on conflict do nothing;\n";
-					$q .= "INSERT INTO latchlog VALUES ('$personid', '$data');\n";
+					$q .= "INSERT INTO latchlog VALUES ('$personid', '$data') on conflict do nothing;\n";
 					$text = "Set latch " . $latchData[0]["label"];
 					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$text');\n";
 					$q .= "COMMIT;\n";
