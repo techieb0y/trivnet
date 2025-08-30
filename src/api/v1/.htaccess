@@ -2,3 +2,7 @@ AuthName API
 AuthType Basic
 AuthUserFile passwd
 Require valid-user
+
+RewriteEngine On
+RewriteBase "/api/v1"
+RewriteRule "^finish" csv.php

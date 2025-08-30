@@ -4,5 +4,3 @@ ExpiresDefault "now plus 1 week"
 RewriteEngine On
 RewriteBase "/"
 RewriteRule "^symbol/(.*)" getAPRS.php?sym=$1
-
-RewriteRule "^/api/v1/finish" /api/v1/csv.php
