@@ -5,4 +5,4 @@ RewriteEngine On
 RewriteBase "/"
 RewriteRule "^symbol/(.*)" getAPRS.php?sym=$1
 
-RewriteRule "^/api/v2/finish" /api/v2/csv.php
+RewriteRule "^/api/v1/finish" /api/v1/csv.php
