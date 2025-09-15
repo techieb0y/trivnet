@@ -10,8 +10,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
     if ( isset($_GET["bibnum"] ) ) {
         // GET with options
         $bib = $_GET["bibnum"];
-        $q_id = "SELECT personid FROM persondata WHERE datatype = 2 AND value = $bib";
-        $r_id = query($q_id);
+        $q_id = "SELECT personid FROM persondata WHERE datatype = 2 AND value = $1";
+        $p_id[0] = $bib;
+        $res = pg_query_params( connect(), $q_id, $p_id );
+
+        $r_id = array();
+        while ( $z = pg_fetch_assoc($res) ) {
+            $r_id[] = $z;
+        } // end while
 
         // Bail if we can't match the bibnumber to a personid
         if ( ! isset($r_id[0]) ) {
