@@ -16,7 +16,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // Bail if we can't match the bibnumber to a personid
         if ( ! isset($r_id[0]) ) {
             $output["finished"] = false;
-             echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
+             echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
         }
 
@@ -28,7 +28,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // No rows in the latchlog means they haven't finished yet
         if ( ! isset($r_count[0]) ) {
             $output["finished"] = false;
-             echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
+             echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
         }
 
@@ -37,7 +37,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // If there is exactly 1 row for the person/latch type tuple, then they've finished.
         if ( $count == 1 ) {
             $output["finished"] = true;
-            echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
+            echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
         }
     } else {
