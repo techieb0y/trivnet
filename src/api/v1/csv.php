@@ -36,11 +36,14 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
             $output["finished"] = false;
              echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
-        }
-
-        $count = $r_count[0]["count"];
+        } elseif ( isset($r_count[0]) && $r_count[0]["count"] == 0 )
+            $output["finished"] = false;
+             echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
+             exit(0);
+        }    
 
         // If there is exactly 1 row for the person/latch type tuple, then they've finished.
+        $count = $r_count[0]["count"];
         if ( $count == 1 ) {
             $output["finished"] = true;
             echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
