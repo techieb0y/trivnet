@@ -36,7 +36,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
             $output["finished"] = false;
              echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
-        } elseif ( isset($r_count[0]) && $r_count[0]["count"] == 0 )
+        } elseif ( isset($r_count[0]) && $r_count[0]["count"] == 0 ) {
             $output["finished"] = false;
              echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
              exit(0);
