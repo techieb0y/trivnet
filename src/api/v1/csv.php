@@ -18,7 +18,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         if ( ! isset($r_id[0]) ) {
             $output["finished"] = false;
              echo json_encode($output, JSON_PRETTY_PRINT);
-             exit 0;
+             exit(0);
         }
 
         $x = $r_id[0]["personid"];
@@ -30,7 +30,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         if ( ! isset($r_count[0]) ) {
             $output["finished"] = false;
              echo json_encode($output, JSON_PRETTY_PRINT);
-             exit 0;
+             exit(0);
         }
 
         $count = $r_count[0]["count"];
@@ -39,7 +39,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         if ( $count == 1 ) {
             $output["finished"] = true;
             echo json_encode($output, JSON_PRETTY_PRINT);
-            exit 0
+             exit(0);
         }
     } else {
         // GET without options
