@@ -47,7 +47,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         $count = $r_count[0]["count"];
 
         $output["count"] = $count;
-        echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
+        echo json_encode($output, JSON_PRETTY_PRINT) . "\n";
     }
 } elseif ( ($_SERVER['REQUEST_METHOD'] === 'POST') && isset( $_SERVER["CONTENT_TYPE"] ) ) {
     header("Content-Type: text/plain");
