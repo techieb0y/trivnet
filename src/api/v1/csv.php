@@ -7,7 +7,50 @@ require_once("../../include/config.inc");
 
 header("Content-Type: text/plain");
 
-if ( isset( $_SERVER["CONTENT_TYPE"] ) ) {
+if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
+    if ( isset($_GET["bibnumber"] ) {
+        // GET with options
+        $bib = $_GET["bibnum"]
+        $q_id = "SELECT personid FROM persondata WHERE datatype = 2 AND value = $bib";
+        $r_id = query($q_id);
+
+        // Bail if we can't match the bibnumber to a personid
+        if ( ! isset($r_id[0]) ) {
+            $output["finished"] = false;
+             echo json_encode($output, JSON_PRETTY_PRINT);
+             exit 0;
+        }
+
+        $x = $r_id[0]["personid"];
+
+        $q_count = "SELECT count(personid) AS count FROM latchlog WHERE latchid = 1 AND personid = $x";
+        $r_count = query($q_count);
+
+        // No rows in the latchlog means they haven't finished yet
+        if ( ! isset($r_count[0]) ) {
+            $output["finished"] = false;
+             echo json_encode($output, JSON_PRETTY_PRINT);
+             exit 0;
+        }
+
+        $count = $r_count[0]["count"];
+
+        // If there is exactly 1 row for the person/latch type tuple, then they've finished.
+        if ( $count == 1 ) {
+            $output["finished"] = true;
+            echo json_encode($output, JSON_PRETTY_PRINT);
+            exit 0
+        }
+    } else {
+        // GET without options
+        $q_count = "SELECT count('personid') AS count FROM latchlog WHERE latchid = 1";
+        $r_count = query($q_count);
+        $count = $r_count[0]["count"];
+
+        $output["count"] = $count;
+        echo json_encode($output, JSON_PRETTY_PRINT);
+    }
+} elseif ( ($_SERVER['REQUEST_METHOD'] === 'POST') && isset( $_SERVER["CONTENT_TYPE"] ) ) {
     // Save CSV input into a file
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         $tmp = tmpfile() or die("Unable to open tempfile.");
