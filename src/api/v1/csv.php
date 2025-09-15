@@ -10,7 +10,7 @@ header("Content-Type: text/plain");
 if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
     if ( isset($_GET["bibnumber"] ) ) {
         // GET with options
-        $bib = $_GET["bibnum"]
+        $bib = $_GET["bibnum"];
         $q_id = "SELECT personid FROM persondata WHERE datatype = 2 AND value = $bib";
         $r_id = query($q_id);
 
