@@ -5,10 +5,9 @@
 require_once("../../include/db_ops.inc");
 require_once("../../include/config.inc");
 
-header("Content-Type: text/plain");
-
 if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-    if ( isset($_GET["bibnumber"] ) ) {
+    header("Content-Type: application/json");
+    if ( isset($_GET["bibnum"] ) ) {
         // GET with options
         $bib = $_GET["bibnum"];
         $q_id = "SELECT personid FROM persondata WHERE datatype = 2 AND value = $bib";
@@ -17,7 +16,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // Bail if we can't match the bibnumber to a personid
         if ( ! isset($r_id[0]) ) {
             $output["finished"] = false;
-             echo json_encode($output, JSON_PRETTY_PRINT);
+             echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
              exit(0);
         }
 
@@ -29,7 +28,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // No rows in the latchlog means they haven't finished yet
         if ( ! isset($r_count[0]) ) {
             $output["finished"] = false;
-             echo json_encode($output, JSON_PRETTY_PRINT);
+             echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
              exit(0);
         }
 
@@ -38,7 +37,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // If there is exactly 1 row for the person/latch type tuple, then they've finished.
         if ( $count == 1 ) {
             $output["finished"] = true;
-            echo json_encode($output, JSON_PRETTY_PRINT);
+            echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
              exit(0);
         }
     } else {
@@ -48,9 +47,10 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         $count = $r_count[0]["count"];
 
         $output["count"] = $count;
-        echo json_encode($output, JSON_PRETTY_PRINT);
+        echo json_encode($output, JSON_PRETTY_PRINT) + "\n";
     }
 } elseif ( ($_SERVER['REQUEST_METHOD'] === 'POST') && isset( $_SERVER["CONTENT_TYPE"] ) ) {
+    header("Content-Type: text/plain");
     // Save CSV input into a file
     if ( "text/csv" == $_SERVER["CONTENT_TYPE"] ) {
         $tmp = tmpfile() or die("Unable to open tempfile.");
