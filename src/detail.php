@@ -218,11 +218,11 @@ echo "<table><tr><td>\n";
 	}
 	echo "</tr></table>\n";
 
-echo "</td><td>\n";
+echo "</td><td>&nbsp;</td><td>\n";
 
 if ( isset( $RACEID[$rid]) ) { 
 	$raceid = $RACEID[ $rid ];
-	echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
+	echo "<br><a target=\"_new\" href=\"" . sprintf( $config["timinglink"], $rid, $bibNum ) . "\">MTEC Results for bib $bibNum</a>\n";
 }
 
 echo "</td></tr></table>\n";
