@@ -26,7 +26,11 @@
 				$rowNum++;
 			})
 		})
+
+		// Event bindings are additive
+		$("#olderMsgs").unbind("click");
 		$("#olderMsgs").click( function() { getMessages( timeref ); } );
+
 		$("#mesgLoad").innerHTML = "🔄";
 		setTimeout(getMessages, 60000);
 	} // end getMessages
