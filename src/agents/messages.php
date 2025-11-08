@@ -12,7 +12,7 @@ $num = $_GET["limit"];
 if ( isset( $_GET["start"] ) ) {
 	$start = $_GET["start"];
 } else {
-	$start = now()
+	$start = now();
 }
 
 if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
