@@ -110,7 +110,7 @@ foreach($r_dts as $dt) {
 	$dts[$_name]["enum"] = $_en;
 } // end foreach
 
-echo "<table>\n";
+echo "<table class="persondata">\n";
 echo "<tr>";
 echo "<th>PersonID</th>";
 foreach ( $theBigArray as $fieldName ) {
@@ -179,7 +179,7 @@ foreach ( $r as $key => $row ) {
 	echo "</tr>\n";
 } // end foreach
 
-echo "</table>\n<table class=\"details\">\n";
+echo "</table>\n<table class=\"persondata details\">\n";
 
 echo "<tr><td>\n";
 
