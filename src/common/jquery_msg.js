@@ -9,7 +9,7 @@
 		}
 
 		$rowNum = 0;
-		$.getJSON("/agents/messages.php?limit=18&start=" + basetime, null, function(data) {
+		$.getJSON("/agents/messages.php?limit=15&start=" + basetime, null, function(data) {
 		timeref = Math.floor( Date.now() / 1000 );
 		$.each( data, function(idx) {
 				ts = new Date( data[idx].timestamp * 1000 );
