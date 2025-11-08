@@ -1,7 +1,13 @@
 	function getMessages(start) {
 		$("#mesgLoad").innerHTML = "📡";
 		$(".msgItem").remove();
-		basetime = ( start !== undefined ? Date.now() : start );
+		
+		if ( start !== undefined ) {
+			basetime =  start;
+		} else {
+			basetime = Date.now();
+		}
+
 		$rowNum = 0;
 		$.getJSON("/agents/messages.php?limit=18&start=" + basetime, null, function(data) {
 		timeref = Date.now(); 
