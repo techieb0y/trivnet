@@ -179,25 +179,7 @@ foreach ( $r as $key => $row ) {
 	echo "</tr>\n";
 } // end foreach
 
-
-echo "</table>\n";
-
-// Latching statuses
-
-echo "<table>\n";
-
-$q_latch = 'select label from latchlog,latchtypes where latchtypes.id=latchlog.latchid and latchlog.personid = $1;';
-$p_latch[0] = $id;
-
-$res = pg_query_params( connect(), $q_latch, $p_latch );
-$r = array();
-while ( $z = pg_fetch_assoc($res) ) {
-	echo "<td><td>" . $z["label"] . "</td></tr>\n";
-} // end while
-
-echo "</table>\n";
-
-echo "<table><tr><td>\n";
+echo "<tr><td>\n";
 
 	// 11 = Red Cross
 	// 27 = Tent
@@ -219,13 +201,34 @@ echo "<table><tr><td>\n";
 	echo "</tr></table>\n";
 
 echo "</td><td>&nbsp;</td><td>\n";
+echo "<table><tr><td>\n";
+echo "<b>Results</b>\n";
+echo "</td></tr>\n<tr><td>\n";
 
 if ( isset( $RACEID[$rid]) ) { 
 	$raceid = $RACEID[ $rid ];
-	echo "<br><a target=\"_new\" href=\"" . sprintf( $config["timinglink"], $rid, $bibNum ) . "\">MTEC Results for bib $bibNum</a>\n";
+	echo "<a target=\"_new\" href=\"" . sprintf( $config["timinglink"], $rid, $bibNum ) . "\">$bibNum</a>\n";
 }
+echo "</td></tr></table>\n";
+
+echo "</td>\n<td>&nbsp;</td>\n<td>\n";
+
+echo "<table><tr><td>\n";
+echo "<b>Latching statuses</b><br>\n";
+echo "</td></tr>\n<tr><td>\n";
+$q_latch = 'select label from latchlog,latchtypes where latchtypes.id=latchlog.latchid and latchlog.personid = $1;';
+$p_latch[0] = $id;
+
+$res = pg_query_params( connect(), $q_latch, $p_latch );
+$r = array();
+while ( $z = pg_fetch_assoc($res) ) {
+	echo "<td><td>" . $z["label"] . "</td></tr>\n";
+} // end while
 
 echo "</td></tr></table>\n";
+
+echo "</td>\n";
+echo "</tr></table>\n";
 
 echo "<hr>\n";
 
