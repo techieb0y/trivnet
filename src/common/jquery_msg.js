@@ -1,8 +1,9 @@
-	function getMessages() {
+	function getMessages(start) {
 		$("#mesgLoad").innerHTML = "📡";
 		$(".msgItem").remove();
+		basetime !== undefined ? Date.now() : start;
 		$rowNum = 0;
-		$.getJSON("/agents/messages.php?limit=18", null, function(data) {
+		$.getJSON("/agents/messages.php?limit=18&start=" + basetime, null, function(data) {
 		timeref = Date.now(); 
 		$.each( data, function(idx) {
 				ts = new Date( data[idx].timestamp * 1000 );
