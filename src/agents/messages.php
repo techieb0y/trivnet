@@ -9,6 +9,12 @@ session_start();
 
 $num = $_GET["limit"];
 
+if ( isset( $_GET["start"] ) ) {
+	$start = $_GET["start"];
+} else {
+	$start = now()
+}
+
 if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
 if ( !has_session($mycall) ) {
 	header("HTTP/401 Unauthorized");
@@ -16,7 +22,7 @@ if ( !has_session($mycall) ) {
 	// header("WWW-Authenticate: Basic");
 } else {
 	touch_session($mycall);
-	$q = "SELECT DISTINCT callsign, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$mycall' OR dest='all' OR callsign='$mycall') ORDER BY timestamp DESC LIMIT $num";
+	$q = "SELECT DISTINCT callsign, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$mycall' OR dest='all' OR callsign='$mycall') AND timestamp < $start ORDER BY timestamp DESC LIMIT $num";
 	// $q = "SELECT callsign, dest, message, to_timestamp(timestamp) AS timestamp FROM messages ORDER BY timestamp DESC LIMIT $num";
 	$r = query($q);
 	if ( count($r) > 0 ) {
