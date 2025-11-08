@@ -37,5 +37,5 @@ img { border: 0px; }
 .evenRow { background-color: #bebebe; }
 .oddRow { background-color: #ffffff; }
 .audit { color: grey; font-size: 10pt; }
-.details { border: 1px solid black; border-spacing: 10px; text-align:center; border-collapse: collapse;}
-.persondata { width: 512px; }
+.details { border: 1px solid black; border-spacing: 10px 2px; text-align:center;}
+.persondata { width: 1024px; }
