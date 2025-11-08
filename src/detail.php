@@ -202,10 +202,10 @@ echo "<tr><td>\n";
 	}
 	echo "</tr></table>\n";
 
-echo "</td><td>&nbsp;</td><td>\n";
-echo "<table><tr><td>\n";
+echo "</td><td>\n";
+echo "<table><tr><th>\n";
 echo "<b>Results</b>\n";
-echo "</td></tr>\n<tr><td>\n";
+echo "</th></tr>\n<tr><td>\n";
 
 if ( isset( $RACEID[$rid]) ) { 
 	$raceid = $RACEID[ $rid ];
@@ -213,11 +213,12 @@ if ( isset( $RACEID[$rid]) ) {
 }
 echo "</td></tr></table>\n";
 
-echo "</td>\n<td>&nbsp;</td>\n<td>\n";
+echo "</td><td>\n";
 
-echo "<table><tr><td>\n";
-echo "<b>Latching statuses</b><br>\n";
-echo "</td></tr>\n<tr><td>\n";
+echo "<table>\n";
+echo "<tr><th>\n";
+echo "<b>Latching statuses</b>\n";
+echo "</th></tr>\n<tr><td>\n";
 $q_latch = 'select label from latchlog,latchtypes where latchtypes.id=latchlog.latchid and latchlog.personid = $1;';
 $p_latch[0] = $id;
 
