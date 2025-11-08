@@ -21,7 +21,7 @@
 	echo "</table>";
 
 	echo "<br>";
-	echo "<input type=\"submit\">";
+	echo "<input type=\"submit\" value=\"Add Message\">";
 	echo "</form>";
 
 	echo "</div>\n";

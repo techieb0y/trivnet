@@ -94,7 +94,7 @@
 	echo "<input name=\"exact\" id=\"exact\" type=checkbox value=\"true\"><label for=\"exact\">Exact Match</label><br>\n";
 
 	echo "<br>";
-	echo "<input type=\"submit\">";
+	echo "<input type=\"submit\" value=\"Add Datatype\">";
 	echo "</form>";
 
 	echo "<br>";
