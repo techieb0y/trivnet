@@ -63,7 +63,7 @@ function showFields() {
 		} // end foreach
 	} // end if
 	echo "<tr><td>or by status message:</td><td><input name=\"statusmesg\"></td></tr>\n";
-	echo "<tr><td><input type=\"reset\"></td><td><input type=\"submit\"></td></tr>\n";
+	echo "<tr><td><input type=\"reset\"></td><td><input type=\"submit\" value=\"Search\"></td></tr>\n";
 	echo "</table>\n";
 	echo "</table></form>\n";
 } // end showFields

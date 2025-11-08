@@ -263,7 +263,7 @@ foreach($r as $row) {
 echo "</select>\n";
 
 echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>";
-echo "<input type=\"submit\"></form>";
+echo "<input type=\"submit\" value=\"Save\"></form>";
 
 echo "</body></html>";
 ?>
