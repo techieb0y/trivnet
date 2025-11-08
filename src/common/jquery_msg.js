@@ -1,7 +1,7 @@
 	function getMessages(start) {
 		$("#mesgLoad").innerHTML = "📡";
 		$(".msgItem").remove();
-		
+
 		if ( start !== undefined ) {
 			basetime =  start;
 		} else {
@@ -10,10 +10,10 @@
 
 		$rowNum = 0;
 		$.getJSON("/agents/messages.php?limit=18&start=" + basetime, null, function(data) {
-		timeref = Date.now(); 
+		timeref = Date.now() / 1000; 
 		$.each( data, function(idx) {
 				ts = new Date( data[idx].timestamp * 1000 );
-				if ( data[idx].timestamp < timeref ) { timeref = data[idx].timestamp; console.log("timeref is now " + timeref); }
+				if ( data[idx].timestamp < timeref ) { timeref = data[idx].timestamp; }
 				if ( data[idx].dest == callsign ) {
   				$("#messages").append( '<tr class=\"msgItem tome\"><td><img class=mesgSymbol src=symbol/' + data[idx].symbol + '></td><td class=msgLeft>' + data[idx].callsign + ' &rarr; ' + data[idx].dest + '<br>' + data[idx].tactical + '</td><td class=msgCenter> ' + data[idx].message + '</td><td class=msgRight>' + ts.toLocaleString() + '</td></tr>' );
 				} else if ( data[idx].callsign == callsign) {
