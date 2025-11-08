@@ -25,8 +25,8 @@
 				}
 				$rowNum++;
 			})
-			$("#olderMsgs").click( function() { getMessages( timeref ); } );
 		})
+		$("#olderMsgs").click( function() { getMessages( timeref ); } );
 		$("#mesgLoad").innerHTML = "🔄";
 		setTimeout(getMessages, 60000);
 	} // end getMessages
