@@ -179,6 +179,8 @@ foreach ( $r as $key => $row ) {
 	echo "</tr>\n";
 } // end foreach
 
+echo "</table>\n<table class=\"details\">\n";
+
 echo "<tr><td>\n";
 
 	// 11 = Red Cross
