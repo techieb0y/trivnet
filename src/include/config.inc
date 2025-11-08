@@ -45,7 +45,7 @@ $config["async_count"] = 1;
 // printf-style format string for generating the Results out-link
 // Arg 1 = race ID
 // Arg 2 = bib number
-$config["timinglink"] = "https://www.mtecresults.com/runner/show?rid=%1$d&race=%2$d";
+$config["timinglink"] = "https://www.mtecresults.com/runner/show?rid=%1\$d&race=%2\$d";
 
 global $RACEID;
 $RACEID[1] = "2569";
