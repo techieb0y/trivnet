@@ -210,9 +210,9 @@ echo "<table><tr><td>\n";
 	echo "<th colspan=3>Med-tent specific options</th>\n";
 	echo "</tr><tr>\n";
 	if ( in_array( $_SESSION["symbol"], $mt ) ) {
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["medtentstatus"] . "\">Entered Med Tent</a></td>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["medtentstatus"] . "\">➡️🏥<br>Entered Med Tent</a></td>\n";
 		echo "<td>&nbsp;</td>";
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["lefttentstatus"] . "\">Left Med Tent</a></td>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["lefttentstatus"] . "\">⬅️🏥<br>Left Med Tent</a></td>\n";
 	} else {
 		echo "<td colspan=3><i>n/a</i></td>\n";		
 	}
@@ -262,8 +262,8 @@ foreach($r as $row) {
 } // end foreach
 echo "</select>\n";
 
-echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>";
-echo "<input type=\"submit\" value=\"Save\"></form>";
+echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>\n";
+echo "<input type=\"submit\" value=\"Save\"></form>\n";
 
-echo "</body></html>";
+require_once("include/foot.inc");
 ?>
