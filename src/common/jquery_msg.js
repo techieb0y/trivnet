@@ -5,7 +5,7 @@
 		if ( start !== undefined ) {
 			basetime =  start;
 		} else {
-			basetime = Date.now();
+			basetime = Date.now() / 1000;
 		}
 
 		$rowNum = 0;
