@@ -5,12 +5,12 @@
 		if ( start !== undefined ) {
 			basetime =  start;
 		} else {
-			basetime = Date.now() / 1000;
+			basetime = Math.floor ( Date.now() / 1000 );
 		}
 
 		$rowNum = 0;
 		$.getJSON("/agents/messages.php?limit=18&start=" + basetime, null, function(data) {
-		timeref = Date.now() / 1000; 
+		timeref = Math.floor( Date.now() / 1000 );
 		$.each( data, function(idx) {
 				ts = new Date( data[idx].timestamp * 1000 );
 				if ( data[idx].timestamp < timeref ) { timeref = data[idx].timestamp; }
