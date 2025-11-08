@@ -197,6 +197,7 @@ while ( $z = pg_fetch_assoc($res) ) {
 
 echo "</table>\n";
 
+echo "<table><tr><td>\n";
 
 	// 11 = Red Cross
 	// 27 = Tent
@@ -205,20 +206,28 @@ echo "</table>\n";
 	// 31 = SysOp
 
 	$mt = array( "11", "27", "65", "72", "31" );
+	echo "<table><tr>\n";
+	echo "<th colspan=3>Med-tent specific options</th>\n";
+	echo "</tr><tr>\n";
 	if ( in_array( $_SESSION["symbol"], $mt ) ) {
-		echo "<table><tr>\n";
-		echo "<th colspan=2>Med-tent specific options</th>\n";
-		echo "</tr><tr>\n";
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["medtentstatus"] . "\">Entered Med Tent</a>\n";
-		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["lefttentstatus"] . "\">Left Med Tent</a>\n";
-		echo "</tr></table>\n";
-		echo "<hr>\n";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["medtentstatus"] . "\">Entered Med Tent</a></td>\n";
+		echo "<td>&nbsp;</td>";
+		echo "<td><a href=\"mtquick.php?personid=$id&direction=" . $config["lefttentstatus"] . "\">Left Med Tent</a></td>\n";
+	} else {
+		echo "<td colspan=3><i>n/a</i></td>\n";		
 	}
+	echo "</tr></table>\n";
+
+echo "</td><td>\n";
 
 if ( isset( $RACEID[$rid]) ) { 
 	$raceid = $RACEID[ $rid ];
 	echo "<br><a target=\"_new\" href=\"http://www.mtecresults.com/runner/show?rid=$bibNum&race=$raceid\">MTEC Results for bib $bibNum</a>\n";
 }
+
+echo "</td></tr></table>\n";
+
+echo "<hr>\n";
 
 echo "</form>";
 
