@@ -32,14 +32,17 @@ echo "    console.log(update);\n";
 echo "	  document.getElementById(\"updateString\").value = update;\n";
 echo "	  var xhr = new XMLHttpRequest();\n";
 echo "	  xhr.onload = function(){ console.log(xhr.responseText); }\n";
-echo "	  xhr.open( document.forms['updateinfo'].method, document.forms['updateinfo'].getAttribute(\"action\") );\n";
+echo "	  xhr.open( document.forms['updateinfo'].method, 'personedit.php' );\n";
 echo "    console.log(xhr);\n";
 echo "	  xhr.send(new FormData( document.forms['updateinfo']) );\n";
-echo "	  return false;\n";
 echo "	}\n";
 echo "	function doUpdateBoth() {\n";
 echo "    doUpdate();\n";
-echo "    document.forms['quickmesg'].submit();\n";
+echo "	  var xhr2 = new XMLHttpRequest();\n";
+echo "	  xhr2.onload = function(){ console.log(xhr.responseText); }\n";
+echo "	  xhr2.open( document.forms['quickmesg'].method, 'update.php?id=$id' );\n";
+echo "    console.log(xhr2);\n";
+echo "	  xhr2.send(new FormData( document.forms['quickmesg']) );\n";
 echo "	}\n";
 echo "</script>\n";
 
@@ -249,7 +252,7 @@ echo "</tr></table>\n";
 echo "<br>\n";
 
 // Canned message selection and free-form entry goes here
-echo "<form method=\"POST\" id=\"quickmesg\" action=\"update.php?id=$id\" onsubmit=\"return doUpdateBoth();\">\n";
+echo "<form method=\"POST\" name=\"quickmesg\" id=\"quickmesg\" action=\"\" onsubmit=\"return doUpdateBoth();\">\n";
 $q = "SELECT text FROM quickmesg ORDER BY text ASC";
 $r = query($q);
 echo "<select name=\"quickmesg\">\n";
