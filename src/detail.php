@@ -4,6 +4,12 @@ require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
 
+$id=0;
+
+if ( isset($_GET["id"]) ) {
+	$id = $_GET["id"];
+} // end if
+
 echo "<script language=\"JavaScript\">\n";
 echo "	function doChange(id) {\n";
 echo "		document.getElementById(id).style.backgroundColor = '#32CD32';\n";
@@ -45,13 +51,6 @@ echo "    console.log(xhr2);\n";
 echo "	  xhr2.send(new FormData( document.forms['quickmesg']) );\n";
 echo "	}\n";
 echo "</script>\n";
-
-$id=0;
-
-if ( isset($_GET["id"]) ) {
-	$id = $_GET["id"];
-} // end if
-
 
 // Record an 'audit log' event
 global $config;
