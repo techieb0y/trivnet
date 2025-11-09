@@ -25,9 +25,9 @@
 
 	// ------------
 
-	// print_r($_GET);
-	$tuples = explode(",", $_GET["updateString"]);
-	$who = $_GET["personID"];
+	// print_r($_POST);
+	$tuples = explode(",", $_POST["updateString"]);
+	$who = $_POST["personID"];
 	// print_r($tuples);
 	$now = time();
 

@@ -38,7 +38,7 @@ echo "    console.log(update);\n";
 echo "	  document.getElementById(\"updateString\").value = update;\n";
 echo "	  var xhr = new XMLHttpRequest();\n";
 echo "	  xhr.onload = function(){ console.log(xhr.responseText); }\n";
-echo "	  xhr.open( document.forms['updateinfo'].method, 'personedit.php' );\n";
+echo "	  xhr.open( 'POST', 'personedit.php' );\n";
 echo "    xhr.setRequestHeader(\"X-CSRF-Token\", \"" . $_SESSION["token"] . "\");\n";
 echo "    console.log(xhr);\n";
 echo "	  xhr.send(new FormData( document.forms['updateinfo']) );\n";
@@ -47,7 +47,7 @@ echo "	function doUpdateBoth() {\n";
 echo "    doUpdate();\n";
 echo "	  var xhr2 = new XMLHttpRequest();\n";
 echo "	  xhr2.onload = function(){ console.log(xhr2.responseText); }\n";
-echo "	  xhr2.open( document.forms['quickmesg'].method, 'update.php?id=$id' );\n";
+echo "	  xhr2.open( 'POST', 'update.php?id=$id' );\n";
 echo "    xhr2.setRequestHeader(\"X-CSRF-Token\", \"" . $_SESSION["token"] . "\");\n";
 echo "    console.log(xhr2);\n";
 echo "	  xhr2.send(new FormData( document.forms['quickmesg']) );\n";
@@ -106,7 +106,7 @@ $theQuery .= ")";
 // Get results
 $r = query( $theQuery );
 
-echo "<form name=\"updateinfo\" id=\"updateinfo\" action=\"personedit.php\" method=GET>\n";
+echo "<form name=\"updateinfo\" id=\"updateinfo\" action=\"personedit.php\" method=POST>\n";
 echo "<input id=\"personID\" name=\"personID\" value=\"$id\" type=hidden>\n";
 echo "<input id=\"updateString\" name=\"updateString\" type=hidden>\n";
 echo "</form>\n";
