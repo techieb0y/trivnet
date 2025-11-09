@@ -32,7 +32,7 @@ echo "		document.getElementById(\"updateString\").value = update;\n";
 // echo "		document.forms['updateinfo'].submit();\n";
 echo "      submitPersonData(document.forms['updateinfo'])\n";
 echo "	}\n";
-echo "	function submitPersondata(whichForm) {\n";
+echo "	function submitPersonData(whichForm) {\n";
 echo "	  var xhr = new XMLHttpRequest();\n";
 echo "	  xhr.onload = function(){ console.log(xhr.responseText); }\n";
 echo "	  xhr.open(whichForm.method, whichForm.getAttribute(\"action\"));\n";
