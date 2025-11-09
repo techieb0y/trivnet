@@ -222,7 +222,7 @@ echo "</th></tr>\n<tr><td>\n";
 
 if ( isset( $RACEID[$rid]) ) { 
 	$raceid = $RACEID[ $rid ];
-	echo "<a target=\"_new\" href=\"" . sprintf( $config["timinglink"], $rid, $bibNum ) . "\">$bibNum</a>\n";
+	echo "<a target=\"_new\" href=\"" . sprintf( $config["timinglink"], $rid, $bibNum ) . "\">for bib $bibNum</a>\n";
 }
 echo "</td></tr></table>\n";
 
