@@ -55,6 +55,11 @@ function start_session() {
 	if ( has_session() ) {
 		// That call already has a session
 	} else {
+
+		if (empty($_SESSION['token'])) {
+   		  $_SESSION['token'] = bin2hex(random_bytes(32));
+		}
+
 		$call = $_SESSION["callsign"];
 		$sym = $_SESSION["symbol"];
 		$tac = $_SESSION["tactical"];

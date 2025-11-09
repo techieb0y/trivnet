@@ -39,14 +39,16 @@ echo "	  document.getElementById(\"updateString\").value = update;\n";
 echo "	  var xhr = new XMLHttpRequest();\n";
 echo "	  xhr.onload = function(){ console.log(xhr.responseText); }\n";
 echo "	  xhr.open( document.forms['updateinfo'].method, 'personedit.php' );\n";
+echo "    xhr.setRequestHeader(\"X-CSRF-Token\", " . $_SESSION["token"] . ");\n"
 echo "    console.log(xhr);\n";
 echo "	  xhr.send(new FormData( document.forms['updateinfo']) );\n";
 echo "	}\n";
 echo "	function doUpdateBoth() {\n";
 echo "    doUpdate();\n";
 echo "	  var xhr2 = new XMLHttpRequest();\n";
-echo "	  xhr2.onload = function(){ console.log(xhr.responseText); }\n";
+echo "	  xhr2.onload = function(){ console.log(xhr2.responseText); }\n";
 echo "	  xhr2.open( document.forms['quickmesg'].method, 'update.php?id=$id' );\n";
+echo "    xhr2.setRequestHeader(\"X-CSRF-Token\", " . $_SESSION["token"] . ");\n"
 echo "    console.log(xhr2);\n";
 echo "	  xhr2.send(new FormData( document.forms['quickmesg']) );\n";
 echo "	}\n";
