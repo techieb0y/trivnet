@@ -29,9 +29,20 @@ echo "				update += box.id + ':' + box.value + ',';\n";
 echo "			}\n";
 echo "		});\n";
 echo "		document.getElementById(\"updateString\").value = update;\n";
-echo "		document.forms['updateinfo'].submit();\n";
+// echo "		document.forms['updateinfo'].submit();\n";
+echo "      submitPersonData(document.forms['updateinfo'])\n";
 echo "	}\n";
-
+echo "	function submitPersondata(whichForm) {\n";
+echo "	  var xhr = new XMLHttpRequest();\n";
+echo "	  xhr.onload = function(){ console.log(xhr.responseText); }\n";
+echo "	  xhr.open(whichForm.method, whichForm.getAttribute(\"action\"));\n";
+echo "	  xhr.send(new FormData(whichForm));\n";
+echo "	  return false;\n";
+echo "	}\n";
+echo "	function doUpdateBoth() {\n";
+echo "    doUpdate();\n";
+echo "    document.forms['quickmesg'].submit();\n";
+echo "	}\n";
 echo "</script>\n";
 
 $id=0;
@@ -174,12 +185,16 @@ foreach ( $r as $key => $row ) {
 			echo "</td>\n";
 			} // end if
 	} // end foreach
-	echo "<td><input type=button value=\"Save\" onClick=\"doUpdate()\"></td>";
+	// echo "<td><input type=button value=\"Save\" onClick=\"doUpdate()\"></td>";
 	echo "<td><input type=reset  value=\"Reset\" onClick=\"doUnChange()\"></td>";
 	echo "</tr>\n";
 } // end foreach
 
-echo "</table>\n<table class=\"persondata details\">\n";
+echo "</table>\n";
+
+echo "</form>\n";
+
+echo "<table class=\"persondata\">\n";
 
 echo "<tr><td>\n";
 
@@ -235,9 +250,25 @@ echo "</td></tr></table>\n";
 echo "</td>\n";
 echo "</tr></table>\n";
 
-echo "<hr>\n";
+echo "<br>\n";
 
+// Canned message selection and free-form entry goes here
+echo "<form method=\"POST\" id=\"quickmesg\" action=\"update.php?id=$id\" onsubmit=\"return doUpdateBoth();\">\n";
+$q = "SELECT text FROM quickmesg ORDER BY text ASC";
+$r = query($q);
+echo "<select name=\"quickmesg\">\n";
+echo "<option value=\"null\">Choose one:</option>\n";
+foreach($r as $row) {
+	echo "<option value=\"" . $row["text"] . "\">" . $row["text"] . "</option>\n";
+} // end foreach
+echo "</select>\n";
+
+echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>\n";
+echo "<td><input type=button value=\"Save\" onClick=\"doUpdateBoth()\"></td>";
+// echo "<input type=\"submit\" value=\"Save\"></form>\n";
 echo "</form>";
+
+echo "<hr>\n";
 
 $mdt = $config["message"];
 $q = "SELECT * from updatesequence WHERE personid=$id AND datatype=$mdt ORDER BY timestamp desc";
@@ -258,20 +289,6 @@ if ( count( $r ) > 0 ) {
 
 echo "</table>\n";
 echo "<b>" . count($r) . " updates</b><br>\n";
-
-// Canned message selection and free-form entry goes here
-echo "<form method=\"POST\" action=\"update.php?id=$id\">\n";
-$q = "SELECT text FROM quickmesg ORDER BY text ASC";
-$r = query($q);
-echo "<select name=\"quickmesg\">\n";
-echo "<option value=\"null\">Choose one:</option>\n";
-foreach($r as $row) {
-	echo "<option value=\"" . $row["text"] . "\">" . $row["text"] . "</option>\n";
-} // end foreach
-echo "</select>\n";
-
-echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>\n";
-echo "<input type=\"submit\" value=\"Save\"></form>\n";
 
 require_once("include/foot.inc");
 ?>
