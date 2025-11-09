@@ -232,16 +232,14 @@ echo "<table>\n";
 echo "<tr><th>\n";
 echo "Latching statuses\n";
 echo "</th></tr>\n<tr><td>\n";
-echo "<ul>\n";
 $q_latch = 'select label from latchlog,latchtypes where latchtypes.id=latchlog.latchid and latchlog.personid = $1;';
 $p_latch[0] = $id;
 
 $res = pg_query_params( connect(), $q_latch, $p_latch );
 $r = array();
 while ( $z = pg_fetch_assoc($res) ) {
-	echo "<li>" . $z["label"] . "</li>\n";
+	echo $z["label"] . "<br>\n";
 } // end while
-echo "</ul>\n";
 
 echo "</td></tr></table>\n";
 
