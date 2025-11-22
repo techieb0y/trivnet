@@ -266,8 +266,8 @@ foreach($r as $row) {
 echo "</select>\n";
 
 echo " or custom message: <input name=\"customtext\" length=255 size=128><i>(overrides preset text)</i><br>\n";
-echo "<td><input type=button value=\"Save\" onClick=\"doUpdateBoth()\"></td>";
-// echo "<input type=\"submit\" value=\"Save\"></form>\n";
+// echo "<td><input type=button value=\"Save\"></td>";
+echo "<input type=\"submit\" value=\"Save\"></form>\n";
 echo "</form>";
 
 echo "<hr>\n";
