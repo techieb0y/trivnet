@@ -113,7 +113,7 @@ echo "<input id=\"personID\" name=\"personID\" value=\"$id\" type=hidden>\n";
 echo "<input id=\"updateString\" name=\"updateString\" type=hidden>\n";
 echo "</form>\n";
 
-echo "<form name=\"personinfo\" id=\"personinfo\" action=\"update.php?id=$id\" method=POST>\n";
+echo "<form name=\"personinfo\" id=\"personinfo\" action=\"javascript:;\" method=GET>\n";
 
 // Fetch the enum-ness of all the datatypes
 $r_dts = query("SELECT typeid, name, enum FROM datatypes");
@@ -255,7 +255,7 @@ echo "</tr></table>\n";
 echo "<br>\n";
 
 // Canned message selection and free-form entry goes here
-echo "<form method=\"POST\" name=\"quickmesg\" id=\"quickmesg\" action=\"\" onsubmit=\"return doUpdateBoth();\">\n";
+echo "<form method=\"POST\" name=\"quickmesg\" id=\"quickmesg\" action=\"update.php?id=$id\">\n";
 $q = "SELECT text FROM quickmesg ORDER BY text ASC";
 $r = query($q);
 echo "<select name=\"quickmesg\">\n";
