@@ -13,6 +13,8 @@ if ( isset($_GET["id"]) ) {
 echo "<script language=\"JavaScript\">\n";
 echo "	function doChange(id) {\n";
 echo "		document.getElementById(id).style.backgroundColor = '#32CD32';\n";
+echo "      doUpdate();\n";
+echo "		document.getElementById(id).style.backgroundColor = '#FFFFFF';\n";
 echo "	}\n";
 echo "	function doUnChange() {\n";
 echo "		var boxes = document.forms['personinfo'].getElementsByTagName(\"input\");\n";
@@ -111,7 +113,7 @@ echo "<input id=\"personID\" name=\"personID\" value=\"$id\" type=hidden>\n";
 echo "<input id=\"updateString\" name=\"updateString\" type=hidden>\n";
 echo "</form>\n";
 
-echo "<form name=\"personinfo\" id=\"personinfo\" action=\"javascript:;\" method=GET>\n";
+echo "<form name=\"personinfo\" id=\"personinfo\" action=\"update.php?id=$id\" method=POST>\n";
 
 // Fetch the enum-ness of all the datatypes
 $r_dts = query("SELECT typeid, name, enum FROM datatypes");
@@ -188,7 +190,7 @@ foreach ( $r as $key => $row ) {
 			} // end if
 	} // end foreach
 	// echo "<td><input type=button value=\"Save\" onClick=\"doUpdate()\"></td>";
-	echo "<td><input type=reset  value=\"Reset\" onClick=\"doUnChange()\"></td>";
+	// echo "<td><input type=reset  value=\"Reset\" onClick=\"doUnChange()\"></td>";
 	echo "</tr>\n";
 } // end foreach
 
