@@ -1,0 +1,67 @@
+services:
+  web:
+    image: trivnetphp
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+    networks:
+     - trivnet
+    depends_on:
+      - database
+    volumes:
+      - type: bind
+        source: ./src/
+        target: /var/www/html/
+      - asyncdata:/var/www/html/jobs/
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+  async:
+    image: trivnetphp
+    command: php /var/www/html/async.php --daemon
+    networks:
+     - trivnet
+    depends_on:
+      - database
+    volumes:
+      - asyncdata:/var/www/html/jobs/
+    restart: unless-stopped
+  database:
+    image: postgres:15-alpine
+    networks:
+     - trivnet
+    restart: unless-stopped
+    volumes:
+      - "./docker/postgres/:/docker-entrypoint-initdb.d/"
+      - pgdata:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: trivnet
+      POSTGRES_USER: trivnet
+      POSTGRES_DB: trivnet
+  prometheus:
+    image: prom/prometheus
+    networks:
+     - trivnet
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    volumes:
+      - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
+  grafana:
+    image: grafana/grafana
+    networks:
+     - trivnet
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    volumes:
+      - "./docker/grafana/prometheus.yml:/etc/grafana/provisioning/datasources/prometheus.yml"
+      - "./docker/grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml"
+      - "./docker/grafana/tcm.json:/etc/grafana/dashboards/tcm.json"
+
+volumes:
+  asyncdata:
+  pgdata:
+      
+networks:
+  trivnet:
