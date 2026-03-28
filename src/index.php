@@ -12,8 +12,7 @@ include("head.inc");
 
 // Overall summery
 $sdt = $config["status"];
-echo "Status summary:<br>\n";
-
+echo "<b>Status summary</b>:<br>\n";
 
 $q_sum = 'select count(persondata.value) as num, enumtypes.value as option from persondata,enumtypes where persondata.datatype = $1 and enumtypes.id=persondata.value::integer and enumtypes.datatype=persondata.datatype group by persondata.value, enumtypes.value order by option;';
 $p_sum[] = $sdt;
@@ -27,7 +26,7 @@ while ( $z = pg_fetch_assoc($res) ) {
 // $r_sum = query("select datatypes.label, enumtypes.value as option, count(persondata.value) as num from persondata, datatypes, enumtypes where persondata.datatype=datatypes.typeid and enumtypes.id=persondata.value::integer and persondata.datatype in ( select typeid from datatypes where enum='t' ) group by label, option");
 
 echo "<table><tr>\n";
-echo "<td width=\"50%\">";
+echo "<td width=\"30%\">";
 
 if ( count($r_sum) > 0 ) {
 	echo "<table>\n";
@@ -37,7 +36,7 @@ if ( count($r_sum) > 0 ) {
 	echo "</table>\n";
 } // end if
 
-echo "</td><td width=\"50%\">";
+echo "</td><td width=\"40%\">";
 
 echo "<img src=\"symbol/11\">Currently in the med tent:";
 
@@ -79,6 +78,25 @@ if ( pg_num_rows($res) > 0 ) {
 } // end if
 
 echo "</td>\n";
+
+echo "<td width=\"30%\">\n";
+echo "<b>Incident List</b><br>";
+echo "<button>New Incident</button>";
+
+$q_incidents = 'select id,title from incidents where status=\'open\';';
+
+$res = pg_query( connect(), $q_incidents );
+$r = array();
+echo "<table>\n";
+while ( $z = pg_fetch_assoc($res) ) {
+	$id = $z["id"];
+	$title = $z["title"];
+	echo "<tr><td><a href=\"incident.php?id={$id}\">{$title}</td></tr>\n";
+} // end while
+echo "</table>\n";
+
+echo "</td>\n";
+
 echo "</tr></table>";
 
 // Latching statuses

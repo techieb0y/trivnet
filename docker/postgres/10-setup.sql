@@ -19,5 +19,9 @@ CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varch
 INSERT INTO messages VALUES ( extract(epoch from now() )::integer, 'SysOp', 31, 'SysOp', 'Database Setup Complete', 'all' );
 CREATE TABLE enumtypes ( id int not null, datatype int not null, value varchar not null, constraint datatype_fk foreign key (datatype) references datatypes(typeid) );
 CREATE TABLE race ( raceid int not null primary key, head real check (head >= 0) check (head < 27), tail real check (tail <= head) check ( tail < 27 )  );
+CREATE TYPE incidentstatus AS enum ('open', 'closed');
+CREATE TABLE incidents ( id int primary key, title varchar(64), status incidentstatus not null );
+CREATE TABLE incidentsequence ( incident int REFERENCES incidents(id) NOT NULL, timestamp int NOT NULL, message varchar(255) NOT NULL );
+CREATE TABLE incidentlink ( incident int REFERENCES incidents(id) NOT NULL, person int REFERENCES people(id) NOT NULL );
 copy "part97" from '/docker-entrypoint-initdb.d/trivnet-fcc.out';
 COMMIT;
