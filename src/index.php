@@ -81,7 +81,10 @@ echo "</td>\n";
 
 echo "<td width=\"30%\">\n";
 echo "<b>Incident List</b><br>";
-echo "<button>New Incident</button>";
+echo "<form action=\"newincident.php\" method=POST>";
+echo "<input type=\"text\" name=\"title\">";
+echo "<input type=\"submit\" value=\"New Incident\">";
+echo "</form><br>";
 
 $q_incidents = 'select id,title from incidents where status=\'open\';';
 
