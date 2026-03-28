@@ -26,33 +26,6 @@ get-fcc-db:
     paths:
       - fcc/trivnet-fcc.out
 
-create-web-container:
-  stage: assets
-  tags:
-    - docker-shell
-  only:
-    - master  
-  variables:
-    GIT_STRATEGY: clone
-    IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-  before_script:
-    - /bin/docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  script:
-    - mkdir src/js/ src/css/
-    - curl -L -o src/js/jquery.js -L https://code.jquery.com/jquery-3.7.0.min.js
-    - curl -L -o src/js/datatables.js https://cdn.datatables.net/v/ju/dt-1.13.6/datatables.min.js
-    - curl -L -o src/common/datatables.css https://cdn.datatables.net/v/ju/dt-1.13.6/datatables.min.css
-    - curl -LO https://jqueryui.com/resources/download/jquery-ui-1.13.2.zip && unzip jquery-ui-1.13.2.zip
-    - mv jquery-ui-1.13.2/jquery-ui.min.js src/js/jquery-ui.js && mv jquery-ui-1.13.2/jquery-ui.min.css src/css/jquery-ui.css
-    - echo -e "<?php\n\$sha=\"${CI_COMMIT_SHA}\";\n?>\n" > src/include/sha.inc
-    - docker build -t trivnetphp -f docker/web/Dockerfile . 
-    - docker tag trivnetphp $IMAGE_TAG
-    - docker push $IMAGE_TAG
-    - docker save trivnetphp -o trivnetphp.tar
-  artifacts:
-    paths:
-      - trivnetphp.tar
-
 deploy-stage:
   stage: deploy
   tags:
@@ -71,7 +44,12 @@ deploy-stage:
     - docker compose down
     - chown gitlab-runner -R src/
     - chmod a+rX -R docker/
+    - echo -e "<?php\n\$sha=\"${CI_COMMIT_SHA}\";\n?>\n" > src/include/sha.inc
     - docker compose up -d
+    - docker save trivnetphp -o trivnetphp.tar
+  artifacts:
+    paths:
+      - trivnetphp.tar
 
 stop-stage:
   stage: deploy
@@ -99,13 +77,14 @@ deploy-prod:
     GIT_STRATEGY: clone
   dependencies:
     - get-fcc-db
-    - create-web-container
+    - deploy-stage
   script:
     - docker load < trivnetphp.tar && rm -f trivnetphp.tar
     - mv fcc/trivnet-fcc.out docker/postgres/
     - docker compose down
     - chown gitlab-runner -R src/
     - chmod a+rX -R docker/
+    - echo -e "<?php\n\$sha=\"${CI_COMMIT_SHA}\";\n?>\n" > src/include/sha.inc
     - docker compose up -d
   environment:
     name: Production

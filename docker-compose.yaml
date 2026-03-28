@@ -1,6 +1,9 @@
 services:
   web:
     image: trivnetphp
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
     networks:
      - trivnet
     depends_on:
