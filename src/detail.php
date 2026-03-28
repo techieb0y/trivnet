@@ -250,6 +250,38 @@ while ( $z = pg_fetch_assoc($res) ) {
 echo "</td></tr></table>\n";
 
 echo "</td>\n";
+
+echo "<td>";
+echo "<b>Linked Incidents:</b><br><ul>";
+
+$q_incidents = "select incidents.id,incidents.title from incidents,incidentlink where incidents.id=incidentlink.incident and incidentlink.person={$id};";
+$r_incidents = query( $q_incidents );
+foreach ( $r_incidents as $z ) {
+	$incid = $z["id"];
+	$inctitle = $z["title"];
+	echo "<li><a href=\"incident.php?id={$incid}\">{$inctitle}</a>\n";
+} // end foreach
+
+echo "</ul><br>\n";
+
+echo "<form action=\"linkincident.php\" method=\"POST\">\n";
+echo "<input type=\"hidden\" name=\"who\" value=\"{$id}\">\n";
+$q_openincs = "select id,title from incidents where status='open' and id not in ( select incidents.id from incidents,incidentlink where incidents.id=incidentlink.incident and incidentlink.person={$id} )";
+$r_openincs = query( $q_openincs );
+if ( count($r_openincs) > 0 ) {
+	echo "<select name=\"id\">";
+	echo "<option selected disabled>Pick One:</option>\n";
+	foreach ( $r_openincs as $z ) {
+		$incid = $z["id"];
+		$inctitle = $z["title"];
+		echo "<option value=\"{$incid}\">{$inctitle}</option>\n";
+	} // end foreach
+	echo "</select>\n";
+	echo "<input type=\"submit\" value=\"Link to incident\">";
+} // end if
+
+echo "</td>";
+
 echo "</tr></table>\n";
 
 echo "<br>\n";

@@ -23,6 +23,13 @@ if ( count( $r ) > 0 ) {
 
 echo "<br>\n";
 
+echo "<form action=\"updateincident.php?id={$id}\" method=\"POST\">";
+echo "<input type=text size=128 name=\"message\">";
+echo "<input type=\"submit\" value=\"Post\">";
+echo "</form>\n";
+
+echo "<br>\n";
+
 $q = "SELECT * from incidentsequence WHERE incident=$id ORDER BY timestamp desc";
 $r = query($q);
 
