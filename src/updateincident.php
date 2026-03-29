@@ -16,12 +16,12 @@ if ( !has_session($mycall) ) {
 	exit(0);
 }
 
-$id = $_GET["id"];
-$mesg = $_POST["message"];
-$text = pg_escape_string(connect(), $_POST["message"]);
+$id = $_POST["id"];
+$q = 'INSERT INTO incidentsequence VALUES ( $1, extract(epoch from NOW()), $2 )';
+$p[0] = $id;
+$p[1] = pg_escape_string(connect(), $_POST["message"]);
 
-$q = "INSERT INTO incidentsequence VALUES ( $id, extract(epoch from NOW()), '{$text}' )";
-$r = query($q);
+$r = pg_query_params( connect(), $q, $p );
 
 header("Location: incident.php?id=$id");
 ?>

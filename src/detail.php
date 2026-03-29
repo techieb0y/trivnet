@@ -254,24 +254,26 @@ echo "</td>\n";
 echo "<td>";
 echo "<b>Linked Incidents:</b><br><ul>";
 
-$q_incidents = "select incidents.id,incidents.title from incidents,incidentlink where incidents.id=incidentlink.incident and incidentlink.person={$id};";
-$r_incidents = query( $q_incidents );
-foreach ( $r_incidents as $z ) {
+$q_incidents = 'SELECT incidents.id,incidents.title FROM incidents,incidentlink WHERE incidents.id=incidentlink.incident AND incidentlink.person=$1;';
+$p_incidents[0] = $id;
+$r_incidents = pg_query_params( connect(), $q_incidents, $p_incidents );
+while ( $z = pg_fetch_assoc($r_incidents) ) {
 	$incid = $z["id"];
 	$inctitle = $z["title"];
 	echo "<li><a href=\"incident.php?id={$incid}\">{$inctitle}</a>\n";
-} // end foreach
+} // end while
 
 echo "</ul><br>\n";
 
 echo "<form action=\"linkincident.php\" method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"who\" value=\"{$id}\">\n";
-$q_openincs = "select id,title from incidents where status='open' and id not in ( select incidents.id from incidents,incidentlink where incidents.id=incidentlink.incident and incidentlink.person={$id} )";
-$r_openincs = query( $q_openincs );
-if ( count($r_openincs) > 0 ) {
+$q_openincs = 'SELECT id,title FROM incidents WHERE status=\'open\' AND id NOT IN ( SELECT incidents.id FROM incidents,incidentlink WHERE incidents.id=incidentlink.incident AND incidentlink.person=$1)';
+$p_openincs[0]= $id;
+$r_openincs = pg_query_params( connect(), $q_openincs, $p_openincs );
+if ( pg_num_rows($r_openincs) > 0 ) {
 	echo "<select name=\"id\">";
 	echo "<option selected disabled>Pick One:</option>\n";
-	foreach ( $r_openincs as $z ) {
+	while ( $z = pg_fetch_assoc($r_openincs) ) {
 		$incid = $z["id"];
 		$inctitle = $z["title"];
 		echo "<option value=\"{$incid}\">{$inctitle}</option>\n";

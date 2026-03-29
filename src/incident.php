@@ -10,11 +10,12 @@ if ( isset($_GET["id"]) ) {
 	$id = $_GET["id"];
 } // end if
 
-$q = "SELECT * from incidents WHERE id=$id";
-$r = query($q);
+$q = 'SELECT * FROM incidents WHERE id=$1';
+$p[0] = $id;
+$r = pg_query_params( connect(), $q, $p );
 
-if ( count( $r ) > 0 ) {
-	foreach ( $r as $row) {
+if ( pg_num_rows($r) > 0 ) {
+	while ( $row = pg_fetch_assoc($r) ) {	
 		$title = $row["title"];
 		$status = $row["status"];
 		echo "<b>{$title}</b> ({$status})\n";
@@ -23,22 +24,30 @@ if ( count( $r ) > 0 ) {
 
 echo "<br>\n";
 
-echo "<form action=\"updateincident.php?id={$id}\" method=\"POST\">";
+echo "<form action=\"updateincident.php\" method=\"POST\">";
+echo "<input type=\"hidden\" name=\"id\" value=\"{$id}\">";
 echo "<input type=text size=128 name=\"message\">";
 echo "<input type=\"submit\" value=\"Post\">";
+echo "</form>\n";
+echo "<br>\n";
+
+echo "<form action=\"closeincident.php\" method=\"POST\">\n";
+echo "<input type=\"hidden\" name=\"id\" value=\"{$id}\">";
+echo "<input type=\"submit\" value=\"Close Incident\">\n";
 echo "</form>\n";
 
 echo "<br>\n";
 
-$q = "SELECT * from incidentsequence WHERE incident=$id ORDER BY timestamp desc";
-$r = query($q);
+$q = 'SELECT * FROM incidentsequence WHERE incident=$1 ORDER BY timestamp desc';
+$p[0] = $id;
+$r = pg_query_params( connect(), $q, $p );
 
 echo "<table width=\"100%\">\n";
 
 echo "<tr><th>Timestamp</th><th>Message</th></tr>\n";
 
-if ( count( $r ) > 0 ) {
-	foreach ( $r as $row) {
+if ( pg_num_rows($r) > 0 ) {
+	while ( $row = pg_fetch_assoc($r) ) {	
 		$when = date( "r", $row["timestamp"] );
 		$mesg = $row["message"];
 		echo "<tr><td>$when</td><td>$mesg</td></tr>\n";
@@ -46,7 +55,7 @@ if ( count( $r ) > 0 ) {
 } // end if
 
 echo "</table>\n";
-echo "<b>" . count($r) . " updates</b><br>\n";
+echo "<b>" . pg_num_rows($r) . " updates</b><br>\n";
 
 echo "🔗 <b>Linked to this incident:</b>";
 

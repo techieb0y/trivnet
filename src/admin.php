@@ -28,6 +28,7 @@ if ( isset($_GET["mode"]) ) {
     echo "<ul>\n";
     echo "<li><a href=\"#tabs1\">Data Types</a></li>\n";
     echo "<li><a href=\"#tabs5\">Quick Status Messages</a></li>\n";
+    echo "<li><a href=\"#tabs4\">Incident List</a></li>\n";
     echo "<li><a href=\"#tabs2\">Bulk Import</a></li>\n";
     echo "<li><a href=\"#tabs3\">Async Jobs</a></li>\n";
     echo "<li><a href=\"#tabs9\">Debug Info</a></li>\n";
@@ -35,6 +36,7 @@ if ( isset($_GET["mode"]) ) {
 
 	require_once("include/admin_datatype.inc");
 	require_once("include/admin_quickmesg.inc");
+    require_once("include/incidentlist.inc");
 	require_once("include/admin_bulkimport.inc");
 	require_once("include/admin_async.inc");
 	require_once("include/admin_debug.inc");
