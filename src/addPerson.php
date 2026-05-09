@@ -12,8 +12,8 @@ $type = $config["multidefault"];
 
 $r = query("SELECT MAX(id) + 1 AS nextID FROM people;");
 $next =  $r[0]["nextid"];
-echo "Got: $next";
+// echo "Got: $next";
 $s = query("BEGIN; INSERT INTO people VALUES ( '$next' ); COMMIT;");
 
-header("Location: detail.php?id=$next");
+header("Location: detail.php?id={$next}");
 ?>
