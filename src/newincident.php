@@ -3,7 +3,7 @@ session_start();
 
 include("include/db_ops.inc");
 
-$r = query("SELECT COALESCE((SELECT MAX(id) FROM incidents), 1) as next;");
+$r = query("SELECT COALESCE((SELECT MAX(id)+1 FROM incidents), 1) as next;");
 $next =  $r[0]["next"];
 
 error_log("Next incident ID is {$next}");
