@@ -24,7 +24,7 @@ services:
       - asyncdata:/var/www/html/jobs/
     restart: unless-stopped
   database:
-    image: postgres:15-alpine
+    image: postgres:17-alpine
     networks:
      - trivnet
     restart: unless-stopped
