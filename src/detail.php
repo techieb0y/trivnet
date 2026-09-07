@@ -233,6 +233,8 @@ if ( isset($rid) ) {
 	} else {
 		echo "Race not set, can't link to results.";
 	}
+}
+
 echo "</td></tr></table>\n";
 
 echo "</td><td>\n";
