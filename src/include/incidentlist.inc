@@ -1,5 +1,9 @@
 <?php 
 
+// Admin list of all incidents
+echo "<div id=\"tabs4\">\n";
+
+
 require_once("include/head.inc");
 require_once("include/config.inc");
 require_once("include/db_ops.inc");
@@ -20,4 +24,6 @@ foreach ( $r as $row ) {
 echo "</table>\n";
 
 require_once("include/foot.inc");
+
+echo "</div>";
 ?>
