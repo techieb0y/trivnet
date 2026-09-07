@@ -25,7 +25,7 @@ while ( $z = pg_fetch_assoc($res) ) {
 
 // $r_sum = query("select datatypes.label, enumtypes.value as option, count(persondata.value) as num from persondata, datatypes, enumtypes where persondata.datatype=datatypes.typeid and enumtypes.id=persondata.value::integer and persondata.datatype in ( select typeid from datatypes where enum='t' ) group by label, option");
 
-echo "<table><tr>\n";
+echo "<table width=\"100%\"><tr>\n";
 echo "<td width=\"30%\">";
 
 if ( count($r_sum) > 0 ) {
@@ -80,11 +80,11 @@ if ( pg_num_rows($res) > 0 ) {
 echo "</td>\n";
 
 echo "<td width=\"30%\">\n";
-echo "<b>Incident List</b><br>";
 echo "<form action=\"newincident.php\" method=POST>";
+echo "<input type=\"submit\" value=\"New Incident:\">";
 echo "<input type=\"text\" name=\"title\">";
-echo "<input type=\"submit\" value=\"New Incident\">";
 echo "</form><br>";
+echo "<b>Open Incident List</b><br>";
 
 $q_incidents = 'select id,title from incidents where status=\'open\';';
 
@@ -94,7 +94,7 @@ echo "<table>\n";
 while ( $z = pg_fetch_assoc($res) ) {
 	$id = $z["id"];
 	$title = $z["title"];
-	echo "<tr><td><a href=\"incident.php?id={$id}\">{$title}</td></tr>\n";
+	echo "<tr><td>📍<a href=\"incident.php?id={$id}\">{$title}</td></tr>\n";
 } // end while
 echo "</table>\n";
 
