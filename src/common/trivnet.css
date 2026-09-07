@@ -37,4 +37,4 @@ img { border: 0px; }
 .evenRow { background-color: #bebebe; }
 .oddRow { background-color: #ffffff; }
 .audit { color: grey; font-size: 10pt; }
-.persondata { width: 1024px; text-align:center;}
+.persondata { width: 75%; text-align:center;}
