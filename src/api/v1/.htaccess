@@ -6,3 +6,4 @@ Require valid-user
 RewriteEngine On
 RewriteBase "/api/v1"
 RewriteRule "^finish" csv.php
+RewriteRule "^sweep" csv.php?type=0&value=16
