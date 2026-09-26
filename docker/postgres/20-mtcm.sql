@@ -6,6 +6,7 @@ INSERT INTO datatypes VALUES ( 4, 'lastname', 'Last Name', false, false);
 INSERT INTO datatypes VALUES ( 5, 'sex', 'Sex', true, true);
 INSERT INTO enumtypes VALUES ( 1, 5, 'Male');
 INSERT INTO enumtypes VALUES ( 2, 5, 'Female');
+INSERT INTO enumtypes VALUES ( 3, 5, 'Non-Binary');
 
 INSERT INTO datatypes VALUES ( 6, 'race', 'Race', true, true);
 INSERT INTO enumtypes VALUES ( 1, 6, 'Marathon');
@@ -18,6 +19,7 @@ INSERT INTO enumtypes VALUES ( 3, 0, 'In Med Tent');
 INSERT INTO enumtypes VALUES ( 4, 0, 'Left Med Tent');
 INSERT INTO enumtypes VALUES ( 5, 0, '🚑 EMS Transport');
 INSERT INTO enumtypes VALUES ( 6, 0, 'Dropped Out');
+INSERT INTO enumtypes VALUES ( 6, 0, 'Passed by sweep');
 
 INSERT INTO enumtypes VALUES ( 10, 0, '🚍 On SAG Bus 1');
 INSERT INTO enumtypes VALUES ( 11, 0, '🚍 On SAG Bus 2');
