@@ -89,7 +89,13 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         // $r_id = query($q_id);
         // $jobid = $r_id[0]["jobid"];
 
-        $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '999', '1', 1, 0, '" . time() . "');";
+        if ( isset($_GET["type"]) && isset($_GET["value"])) {
+            $type = $_GET["type"];
+            $value = $_GET["value"]
+            $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '{$type}', '{$value}', 1, 0, '" . time() . "');";
+        } else {
+            $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '999', '1', 1, 0, '" . time() . "');";
+        }
 	    $r_submit = query($q_submit);
 
     } else {
