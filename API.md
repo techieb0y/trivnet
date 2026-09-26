@@ -31,9 +31,17 @@ or
 # Write Ops
 
 * URL: /api/v1/finish
-* Method: `POST`
-* Input: A list of bib numbers, one per line, of runners who have crossed the finish line.
-* Authenticatin: HTTP Basic auth
-* Send a `Content-Type` header of `text/csv`
+  * Method: `POST`
+  * Input: A list of bib numbers, one per line, of runners who have crossed the finish line.
+  * Authenticatin: HTTP Basic auth
+  * Send a `Content-Type` header of `text/csv`
+
+
+* URL: /api/v1/sweep
+  * Method: `POST`
+  * Input: A list of bib numbers, one per line, of runners who have been passed by the end-of-race sweep.
+  * Authenticatin: HTTP Basic auth
+  * Send a `Content-Type` header of `text/csv`
+
 
 Ideally, each batch should only include new finishers since the last submission, but it doesn't really hurt anything to send the full finisher list each time.
