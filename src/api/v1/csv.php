@@ -91,7 +91,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 
         if ( isset($_GET["type"]) && isset($_GET["value"])) {
             $type = $_GET["type"];
-            $value = $_GET["value"]
+            $value = $_GET["value"];
             $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '{$type}', '{$value}', 1, 0, '" . time() . "');";
         } else {
             $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '999', '1', 1, 0, '" . time() . "');";
