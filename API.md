@@ -44,4 +44,4 @@ or
   * Send a `Content-Type` header of `text/csv`
 
 
-Ideally, each batch should only include new finishers since the last submission, but it doesn't really hurt anything to send the full finisher list each time.
+Ideally, each batch should only include new runners since the last submission, but it doesn't really hurt anything to send the full list each time.
