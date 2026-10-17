@@ -16,23 +16,31 @@ div.symbolpickershow { display: inline; }
 </style>
 
 <script>
-function hamSearch() {
-	// get_rn_by_cs.php?cs=KD8GBL
-	callsign = document.getElementById("callsign");
-	realname = document.getElementById("realname");
-	realname.innerHTML = '<img src=images/spinner-small.gif>';
-	req=new XMLHttpRequest();
-	url = 'agents/get_rn_by_cs.php?cs=' + callsign.value;
-	req.open("GET", url, false);
-	req.send();
-	rslt = JSON.parse( req.responseText );
-	if ( rslt.name ) {
-		realname.innerHTML = rslt.name;
-		setSymbol(rslt.symbol);
-	} else {
-		realname.innerHTML = '⚠️ Error fetching name';
-	} // end if
-} // end doAjax
+	function userSearch() {
+		// get_rn_by_cs.php?cs=KD8GBL
+		username = document.getElementById("username");
+		loginbtn = document.getElementById("loginbtn");
+		loginpage = document.getElementById("loginpage");
+
+		req=new XMLHttpRequest();
+		url = 'agents/validate-username.php?username=' + username.value;
+		req.open("GET", url, false);
+		req.send();
+		rslt = JSON.parse( req.responseText );
+		console.log(rslt);
+
+		if ( rslt.id > 0) {
+			// We got an ID for the username, so they exist
+			loginbtn.value = "🔑 Sign In";
+			console.log("User Exists");
+			loginpage.action = "authenticate.php";
+		} else {
+			// We didn't get an ID for the username, offer to register
+			loginbtn.value = "🪪 Register";
+			console.log("New User");
+			loginpage.action = "register.php";
+		} // end if
+	} // end doAjax
 
 	function toggleSymbols() {
 		document.getElementById("symbolpicker").classList.toggle("symbolpickershow");
@@ -49,11 +57,11 @@ function hamSearch() {
 
 <div class="loginWindow">
 
-<form action="index.php" method=POST>
+<form id="loginpage" action="index.php" method=POST>
 
 	<table>
-	<tr><td>Callsign:</td><td><input type=text name="callsign" id="callsign" maxlength=10 size=10 onBlur="javascript:hamSearch()"> (<i>or enter 'guest')</i></td></tr>
-	<tr><td>Name:</td>    <td><div name="realname" id="realname"></td></tr>
+	<tr><td>Username:</td><td> <input type=text name="username" id="username" maxlength=16 size=16 onBlur="javascript:userSearch()"></td></tr>
+	<tr><td colspan=2><hr></td></tr>
 	<tr><td>Tactical: (<em>optional</em>)</td><td><input type=text maxlength=20 name="tactical" id="tactical"></td></tr>
 	<tr><td>Symbol: </td><td><img class="symbol" id="symb" src="symbol/0" onClick="toggleSymbols()">
 		<input type="hidden" id="symbol" value="0" name="symbol">
@@ -62,7 +70,7 @@ function hamSearch() {
 		?>
 		(<em>click to change</em>)
 	</td></tr>
-	<tr><td colspan=2><input type=submit value="Login"></td></tr>
+	<tr><td colspan=2><input id="loginbtn" type=submit value=""></td></tr>
 	</table>
 
 </form>

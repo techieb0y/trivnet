@@ -1,8 +1,10 @@
 BEGIN;
 set client_encoding to latin1;
 CREATE EXTENSION tablefunc;
+CREATE TABLE users ( id int NOT NULL PRIMARY KEY, username varchar(16) NOT NULL, display varchar(128) );
+CREATE TYPE credkind AS enum ('bootstrap', 'totp', 'passkey');
+CREATE TABLE credentials ( id int NOT NULL references users(id), type credkind NOT NULL, data varchar(128) NOT NULL );
 CREATE TABLE people ( id int NOT NULL PRIMARY KEY );
-CREATE TABLE part97 ( callsign varchar(10) primary key, name varchar(200) not null, symbol int not null default 0 );
 CREATE TABLE datatypes ( typeid int PRIMARY KEY, name varchar(12) unique, label varchar(32), exact boolean default false, enum boolean default false );
 INSERT INTO datatypes VALUES ( 0, 'status', 'Status', 'f', 't' );
 INSERT INTO datatypes VALUES ( 1, 'message', 'Message', 'f', 'f' );
@@ -23,5 +25,4 @@ CREATE TYPE incidentstatus AS enum ('open', 'closed');
 CREATE TABLE incidents ( id int primary key, title varchar(64), status incidentstatus not null );
 CREATE TABLE incidentsequence ( incident int REFERENCES incidents(id) NOT NULL, timestamp int NOT NULL, message varchar(255) NOT NULL );
 CREATE TABLE incidentlink ( incident int REFERENCES incidents(id) NOT NULL, person int REFERENCES people(id) NOT NULL );
-copy "part97" from '/docker-entrypoint-initdb.d/trivnet-fcc.out';
 COMMIT;

@@ -32,6 +32,7 @@ if ( isset($_GET["mode"]) ) {
     echo "<li><a href=\"#tabs2\">Bulk Import</a></li>\n";
     echo "<li><a href=\"#tabs3\">Async Jobs</a></li>\n";
     echo "<li><a href=\"#tabs9\">Debug Info</a></li>\n";
+    echo "<li><a href=\"#tabs10\">Users</a></li>\n";
     echo "</ul>\n";
 
 	require_once("include/admin_datatype.inc");
@@ -40,6 +41,7 @@ if ( isset($_GET["mode"]) ) {
 	require_once("include/admin_bulkimport.inc");
 	require_once("include/admin_async.inc");
 	require_once("include/admin_debug.inc");
+    require_once("include/admin_users.inc");
     require_once("include/foot.inc");
 
     echo "</body></html>";
