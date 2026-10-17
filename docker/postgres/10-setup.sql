@@ -1,7 +1,7 @@
 BEGIN;
 set client_encoding to latin1;
 CREATE EXTENSION tablefunc;
-CREATE TABLE users ( id int NOT NULL PRIMARY KEY, username varchar(16) NOT NULL, display varchar(128) );
+CREATE TABLE users ( id int NOT NULL PRIMARY KEY, username varchar(16) NOT NULL, display varchar(128), auth int NOT NULL default 0 );
 CREATE TYPE credkind AS enum ('bootstrap', 'totp', 'passkey');
 CREATE TABLE credentials ( id int NOT NULL references users(id), type credkind NOT NULL, data varchar(128) NOT NULL );
 CREATE TABLE people ( id int NOT NULL PRIMARY KEY );

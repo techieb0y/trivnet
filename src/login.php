@@ -26,6 +26,9 @@ div.symbolpickershow { display: inline; }
 
 		tactical = document.getElementById("tactical");
 
+		// Reset the auth chalange row
+		authrow.innerHTML = "";
+
 		req=new XMLHttpRequest();
 		url = 'agents/validate-username.php?username=' + username.value;
 		req.open("GET", url, false);

@@ -8,17 +8,18 @@
 <body>
 
 <?php
+	require_once("include/constants.inc");
 	require_once("include/db_ops.inc");
 	require_once("include/config.inc");
 
 	$username = $_POST["username"];
 
-	$q = "SELECT id FROM users WHERE username = \$1";
+	$q = "SELECT id,auth FROM users WHERE username = \$1";
 	$p[] = $username;
 	$res = pg_query_params( connect(), $q, $p );
 
+	$r = array();
 	if (pg_num_rows($res) > 0 ) {
-		$r = array();
 		while ( $z = pg_fetch_assoc($res) ) {
 			$r[] = $z;
 		} // end while
@@ -28,13 +29,14 @@
 		// We found a user with this username, a good start.
 
 			$id = $r[0]["id"];
+			$auth = $r[0]["auth"];
 
 			$qc = "SELECT * FROM credentials WHERE id = \$1";
 			$pc[] = $id;
 			$rc = pg_query_params( connect(), $qc, $pc );
 
+			$r2 = array();
 			if (pg_num_rows($rc) > 0 ) {
-				$r2 = array();
 				while ( $z = pg_fetch_assoc($rc) ) {
 					$r2[] = $z;
 				} // end while
@@ -50,9 +52,32 @@
 					echo "User ID: $id<br>\n";
 					echo "Credential Type: $type\n";
 					echo "Credential Data: $data\n";
-					echo "<br>\n"; 
+					echo "Authorization Data: $auth\n";
+					echo "<br>\n";
 				}
 
+				if ($FLAGS["DISABLED"] & $auth) {
+					echo "<b>This account has been disabled.</b><br>\n";
+				} else {
+					// "Simple" case: they have a new-user token
+					$authdata = json_decode($data, true);
+
+					echo "<pre>\n";
+					print_r($authdata);
+					echo "</pre>\n";
+
+					if ( time() > $authdata["expire"] ) {
+						echo "Expired!<br>\n";
+					} else {
+						$bootstrap = $_POST["bootstrap"];
+							$salt = $authdata["salt"];
+						if ( sha1($salt . $bootstrap) === $authdata["sha1"] ) {
+							echo "Success!";
+						} else {
+							echo "Fail!";
+						}
+					}
+				}
 			}
 	} else {
 		// No ID found for this username

@@ -1,5 +1,8 @@
 <?php
 
+$FLAGS["DISABLED"] = 1;
+$FLAGS["ADMIN"]    = 2;
+
 $prompt = ">";
 
 $help_text["help"][] = "Get help about available commands";
