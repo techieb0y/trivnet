@@ -19,8 +19,12 @@ div.symbolpickershow { display: inline; }
 	function userSearch() {
 		// get_rn_by_cs.php?cs=KD8GBL
 		username = document.getElementById("username");
+		authrow = document.getElementById("authrow");
+
 		loginbtn = document.getElementById("loginbtn");
 		loginpage = document.getElementById("loginpage");
+
+		tactical = document.getElementById("tactical");
 
 		req=new XMLHttpRequest();
 		url = 'agents/validate-username.php?username=' + username.value;
@@ -30,8 +34,52 @@ div.symbolpickershow { display: inline; }
 		console.log(rslt);
 
 		if ( rslt.id > 0) {
-			// We got an ID for the username, so they exist
+			// We got an ID for the username, so they exist.
+
+			// Next, collect the info depending on credential style
+			if ( rslt.type == "totp" ) {
+				var textTd = document.createElement("td");
+				textTd.innerHTML = "TOTP Code:";
+
+				var inputTd = document.createElement("td");
+				var inputBox = document.createElement("input");
+
+				inputBox.setAttribute("size", "6");
+				inputBox.setAttribute("name", "totp");
+				inputBox.setAttribute("id", "totp");
+				inputTd.appendChild(inputBox);
+
+				authrow.appendChild(textTd);
+				authrow.appendChild(inputTd);
+			} else if ( rslt.type == "bootstrap" ) {
+				var textTd = document.createElement("td");
+				textTd.innerHTML = "Registration Code:";
+
+				var inputTd = document.createElement("td");
+				var inputBox = document.createElement("input");
+
+				inputBox.setAttribute("size", "32");
+				inputBox.setAttribute("name", "bootstrap");
+				inputBox.setAttribute("id", "bootstrap");
+				inputTd.appendChild(inputBox);
+
+				authrow.appendChild(textTd);
+				authrow.appendChild(inputTd);
+			} else if ( rslt.type == "passkey" ) {
+				var passkey = document.createElement("button");
+				passkey.setAttribute("name", "passkeyLogin");
+				passkey.setAttribute("value", "🔑 Sign In With Passkey");
+				authrow.appendChild(passkey);
+			} else {
+				authtext.innerHTML = "Error!";
+				authdata.size=1;
+			}
+
+			setSymbol(rslt.symbol);
+			tactical.value=rslt.tactical;
+
 			loginbtn.value = "🔑 Sign In";
+			loginbtn.hidden = false;
 			console.log("User Exists");
 			loginpage.action = "authenticate.php";
 		} else {
@@ -39,6 +87,7 @@ div.symbolpickershow { display: inline; }
 			loginbtn.value = "🪪 Register";
 			console.log("New User");
 			loginpage.action = "register.php";
+			loginbtn.hidden = false;
 		} // end if
 	} // end doAjax
 
@@ -61,6 +110,8 @@ div.symbolpickershow { display: inline; }
 
 	<table>
 	<tr><td>Username:</td><td> <input type=text name="username" id="username" maxlength=16 size=16 onBlur="javascript:userSearch()"></td></tr>
+	<tr id="authrow"></tr>
+
 	<tr><td colspan=2><hr></td></tr>
 	<tr><td>Tactical: (<em>optional</em>)</td><td><input type=text maxlength=20 name="tactical" id="tactical"></td></tr>
 	<tr><td>Symbol: </td><td><img class="symbol" id="symb" src="symbol/0" onClick="toggleSymbols()">
@@ -70,7 +121,7 @@ div.symbolpickershow { display: inline; }
 		?>
 		(<em>click to change</em>)
 	</td></tr>
-	<tr><td colspan=2><input id="loginbtn" type=submit value=""></td></tr>
+	<tr><td colspan=2><input id="loginbtn" hidden type=submit value=""></td></tr>
 	</table>
 
 </form>

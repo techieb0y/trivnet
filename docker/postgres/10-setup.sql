@@ -12,7 +12,7 @@ CREATE TABLE defaults ( callsign char(12) primary key, defsearch varchar(12) ref
 CREATE TABLE persondata ( personid int references people(id) NOT NULL, datatype int references datatypes(typeid) NOT NULL, value varchar(512), PRIMARY KEY (personid,datatype) );
 CREATE TABLE quickmesg ( text varchar(255) );
 CREATE TABLE updatesequence ( personid int references people(id) NOT NULL, timestamp int NOT NULL, source varchar(35) NOT NULL, datatype int REFERENCES datatypes(typeid), value varchar(255) NOT NULL );
-CREATE TABLE sessions ( sessionid character varying(32) NOT NULL, callsign character varying(25) NOT NULL, "timestamp" bigint, symbol integer DEFAULT 0 NOT NULL, tactical character varying(64));
+CREATE TABLE sessions ( sessionid character varying(32) NOT NULL, userid int NOT NULL references users(id), "timestamp" bigint, symbol integer DEFAULT 0 NOT NULL, tactical character varying(64));
 CREATE TABLE messages ( timestamp int NOT NULL, callsign varchar(25) NOT NULL, symbol integer DEFAULT 0 NOT NULL, tactical character varying(64), message varchar(255) NOT NULL, dest varchar(25) NOT NULL );
 CREATE TABLE pidmap ( pid int, callsign varchar(12) );
 INSERT INTO people VALUES ( 0 );

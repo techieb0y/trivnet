@@ -13,22 +13,39 @@
 
 	$username = $_POST["username"];
 
-	$qr = "SELECT id FROM users WHERE username='$username'";
-	$r = query($qr);
+	$q = "SELECT id FROM users WHERE username = \$1";
+	$p[] = $username;
+	$res = pg_query_params( connect(), $q, $p );
+
+	if (pg_num_rows($res) > 0 ) {
+		$r = array();
+		while ( $z = pg_fetch_assoc($res) ) {
+			$r[] = $z;
+		} // end while
+	}
+
 	if ( count($r) > 0 ) {
 		// We found a user with this username, a good start.
 
 			$id = $r[0]["id"];
 
-			$qc = "SELECT * FROM credentials WHERE id='$id'";
-			$rc = query($qc);
+			$qc = "SELECT * FROM credentials WHERE id = \$1";
+			$pc[] = $id;
+			$rc = pg_query_params( connect(), $qc, $pc );
 
-			if ( count($rc) > 0 ) {
+			if (pg_num_rows($rc) > 0 ) {
+				$r2 = array();
+				while ( $z = pg_fetch_assoc($rc) ) {
+					$r2[] = $z;
+				} // end while
+			}
+
+			if ( count($r2) > 0 ) {
 				// ...and there are credential mapping entries for the user, even better!
 
-				foreach ( $rc as $cred ) {
+				foreach ( $r2 as $cred ) {
 					$type = $cred["type"];
-					$date = $cred["data"];
+					$data = $cred["data"];
 
 					echo "User ID: $id<br>\n";
 					echo "Credential Type: $type\n";
@@ -37,11 +54,15 @@
 				}
 
 			}
-
 	} else {
 		// No ID found for this username
 		echo "Login Failed";
 	}
+
+echo "<hr>\n";
+echo "<pre>\n";
+print_r($_POST);
+echo "</pre>\n";
 
 ?>
 
