@@ -8,13 +8,14 @@ header("Content-type: text/plain");
 
 $username = trim(strtolower($_GET["username"]));
 // FIXME: make this work with multiple sessions for a user.
-$qr = "SELECT users.id,users.display,credentials.type,sessions.symbol,sessions.tactical FROM users,credentials,sessions WHERE users.id=credentials.id AND users.username = \$1";
+// $qr = "SELECT users.id,users.display,credentials.type,sessions.symbol,sessions.tactical FROM users,credentials,sessions WHERE users.id=credentials.id AND users.username = \$1";
+$qr = "SELECT users.id,users.display,credentials.type FROM users,credentials WHERE users.id=credentials.id AND users.username = \$1";
 
 $p[] = $username;
 $res = pg_query_params( connect(), $qr, $p );
 
-if (pg_num_rows($r) > 0 ) {
-    $r = array();
+$r = array();
+if (pg_num_rows($res) > 0 ) {
     while ( $z = pg_fetch_assoc($res) ) {
         $r[] = $z;
     } // end while

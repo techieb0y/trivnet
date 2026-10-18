@@ -13,10 +13,9 @@ date_default_timezone_set("America/Chicago");
 
 // Make sure we know who we're talking to
 session_start();
-// session_register("lastmsg");
-// session_register("mycall");
 
-if ( isset($_POST["callsign"]) ) {
+/*
+if ( isset($_SESSION["username"]) ) {
 	// Process login
 	$mycall = strtoupper($_POST["callsign"]);
 	if ( strlen($mycall) < 1 ) { header("Location: login.php"); }
@@ -58,9 +57,10 @@ if ( !has_session() ) {
 	// header("WWW-Authenticate: Basic");
 	header("Location: login.php");
 } // end if
+*/
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
@@ -74,7 +74,7 @@ if ( !has_session() ) {
 		echo "	<link rel=\"stylesheet\" href=\"css/jquery-ui.css\" />\n";
 		echo "	<script src=\"js/jquery.js\"></script>\n";
 		echo "	<script src=\"js/jquery-ui.js\"></script>\n";
-		echo "	<script src=\"common/jquery.js\"></script>\n";
+		echo "	<script src=\"js/jquery.js\"></script>\n";
 	} // end if
 ?>
 </head>
@@ -86,10 +86,11 @@ if ( !has_session() ) {
 	<?php
 		$name = $_SESSION["realname"];
 		$tac = $_SESSION["tactical"];
-		$call = $_SESSION["callsign"];
+		$user = $_SESSION["username"];
+		$auth = $_SESSION["auth"];
 		if ( isset($_SESSION["symbol"]) ) { $sym = $_SESSION["symbol"]; } else { $sym = 0; }
 		echo "<img src=\"symbol/$sym\">&nbsp;";
-		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
+		echo "$name/<b>$tac</b> <i>$user</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
 	<script>var callsign = <?php echo "'$call'" ?></script>
@@ -101,9 +102,16 @@ if ( !has_session() ) {
 		$tabs["query.php"] = "Search";
 		$tabs["multiedit.php"] = "Multi-Edit";
 		// $tabs["turboedit.php"] = "Turbo Edit";
-		$tabs["batch.php"] = "Batch Edit";
+
+		if ( $FLAGS["BATCH"] & $auth ) {
+			$tabs["batch.php"] = "Batch Edit";
+		}
+
 		$tabs["messaging.php"] = "Messaging";
-		$tabs["admin.php"] = "Admin";
+
+		if ( $FLAGS["ADMIN"] & $auth ) {
+			$tabs["admin.php"] = "Admin";
+		}
 
 		foreach ( $tabs as $taburl => $tabname ) {
 			if ( strpos( $_SERVER["PHP_SELF"], $taburl ) ) { 

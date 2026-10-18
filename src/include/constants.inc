@@ -2,6 +2,7 @@
 
 $FLAGS["DISABLED"] = 1;
 $FLAGS["ADMIN"]    = 2;
+$FLAGS["BATCH"]    = 4;
 
 $prompt = ">";
 
@@ -53,6 +54,5 @@ $jobstate[2] = "Aborted";
 $jobstate[3] = "Running";
 $jobstate[4] = "On Hold";
 $jobstate[5] = "Ran With Errors";
-
 
 ?>

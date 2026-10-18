@@ -60,13 +60,13 @@ function start_session() {
    		  $_SESSION['token'] = bin2hex(random_bytes(32));
 		}
 
-		$call = $_SESSION["callsign"];
+		$user = $_SESSION["username"];
 		$sym = $_SESSION["symbol"];
 		$tac = $_SESSION["tactical"];
 		$q3 = "BEGIN;";
 		$t = time();
 		$q3 .= "INSERT INTO sessions VALUES ('" . session_id() . "','$call', '$t', '$sym', '$tac');";
-		$q3 .= "INSERT INTO messages VALUES ('$t', '$call', '$sym', '$tac', 'logged on', 'Sysop' );";
+		$q3 .= "INSERT INTO messages VALUES ('$t', '$user', '$sym', '$tac', 'logged on', 'Sysop' );";
 		$q3 .= "INSERT INTO pidmap VALUES (" . getmypid() . ",'" . $call . "');";
 		$q3 .= "COMMIT;";
 		query_simple($q3);
@@ -100,7 +100,7 @@ function stop_session() {
 
 function list_sessions() {
 	require_once("db_ops.inc");
-	$q = "SELECT sessionid, callsign, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid NOT LIKE 'VOID%';";
+	$q = "SELECT sessionid, userid, tactical, symbol, timestamp, extract(epoch FROM now())-timestamp AS age FROM sessions WHERE timestamp <> 0 AND sessionid NOT LIKE 'VOID%';";
 	$r = query($q);
 	return($r);
 } // end list_sessions

@@ -1,3 +1,7 @@
+<?php
+	ob_start();
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
@@ -73,6 +77,40 @@
 							$salt = $authdata["salt"];
 						if ( sha1($salt . $bootstrap) === $authdata["sha1"] ) {
 							echo "Success!";
+
+							if (empty($_SESSION['token'])) {
+								$token = bin2hex(random_bytes(32));
+								session_name($token);
+								session_start();
+							}
+
+							$_SESSION["token"] = session_id();
+							$_SESSION["username"] = $_POST["username"];
+							$_SESSION["symbol"] = $_POST["symbol"];
+							$_SESSION["tactical"] = $_POST["tactical"];
+							$_SESSION["auth"] = $auth;
+
+							$q3 = "INSERT INTO sessions VALUES ( \$1, \$2, \$3, \$4, \$5 );";
+
+							$p4[] = session_id();		// int
+							$p4[] = $id;				// int
+							$p4[] = time();				// bigint
+							$p4[] = $_POST["symbol"];	// int
+							$p4[] = $_POST["tactical"];	// text
+
+							$rc = pg_query_params( connect(), $q3, $p4 );
+							print_r($rc);
+
+							$q4 = "INSERT INTO messages VALUES ( \$1, \$2, \$3, \$4, 'logged on', 'Sysop' );";
+
+							$p2[] = time();				// 3
+							$p2[] = $_POST["username"];	// 6
+							$p2[] = $_POST["symbol"];	// 4
+							$p2[] = $_POST["tactical"];	// 5
+
+							$rc = pg_query_params( connect(), $q4, $p2 );
+							print_r($rc);
+
 						} else {
 							echo "Fail!";
 						}
@@ -93,3 +131,7 @@ echo "</pre>\n";
 
 </body>
 </html>
+
+<?php
+ob_end_flush();
+?>

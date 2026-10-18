@@ -8,13 +8,13 @@
 	// print_r( list_sessions() );
 	
 	echo "<table border=1 width=\"66%\">";
-	echo "<tr><th colspan=2>Callsign</th><th>Tactical Call</th><th>Age (sec)</th><th>Timestamp</th></tr>\n";
+	echo "<tr><th colspan=2>Username</th><th>Tactical Call</th><th>Age (sec)</th><th>Timestamp</th></tr>\n";
 	foreach ( list_sessions() as $ses ) {
 		if ( $ses["sessionid"] == session_id() ) { $isThisSess = "*"; } else { $isThisSess = ""; }
-		echo "<tr><td>$isThisSess</td><td>" . $ses["callsign"] . "</td><td>" . $ses["tactical"] . "</td><td>". sprintf("%.2f", $ses["age"]) . "</td><td>" . $ses["timestamp"] . "</td></tr>\n";
+		echo "<tr><td>$isThisSess</td><td>" . $ses["userid"] . "</td><td>" . $ses["tactical"] . "</td><td>". sprintf("%.2f", $ses["age"]) . "</td><td>" . $ses["timestamp"] . "</td></tr>\n";
 	} // end foreach
 	echo "</table>";
 
-	echo "</div></div>";
+	echo "</div>";
 
 ?>

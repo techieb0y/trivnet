@@ -68,6 +68,8 @@ div.symbolpickershow { display: inline; }
 
 				authrow.appendChild(textTd);
 				authrow.appendChild(inputTd);
+
+				inputBox.focus();
 			} else if ( rslt.type == "passkey" ) {
 				var passkey = document.createElement("button");
 				passkey.setAttribute("name", "passkeyLogin");
