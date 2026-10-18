@@ -111,6 +111,7 @@
 							$rc = pg_query_params( connect(), $q4, $p2 );
 							print_r($rc);
 
+							header("Location", "index.html");
 						} else {
 							echo "Fail!";
 						}
