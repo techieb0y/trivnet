@@ -3,7 +3,8 @@
 	require_once("include/db_ops.inc");
 	require_once("include/config.inc");
 
-	session_start();
+	@session_start();
+	unset($_SESSION);
 	session_destroy();
 
 	header("HTTP/401 Unauthorized");
