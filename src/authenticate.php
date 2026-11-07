@@ -47,7 +47,8 @@
 			}
 
 			$_SESSION["token"] = session_id();
-			$_SESSION["username"] = $_POST["username"];
+			$_SESSION["username"] = $username;
+			$_SESSION["realname"] = $display;
 			$_SESSION["symbol"] = $_POST["symbol"];
 			$_SESSION["tactical"] = $_POST["tactical"];
 			$_SESSION["auth"] = $auth;
@@ -66,7 +67,7 @@
 			$q4 = "INSERT INTO messages VALUES ( \$1, \$2, \$3, \$4, 'logged on', 'Sysop' );";
 
 			$p2[] = time();				// 3
-			$p2[] = $_POST["username"];	// 6
+			$p2[] = $username;	// 6
 			$p2[] = $_POST["symbol"];	// 4
 			$p2[] = $_POST["tactical"];	// 5
 

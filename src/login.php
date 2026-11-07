@@ -50,7 +50,7 @@ div.symbolpickershow { display: inline; }
 		?>
 		(<em>click to change</em>)
 	</td></tr>
-	<tr><td colspan=2><input id="loginbtn" hidden type=submit value=""></td></tr>
+	<tr><td colspan=2><input id="loginbtn" type=submit value="Log In"></td></tr>
 	</table>
 
 </form>
