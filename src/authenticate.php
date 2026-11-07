@@ -74,12 +74,10 @@
 			$rc = pg_query_params( connect(), $q4, $p2 );
 			// print_r($rc);
 
-			header("Location", "index.html");
+			header("Location", "index.php");
 		}
 	} else {
 		// No ID found for this username; auto-create one that's disabled
-
-
 
 		$q = "INSERT INTO users VALUES ( (SELECT MAX(id)+1 FROM users), \$1, \$2, \$3 )";
 
