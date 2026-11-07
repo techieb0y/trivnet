@@ -83,6 +83,8 @@
 
 		$q = "INSERT INTO users VALUES ( (SELECT MAX(id)+1 FROM users), \$1, \$2, \$3 )";
 
+		unset($p);
+		
 		$p[] = $username;
 		$p[] = $display;
 		$p[] = $FLAGS["DISABLED"];
