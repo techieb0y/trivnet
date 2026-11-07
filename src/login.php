@@ -6,8 +6,7 @@ $username = $authdata["OIDC_CLAIM_preferred_username"];
 
 require_once("include/aprs-symbols.php");
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
@@ -36,7 +35,7 @@ div.symbolpickershow { display: inline; }
 
 <div class="loginWindow">
 
-<form id="loginpage" action="index.php" method=POST>
+<form id="loginpage" action="authenticate.php" method=POST>
 
 	<table>
 	<tr><td>Username:</td><td> <?php echo $display; ?> </td></tr>
