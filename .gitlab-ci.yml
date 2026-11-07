@@ -12,7 +12,7 @@ php-lint:
     - find ./ -name \*.php -print0 | xargs -I '{}' -n1 -0 php -l '{}'
     - find ./ -name \*.inc -print0 | xargs -I '{}' -n1 -0 php -l '{}'
 
-get-fcc-db:
+.get-fcc-db:
   stage: assets
   tags:
     - docker
@@ -32,24 +32,18 @@ deploy-stage:
     - docker-shell
   only:
     - master  
+  needs: [ "php-lint" ]
   variables:
     GIT_STRATEGY: clone
-  dependencies:
-    - get-fcc-db
   environment:
     name: Stage
     url: http://docker.corbettdigital.net:8080/
   script:
-    - mv fcc/trivnet-fcc.out docker/postgres/
     - docker compose down
     - chown gitlab-runner -R src/
     - chmod a+rX -R docker/
     - echo -e "<?php\n\$sha=\"${CI_COMMIT_SHA}\";\n?>\n" > src/include/sha.inc
     - docker compose up -d
-    - docker save trivnetphp -o trivnetphp.tar
-  artifacts:
-    paths:
-      - trivnetphp.tar
 
 stop-stage:
   stage: deploy
@@ -66,6 +60,20 @@ stop-stage:
   script:
     - docker compose down
 
+fetch-stage:
+  stage: deploy
+  tags:
+    - docker-shell
+  only:
+    - master  
+  variables:
+    GIT_STRATEGY: clone
+  script:
+    - docker save trivnetphp -o trivnetphp.tar
+  artifacts:
+    paths:
+      - trivnetphp.tar
+
 deploy-prod:
   stage: deploy
   when: manual
@@ -76,8 +84,8 @@ deploy-prod:
   variables:
     GIT_STRATEGY: clone
   dependencies:
-    - get-fcc-db
-    - deploy-stage
+    - fetch-stage
+  needs: [ "fetch-stage" ]
   script:
     - docker load < trivnetphp.tar && rm -f trivnetphp.tar
     - mv fcc/trivnet-fcc.out docker/postgres/
