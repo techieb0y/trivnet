@@ -79,7 +79,9 @@
 	} else {
 		// No ID found for this username; auto-create one that's disabled
 
-		$q = "INSERT INTO users VALUES ( \$1, \$2, \$3 )";
+
+
+		$q = "INSERT INTO users VALUES ( (SELECT MAX(id)+1 FROM users), \$1, \$2, \$3 )";
 
 		$p[] = $username;
 		$p[] = $display;
