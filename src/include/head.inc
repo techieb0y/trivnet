@@ -14,50 +14,6 @@ date_default_timezone_set("America/Chicago");
 // Make sure we know who we're talking to
 session_start();
 
-/*
-if ( isset($_SESSION["username"]) ) {
-	// Process login
-	$mycall = strtoupper($_POST["callsign"]);
-	if ( strlen($mycall) < 1 ) { header("Location: login.php"); }
-	$qr = "SELECT name FROM part97 WHERE callsign='$mycall'";
-	$r = query($qr);
-	if ( count($r) == 1 ) {
-		$name = $r[0]["name"];
-		$_SESSION["callsign"] = $mycall;
-		$_SESSION["realname"] = $name;
-		if ( isset($_POST["tactical"]) ) {
-			$_SESSION["tactical"] = $_POST["tactical"];
-		} // end if
-		if ( isset($_POST["symbol"]) ) {
-			$_SESSION["symbol"] = $_POST["symbol"];
-			$qu = "UPDATE part97 SET symbol=" . $_POST["symbol"] . " WHERE callsign='" . strtoupper($_POST["callsign"]) . "';";
-			$qur = query($qu);
-		} // end if
-		start_session();
-	} // end if
-	if ( "GUEST" == $mycall ) {
-		// Guest user
-		$name = "Guest user";
-		$_SESSION["callsign"] = "Guest";
-		$_SESSION["realname"] = "Guest User";
-		
-		if ( isset($_POST["tactical"]) ) {
-			$_SESSION["tactical"] = $_POST["tactical"];
-		} // end if
-		if ( isset($_POST["symbol"]) ) {
-			$_SESSION["symbol"] = $_POST["symbol"];
-		} // end if
-		start_session();
-	} // end if
-} // end if 
-
-if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
-if ( !has_session() ) {
-	header("HTTP/403 Forbidden");
-	// header("WWW-Authenticate: Basic");
-	header("Location: login.php");
-} // end if
-*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -85,7 +41,7 @@ if ( !has_session() ) {
 	<div class="whoami">
 	<?php
 		$name = $_SESSION["realname"];
-		$tac = $_SESSION["tactical"];
+		$tac  = $_SESSION["tactical"];
 		$user = $_SESSION["username"];
 		$auth = $_SESSION["auth"];
 		if ( isset($_SESSION["symbol"]) ) { $sym = $_SESSION["symbol"]; } else { $sym = 0; }

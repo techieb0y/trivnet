@@ -52,10 +52,11 @@ function has_session() {
 function start_session() {
 	require_once("db_ops.inc");
 
+	session_start();
+
 	if ( has_session() ) {
 		// That call already has a session
 	} else {
-
 		if (empty($_SESSION['token'])) {
    		  $_SESSION['token'] = bin2hex(random_bytes(32));
 		}
