@@ -66,6 +66,8 @@ fetch-stage:
     - docker-shell
   only:
     - master  
+  when: manual
+  needs: [ "deploy-stage" ]
   variables:
     GIT_STRATEGY: clone
   script:
@@ -76,7 +78,6 @@ fetch-stage:
 
 deploy-prod:
   stage: deploy
-  when: manual
   tags:
     - trivnet-prod
   only:
