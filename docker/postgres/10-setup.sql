@@ -2,6 +2,7 @@ BEGIN;
 set client_encoding to latin1;
 CREATE EXTENSION tablefunc;
 CREATE TABLE users ( id int NOT NULL PRIMARY KEY, username varchar(24) NOT NULL, display varchar(128), auth int NOT NULL default 0 );
+INSERT INTO users VALUES ( 1, 'admin', 'Administrator', 2 );
 CREATE TABLE people ( id int NOT NULL PRIMARY KEY );
 CREATE TABLE datatypes ( typeid int PRIMARY KEY, name varchar(12) unique, label varchar(32), exact boolean default false, enum boolean default false );
 INSERT INTO datatypes VALUES ( 0, 'status', 'Status', 'f', 't' );
