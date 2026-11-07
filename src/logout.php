@@ -4,13 +4,7 @@
 	require_once("include/config.inc");
 
 	session_start();
-	if ( isset( $_SESSION["callsign"] ) ) {
-		$call = $_SESSION["callsign"];
-		stop_session($call);
-		$_SESSION = array();
-    	setcookie(session_name(), '', time() - 42000);
-		session_destroy();
-	} // end if	
+	session_destroy();
 
 	header("HTTP/401 Unauthorized");
 	$loc_parts = explode($_SERVER["REQUEST_URI"], "/");
@@ -18,5 +12,4 @@
 	$loc_parts[] = "login.php";
 	$loc = implode("/", $loc_parts);
 	header("Location: " . $loc);
-
 ?>
