@@ -50,7 +50,8 @@ div.symbolpickershow { display: inline; }
 		(<em>click to change</em>)
 	</td></tr>
 	<tr><td colspan=2><input id="loginbtn" type=submit value="Log In"></td></tr>
-	</table>
+	<tr><td><a href="https://login.corbettdigital.net/api/oidc/end-session">Full Logout</a></td><td>&nbsp;</td></tr>
+</table>
 
 </form>
 
