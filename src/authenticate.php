@@ -1,21 +1,8 @@
 <?php
-	ob_start();
-
 	$authdata = apache_request_headers();
 	$display = $authdata["OIDC_CLAIM_display_name"];
 	$username = $authdata["OIDC_CLAIM_preferred_username"];
-?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-
-<head>
-	<meta charset="utf-8">
-</head>
-
-<body>
-
-<?php
 	require_once("include/constants.inc");
 	require_once("include/db_ops.inc");
 	require_once("include/config.inc");
@@ -38,6 +25,7 @@
 		$auth = $r[0]["auth"];
 
 		if ($FLAGS["DISABLED"] & $auth) {
+			header("HTTP/401 Unauthorized");
 			echo "<b>This account has been disabled.</b><br>\n";
 		} else {
 			if (empty($_SESSION['token'])) {
@@ -90,13 +78,7 @@
 		$r = pg_query_params( connect(), $q, $p );
 		// print_r($r);
 
+		header("HTTP/401 Unauthorized");
 		echo "<br>A Trivnet user has been auto-created; contact an admin to have it enabled.\n";
 	}
-?>
-
-</body>
-</html>
-
-<?php
-	ob_end_flush();
 ?>
