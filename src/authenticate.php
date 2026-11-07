@@ -62,7 +62,7 @@
 			$p4[] = $_POST["tactical"];	// text
 
 			$rc = pg_query_params( connect(), $q3, $p4 );
-			print_r($rc);
+			// print_r($rc);
 
 			$q4 = "INSERT INTO messages VALUES ( \$1, \$2, \$3, \$4, 'logged on', 'Sysop' );";
 
@@ -72,7 +72,7 @@
 			$p2[] = $_POST["tactical"];	// 5
 
 			$rc = pg_query_params( connect(), $q4, $p2 );
-			print_r($rc);
+			// print_r($rc);
 
 			header("Location", "index.html");
 		}
@@ -90,7 +90,7 @@
 		$p[] = $FLAGS["DISABLED"];
 
 		$r = pg_query_params( connect(), $q, $p );
-		print_r($r);
+		// print_r($r);
 
 		echo "<br>A Trivnet user has been auto-created; contact an admin to have it enabled.\n";
 	}

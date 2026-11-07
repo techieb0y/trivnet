@@ -1,7 +1,5 @@
 <?php
-	ini_set( "include_path", "./include/" );
-	session_start();
-	
+ini_set( "include_path", "./include/" );
 // Trivnetdb 2.0 was designed and built by KD8GBL 
 
 //	The original trivnetdb author has a web page with more inforamtion at:

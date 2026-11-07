@@ -11,9 +11,6 @@ date_default_timezone_set("America/Chicago");
 
 // Trivnetdb 2.x was designed and built by KD8GBL
 
-// Make sure we know who we're talking to
-session_start();
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -88,7 +85,7 @@ session_start();
 	echo "</table>\n";
 	echo "</div>\n";
 	
-	// echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
+	echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
 
 ?>
 	<hr>
