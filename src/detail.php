@@ -284,7 +284,8 @@ if ( pg_num_rows($r_openincs) > 0 ) {
 		echo "<option value=\"{$incid}\">{$inctitle}</option>\n";
 	} // end foreach
 	echo "</select>\n";
-	echo "<input type=\"submit\" value=\"Link to incident\">";
+	echo "<input type=\"submit\" value=\"Link to incident\">\n";
+	echo "</form>\n";
 } // end if
 
 echo "</td>";
