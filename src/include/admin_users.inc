@@ -5,7 +5,7 @@
 	echo "<table border=1 width=\"66%\">";
 	echo "<tr><th>ID</th> <th>Username</th>";
 	echo "<th>Display Name</th>";
-	echo "<th>Enabled</th>";
+	echo "<th>Disabled</th>";
 	echo "<th>Batch</th>";
 	echo "<th>Admin</th>";
 	echo "</tr>\n";
@@ -20,7 +20,7 @@
 		echo "<td>" . $who["display"] . "</td>\n";
 
 		echo "<td>";
-			if ( $who["auth"] & $FLAGS["DISABLED"] ) { echo "✅"; } else { echo "⛔️"; }
+			if ( $who["auth"] & $FLAGS["DISABLED"] ) { echo "⛔️"; } else { echo "✅"; }
 		echo "</td>\n";
 
 		echo "<td>";

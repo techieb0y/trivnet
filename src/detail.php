@@ -59,7 +59,7 @@ echo "</script>\n";
 // Record an 'audit log' event
 global $config;
 $who = $_SESSION["tactical"];
-$cs = $_SESSION["callsign"];
+$cs = $_SESSION["username"];
 $now = time();
 $dt = $config["message"];
 $q = "INSERT INTO updatesequence VALUES ( $id, $now, '$who', $dt, '<span class=\"audit\">Search performed by $cs</span>' )";

@@ -9,7 +9,7 @@
 
 	session_start();
 	$tac = $_SESSION["tactical"];
-	$call = $_SESSION["callsign"];
+	$call = $_SESSION["username"];
 	if ( strlen($tac) > 0 ) { 
 		$mycall = $tac . "/" . $call;
 	} else {

@@ -13,7 +13,6 @@ CREATE TABLE quickmesg ( text varchar(255) );
 CREATE TABLE updatesequence ( personid int references people(id) NOT NULL, timestamp int NOT NULL, source varchar(35) NOT NULL, datatype int REFERENCES datatypes(typeid), value varchar(255) NOT NULL );
 CREATE TABLE sessions ( sessionid character varying(32) NOT NULL, userid int NOT NULL references users(id), "timestamp" bigint, symbol integer DEFAULT 0 NOT NULL, tactical character varying(64));
 CREATE TABLE messages ( timestamp int NOT NULL, username varchar(25) NOT NULL, symbol integer DEFAULT 0 NOT NULL, tactical character varying(64), message varchar(255) NOT NULL, dest varchar(25) NOT NULL );
-CREATE TABLE pidmap ( pid int, callsign varchar(12) );
 INSERT INTO people VALUES ( 0 );
 CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varchar(8) not null, searchtype int REFERENCES datatypes(typeid), updatetype int, data varchar(255) not null, state int DEFAULT 0, progress int DEFAULT 0, timestamp int NOT NULL);
 -- setval('async_jobid_seq', 1);

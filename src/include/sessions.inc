@@ -43,7 +43,6 @@ function adminDeleteSession($s) {
 	$q = "BEGIN;";
 	$q .= "DELETE FROM sessions WHERE sessionid='" . $s . "';";
 	$q .= "INSERT INTO messages VALUES (" . time() . ", '$call', 31, 'N/A' , 'logged out due to inactivity', 'Sysop' );";
-	$q .= "DELETE FROM pidmap WHERE pid=" . getmypid() . ";";
 	$q .= "COMMIT;";
 	query_simple($q);
 
