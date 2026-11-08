@@ -6,6 +6,7 @@
 	require_once("include/constants.inc");
 	require_once("include/db_ops.inc");
 	require_once("include/config.inc");
+	require_once("include/sessions.inc");
 
 	$q = "SELECT id,auth FROM users WHERE username = \$1";
 	$p[] = $username;
@@ -28,12 +29,6 @@
 			header("HTTP/401 Unauthorized");
 			echo "<b>This account has been disabled.</b><br>\n";
 		} else {
-			if (empty($_SESSION['token'])) {
-				$token = bin2hex(random_bytes(32));
-				session_name($token);
-				session_start();
-			}
-
 			$_SESSION["token"] = session_id();
 			$_SESSION["username"] = $username;
 			$_SESSION["realname"] = $display;

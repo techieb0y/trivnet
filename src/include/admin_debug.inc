@@ -6,7 +6,14 @@
 	print_r($_SESSION);
 	echo "</pre>\n";
 	// print_r( list_sessions() );
-	
+
+	echo "<br>\n";
+	$authdata = apache_request_headers();
+	$exp = $authdata["OIDC_CLAIM_exp"];
+	$delta = $exp - time();
+	echo "OIDC Session expires at {$exp} (in {$delta} seconds)<br>\n";
+	echo "<br>\n";
+
 	echo "<table border=1 width=\"66%\">";
 	echo "<tr><th colspan=2>Username</th><th>Tactical Call</th><th>Age (sec)</th><th>Timestamp</th></tr>\n";
 	foreach ( list_sessions() as $ses ) {

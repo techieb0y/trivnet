@@ -1,74 +1,76 @@
 <?php
-	require("include/config.inc");
-	require("include/constants.inc");
-	require("include/db_ops.inc");
-	require("include/sessions.inc");
+	global $begin;
+	$begin = microtime(true);
+	require_once("config.inc");
+	require_once("constants.inc");
+	require_once("db_ops.inc");
+	require_once("sessions.inc");
+	require_once("send-metric.inc");
 
-// Make sure we know who we're talking to
-session_start();
-// session_register("lastmsg");
-// session_register("mycall");
-
-if ( isset($_POST["callsign"]) ) {
-	// Process login
-	$mycall = $_POST["callsign"];
-	$qr = "SELECT name FROM part97 WHERE callsign='$mycall'";
-	$r = query($qr);
-	if ( count($r) == 1 ) {
-		$name = $r[0]["name"];
-		$_SESSION["callsign"] = $mycall;
-		$_SESSION["realname"] = $name;
-		if ( isset($_POST["tactical"]) ) {
-			$_SESSION["tactical"] = $_POST["tactical"];
-		} // end if
-		if ( isset($_POST["symbol"]) ) {
-			$_SESSION["symbol"] = $_POST["symbol"];
-		} // end if
-		start_session();
-	} // end if
-} // end if 
-
-if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
-if ( !has_session() ) {
-	header("HTTP/401 Unauthorized");
-	header("Location: login.php");
-} // end if
+	date_default_timezone_set("America/Chicago");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
+	<meta charset="utf-8">
 	<title>TrivnetDB - Amateur Radio Information Network</title>
 	<link rel="stylesheet" href="common/trivnet.css" />
-	<link rel="stylesheet" href="css/jquery-ui.css" />
-	<script src="js/jquery.js"></script>
-	<script src="js/jquery-ui.js"></script>
-	<script src="/common/jquery_msg.js"></script>
+	<!--link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" /-->
+
+<?php
+	if ( "true" != getenv("slownet") ) {
+		echo "	<link rel=\"stylesheet\" href=\"css/jquery-ui.css\" />\n";
+		echo "	<script src=\"js/jquery.js\"></script>\n";
+		echo "	<script src=\"js/jquery-ui.js\"></script>\n";
+		echo "  <script src=\"/common/jquery_msg.js\"></script>\n";
+	} // end if
+?>
 </head>
 
 <body>
+	<!-- Page Header -->
+	<!-- Menu -->
 	<div class="whoami">
 	<?php
 		$name = $_SESSION["realname"];
-		$tac = $_SESSION["tactical"];
-		$call = $_SESSION["callsign"];
+		$tac  = $_SESSION["tactical"];
+		$user = $_SESSION["username"];
+		$auth = $_SESSION["auth"];
 		if ( isset($_SESSION["symbol"]) ) { $sym = $_SESSION["symbol"]; } else { $sym = 0; }
 		echo "<img src=\"symbol/$sym\">&nbsp;";
-		echo "$name/<b>$tac</b> <i>$call</i> <a href=\"logout.php\">[logout]</a>\n";
+		echo "$name/<b>$tac</b> <i>$user</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
-	<script>var callsign = <?php echo "'$call'" ?></script>
 	</div>
+	<script>var callsign = <?php echo "'$call'" ?></script>
 
-	<!-- Menu -->
 	<table class="menu">
 	<tr class="menu">
-		<td> <a class="menu" href="index.php">Home</a> </td>
-		<td> <a class="menu" href="query.php">Search</a> </td>
-		<td> <a class="menu" href="multiedit.php">Multi-Edit</a> </td>
-   		<td> <a class="menu" href="batch.php">Batch Edit</a> </td>
-		<td> <a class="menu activetab" href="messaging.php">Messaging</a> </td>
-		<td> <a class="menu" href="admin.php">Admin</a> </td>
+	<?php
+		$tabs["index.php"] = "Home";
+		$tabs["query.php"] = "Search";
+		$tabs["multiedit.php"] = "Multi-Edit";
+		// $tabs["turboedit.php"] = "Turbo Edit";
+
+		if ( $FLAGS["BATCH"] & $auth ) {
+			$tabs["batch.php"] = "Batch Edit";
+		}
+
+		$tabs["messaging.php"] = "Messaging";
+
+		if ( $FLAGS["ADMIN"] & $auth ) {
+			$tabs["admin.php"] = "Admin";
+		}
+
+		foreach ( $tabs as $taburl => $tabname ) {
+			if ( strpos( $_SERVER["PHP_SELF"], $taburl ) ) { 
+				echo "<td> <a class=\"menu activetab\" href=\"$taburl\">$tabname</a></td>";
+			} else {
+				echo "<td> <a class=\"menu\" href=\"$taburl\">$tabname</a></td>";
+			}
+		}
+	?>
 	</tr>
 	</table>
 

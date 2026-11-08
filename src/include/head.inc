@@ -85,7 +85,7 @@ date_default_timezone_set("America/Chicago");
 	echo "</table>\n";
 	echo "</div>\n";
 	
-	echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
+	// echo "<pre>"; print_r($_SESSION); echo "</pre>\n";
 
 ?>
 	<hr>
