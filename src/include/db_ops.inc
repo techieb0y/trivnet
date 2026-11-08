@@ -1,6 +1,5 @@
 <?php
 require_once("config.inc");
-require_once("send-metric.inc");
 
 /********************** Common functions - these are abstract redirectors *****/
 

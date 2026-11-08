@@ -1,11 +1,10 @@
 <?php
 	global $begin;
 	$begin = microtime(true);
-	require_once("config.inc");
-	require_once("constants.inc");
-	require_once("db_ops.inc");
-	require_once("sessions.inc");
-	require_once("send-metric.inc");
+	require_once("include/config.inc");
+	require_once("include/constants.inc");
+	require_once("include/db_ops.inc");
+	require_once("include/sessions.inc");
 
 	date_default_timezone_set("America/Chicago");
 
@@ -76,7 +75,7 @@
 
 <form action="message_send.php" method="POST">
 	<table><tr>
-	<td>From:</td><td><?php echo $mycall; ?></td></tr>
+	<td>From:</td><td><?php echo $user; ?></td></tr>
 	<tr><td>To:</td><td><input name="sendto" id="sendto" size=12> ("all" or "*" for broadcast message)</td></tr>
 	<tr><td>Message:</td><td><input name="text" size=96 maxlength=255></td></tr>
 	<tr><td>Send: </td><td><input type="submit" value="send"></td></tr>
@@ -101,14 +100,14 @@
 		if ( count($who) > 0 ) {
 		foreach ($who as $w) {
 			if ( $w["age"] < $config["idle_timeout"] ) {
-				$call = trim($w["callsign"]);
+				$call = trim($w["username"]);
 				$sym = trim($w["symbol"]);
 				$tac = trim($w["tactical"]);
 				echo "<tr><td><img src=\"symbol/$sym\"></td>";
 				echo "<td><a onClick=\"document.getElementById('sendto').value='$call'\">$call / $tac</a></td>";
 				echo "</tr>\n";
 			} else {
-				$call = trim($w["callsign"]);
+				$call = trim($w["username"]);
 				echo "<tr><td>&nbsp;</td><td><font color=\"grey\">$call</font></td></tr>\n";
 			} // end if
 		} // end foreach
