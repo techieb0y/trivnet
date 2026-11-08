@@ -5,7 +5,6 @@
 	require_once("constants.inc");
 	require_once("db_ops.inc");
 	require_once("sessions.inc");
-	require_once("send-metric.inc");
 
 date_default_timezone_set("America/Chicago");
 
@@ -46,7 +45,7 @@ date_default_timezone_set("America/Chicago");
 		echo "$name/<b>$tac</b> <i>$user</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
-	<script>var callsign = <?php echo "'$call'" ?></script>
+	<script>var callsign = <?php echo "'$user'" ?></script>
 
 	<table class="menu">
 	<tr class="menu">

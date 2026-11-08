@@ -42,7 +42,7 @@
 		echo "$name/<b>$tac</b> <i>$user</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
-	<script>var callsign = <?php echo "'$call'" ?></script>
+	<script>var callsign = <?php echo "'$user'" ?></script>
 
 	<table class="menu">
 	<tr class="menu">
@@ -92,29 +92,23 @@
 	echo "</div>\n";
 ?>
 
-<b>Users Online:</b><br>
+<b>Users:</b><br>
 <table>
 	<?php
-		$who = list_sessions();
+		$q = "SELECT users.id, users.username, users.display, sessions.symbol, sessions.tactical FROM users,sessions WHERE sessions.userid=users.id ORDER BY users.username ASC";
+		$who = query($q);
 
-		if ( count($who) > 0 ) {
 		foreach ($who as $w) {
-			if ( $w["age"] < $config["idle_timeout"] ) {
-				$call = trim($w["username"]);
-				$sym = trim($w["symbol"]);
-				$tac = trim($w["tactical"]);
-				echo "<tr><td><img src=\"symbol/$sym\"></td>";
-				echo "<td><a onClick=\"document.getElementById('sendto').value='$call'\">$call / $tac</a></td>";
-				echo "</tr>\n";
-			} else {
-				$call = trim($w["username"]);
-				echo "<tr><td>&nbsp;</td><td><font color=\"grey\">$call</font></td></tr>\n";
-			} // end if
+			$user = trim($w["username"]);
+			$disp = trim($w["display"]);
+			$sym = trim($w["symbol"]);
+			$tac = trim($w["tactical"]);
+			echo "<tr><td><img src=\"symbol/$sym\"></td>";
+			echo "<td><a onClick=\"document.getElementById('sendto').value='$user'\">$disp / $tac</a></td>";
+			echo "</tr>\n";
 		} // end foreach
-		} // end if
 	?>
 </table>
-
 <hr>
 
 <?php require_once("include/foot.inc"); ?>
