@@ -18,11 +18,6 @@
 		$mycall = $call;
 	} // end if
 
-
-	if ( !has_session($mycall) ) {
-		exit(0);
-	}
-
 	// ------------
 
 	// print_r($_POST);
