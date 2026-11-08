@@ -8,6 +8,13 @@
 
 	date_default_timezone_set("America/Chicago");
 
+	if ( !isset($_SESSION["symbol"]) ) {
+		$host  = $_SERVER['HTTP_HOST'];
+		$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+		$extra = 'login.php';
+		header( "Location: https://{$host}{$uri}/{$extra}" );
+	}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -21,7 +28,7 @@
 	<link rel="stylesheet" href="css/jquery-ui.css" />
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery-ui.js"></script>
-	<script src="common/jquery.js"></script>
+	<script src="common/jquery_msg.js"></script>
 </head>
 
 <body>

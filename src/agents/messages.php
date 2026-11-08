@@ -19,7 +19,7 @@ if ( isset( $_GET["start"] ) ) {
 	$start = time();
 }
 
-$q = "SELECT DISTINCT username, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$username' OR dest='all' OR callsign='$username') AND timestamp < $start ORDER BY timestamp DESC LIMIT $num";
+$q = "SELECT DISTINCT username, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$username' OR dest='all' OR username='$username') AND timestamp < $start ORDER BY timestamp DESC LIMIT $num";
 
 $r = query($q);
 if ( count($r) > 0 ) {
