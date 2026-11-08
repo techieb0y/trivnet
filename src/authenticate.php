@@ -58,7 +58,6 @@
 			// print_r($rc);
 
 			$host  = $_SERVER['HTTP_HOST'];
-			$host  = $_SERVER['HTTP_HOST'];
 			$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 			$extra = 'index.php';
 			header( "Location: https://{$host}{$uri}/{$extra}" );

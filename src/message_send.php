@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-include("include/db_ops.inc");
+require_once("include/db_ops.inc");
+require_once("include/sessions.inc");
 
 $to = "all";
 
@@ -12,7 +13,7 @@ if ( isset($_POST["sendto"]) ) {
 	} // end if
 } // end if
 
-$from = $_SESSION["callsign"];
+$from  = $_SESSION["username"];
 $mytac = $_SESSION["tactical"];
 $mysym = $_SESSION["symbol"];
 

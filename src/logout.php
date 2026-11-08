@@ -4,8 +4,8 @@
 	require_once("include/config.inc");
 
 	@session_start();
-	unset($_SESSION);
-	session_destroy();
+
+	stop_session();
 
 	header("HTTP/401 Unauthorized");
 	$loc_parts = explode($_SERVER["REQUEST_URI"], "/");
