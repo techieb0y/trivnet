@@ -8,9 +8,10 @@ INSERT INTO enumtypes VALUES ( 1, 5, 'Male');
 INSERT INTO enumtypes VALUES ( 2, 5, 'Female');
 INSERT INTO enumtypes VALUES ( 3, 5, 'Non-Binary');
 
-INSERT INTO datatypes VALUES ( 6, 'race', 'Race', true, true);
+INSERT INTO datatypes VALUES ( 6, 'distance', 'Distance', true, true);
 INSERT INTO enumtypes VALUES ( 1, 6, 'Marathon');
 INSERT INTO enumtypes VALUES ( 2, 6, '10 Mile');
+INSERT INTO enumtypes VALUES ( 3, 6, 'Half Marathon');
 
 INSERT INTO enumtypes VALUES ( 0, 0, 'Unknown');
 INSERT INTO enumtypes VALUES ( 1, 0, 'Running');
@@ -36,6 +37,7 @@ INSERT INTO quickmesg VALUES ( 'Dropped out' );
 INSERT INTO quickmesg VALUES ( 'Waiting for SAG' );
 INSERT INTO quickmesg VALUES ( 'SAG dropoff' );
 INSERT INTO quickmesg VALUES ( '🚑 Transported to Regions' );
+INSERT INTO quickmesg VALUES ( '🚑 Transported to HCMC' );
 INSERT INTO quickmesg VALUES ( '🚑 Transported to United' );
 INSERT INTO quickmesg VALUES ( '🚑 Transported to Abbott Northwestern' );
 INSERT INTO quickmesg VALUES ( '🚑 Transported to UofM' );
