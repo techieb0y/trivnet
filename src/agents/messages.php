@@ -9,7 +9,6 @@ $username = $authdata["OIDC_CLAIM_preferred_username"];
 
 $noauth = array( time(), 'Sysop', 'You are not authorized.', 'all' );
 $nomesg = array( time(), 'Sysop', 'There are no messages.', 'all' );
-session_start();
 
 $num = $_GET["limit"];
 
