@@ -9,7 +9,7 @@ $begin = 0;
 
 include("head.inc");
 
-if ( count($_SESSION) == 0 ) {
+if ( !isset($_SESSION["symbol"]) ) {
 	$host  = $_SERVER['HTTP_HOST'];
 	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 	$extra = 'login.php';
