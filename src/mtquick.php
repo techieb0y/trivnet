@@ -4,7 +4,6 @@ include("include/config.inc");
 include("include/sessions.inc");
 include("include/db_ops.inc");
 
-session_start();
 $tac = $_SESSION["tactical"];
 $call = $_SESSION["username"];
 if ( strlen($tac) > 0 ) { 
