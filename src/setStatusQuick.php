@@ -7,7 +7,6 @@
 
 	$mdt = $config["message"];
 
-	session_start();
 	$tac = $_SESSION["tactical"];
 	$call = $_SESSION["username"];
 	if ( strlen($tac) > 0 ) { 
@@ -15,10 +14,6 @@
 	} else {
 		$mycall = $call;
 	} // end if
-
-	if ( !has_session($mycall) ) {
-		exit(0);
-	}
 
 	// ------------
 

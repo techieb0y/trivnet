@@ -8,9 +8,6 @@ global $config;
 
 $ok = 0;
 
-// Make sure this is permitted
-session_start();
-// session_register("mycall");
 $tac = $_SESSION["tactical"];
 $call = $_SESSION["username"];
 if ( strlen($tac) > 0 ) { 
@@ -38,7 +35,7 @@ if ( count($r_id) == 1 ) {
 
 $status = pg_escape_string(urldecode($data->data));
 
-if ( ($ok == 1) && has_session($mycall) ) {
+if ( $ok == 1) {
 	$now = time();
 	$dt = $config["message"];
 	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $dt, '$status' )";

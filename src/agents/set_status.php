@@ -14,8 +14,6 @@ $msgtyp = $config["message"];
 $status = pg_escape_string( connect(), $_GET["status"] );
 $id = $_GET["personid"];
 
-session_start();
-// session_register("mycall");
 $tac = $_SESSION["tactical"];
 $call = $_SESSION["username"];
 if ( strlen($tac) > 0 ) { 
@@ -24,16 +22,11 @@ if ( strlen($tac) > 0 ) {
 	$mycall = $call;
 } // end if
 
-
-if ( has_session($mycall) ) {
-	$now = time();
-	$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $msgtyp, '$status' )";
-	syslog(LOG_DEBUG, $qr);
-	$r = query($qr);
-	$ok = 1;
-} else {
-	header("401 Unauthorized");
-}
+$now = time();
+$qr = "INSERT INTO updatesequence VALUES ( $id, $now, '$mycall', $msgtyp, '$status' )";
+syslog(LOG_DEBUG, $qr);
+$r = query($qr);
+$ok = 1;
 
 echo "{ \"result\": $ok }";
 
