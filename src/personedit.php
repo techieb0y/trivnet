@@ -5,8 +5,6 @@
 	require_once("include/db_ops.inc");
 	require_once("include/sessions.inc");
 
-	session_start();
-
 	global $config;
 	$msgdt = $config["message"];
 
