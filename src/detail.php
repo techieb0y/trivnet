@@ -285,8 +285,8 @@ if ( pg_num_rows($r_openincs) > 0 ) {
 	} // end foreach
 	echo "</select>\n";
 	echo "<input type=\"submit\" value=\"Link to incident\">\n";
-	echo "</form>\n";
 } // end if
+echo "</form>\n";
 
 echo "</td>";
 
