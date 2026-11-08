@@ -64,6 +64,8 @@ $firstline = fgetcsv($fh, 0, $delim, '"', "");
 $fields = count($firstline);
 $lines[] = $firstline;
 
+$line_num = 0;
+
 while ( !feof($fh) ) {
 	// do the loop, read in the next bunch.
 	$lines[] = fgetcsv($fh, 0 , $delim, '"', "");
