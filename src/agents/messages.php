@@ -1,7 +1,11 @@
 <?php
-	require_once("../include/db_ops.inc");
-	require_once("../include/sessions.inc");
-	header("Content-type: application/json");
+require_once("../include/db_ops.inc");
+require_once("../include/sessions.inc");
+header("Content-type: application/json");
+
+$authdata = apache_request_headers();
+$display = $authdata["OIDC_CLAIM_display_name"];
+$username = $authdata["OIDC_CLAIM_preferred_username"];
 
 $noauth = array( time(), 'Sysop', 'You are not authorized.', 'all' );
 $nomesg = array( time(), 'Sysop', 'There are no messages.', 'all' );
@@ -15,21 +19,13 @@ if ( isset( $_GET["start"] ) ) {
 	$start = time();
 }
 
-if ( isset($_SESSION["callsign"]) ) { $mycall = $_SESSION["callsign"]; } else { $mycall = "N0CALL"; }
-if ( !has_session($mycall) ) {
-	header("HTTP/401 Unauthorized");
-		echo json_encode($noauth);
-	// header("WWW-Authenticate: Basic");
+$q = "SELECT DISTINCT username, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$username' OR dest='all' OR callsign='$username') AND timestamp < $start ORDER BY timestamp DESC LIMIT $num";
+
+$r = query($q);
+if ( count($r) > 0 ) {
+	echo json_encode($r);
 } else {
-	touch_session($mycall);
-	$q = "SELECT DISTINCT callsign, dest, message, timestamp, symbol, tactical FROM messages WHERE( dest='$mycall' OR dest='all' OR callsign='$mycall') AND timestamp < $start ORDER BY timestamp DESC LIMIT $num";
-	// $q = "SELECT callsign, dest, message, to_timestamp(timestamp) AS timestamp FROM messages ORDER BY timestamp DESC LIMIT $num";
-	$r = query($q);
-	if ( count($r) > 0 ) {
-		echo json_encode($r);
-	} else {
-		header("HTTP/1.1 204 No Messages");
-		echo json_encode($nomesg);
-	} // end if
+	header("HTTP/1.1 204 No Messages");
+	echo json_encode($nomesg);
 } // end if
 ?>
