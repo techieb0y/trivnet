@@ -12,10 +12,6 @@ if ( strlen($tac) > 0 ) {
 	$mycall = $call;
 } // end if
 
-if ( !has_session($mycall) ) {
-	exit(0);
-}
-
 if ( isset($_GET["personid"]) ) {
 	$id = $_GET["personid"];
 } // end if
