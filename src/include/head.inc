@@ -21,14 +21,10 @@ date_default_timezone_set("America/Chicago");
 	<link rel="stylesheet" href="common/trivnet.css" />
 	<!--link rel="stylesheet" href="css/jquery.mobile-1.2.0.min.css" /-->
 
-<?php
-	if ( "true" != getenv("slownet") ) {
-		echo "	<link rel=\"stylesheet\" href=\"css/jquery-ui.css\" />\n";
-		echo "	<script src=\"js/jquery.js\"></script>\n";
-		echo "	<script src=\"js/jquery-ui.js\"></script>\n";
-		echo "	<script src=\"js/jquery.js\"></script>\n";
-	} // end if
-?>
+	<link rel="stylesheet" href="css/jquery-ui.css" />
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="common/jquery.js"></script>
 </head>
 
 <body>
