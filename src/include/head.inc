@@ -41,7 +41,9 @@ date_default_timezone_set("America/Chicago");
 		echo "$name/<b>$tac</b> <i>$user</i> <a href=\"logout.php\">[logout]</a>\n";
 	?>
 	</div>
-	<script>var callsign = <?php echo "'$user'" ?></script>
+	
+	<!-- Used by the AJAX callback for displaying messages -->
+	<script>var username = <?php echo "'$user'" ?></script>
 
 	<table class="menu">
 	<tr class="menu">

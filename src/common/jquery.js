@@ -3,9 +3,10 @@
 		$("#mesgLoad").innerHTML = "📡";
 		$(".msgItem").remove();
 		$rowNum = 1;
-		$.getJSON("/agents/messages.php?limit=5", null, function(data) { 
+		$.getJSON("/agents/messages.php?limit=5", function(data) {
 			$.each( data, function(idx) {
 				ts = new Date( data[idx].timestamp * 1000 );
+				// username is set by the including file (head.inc or messaging.php)
 				if ( data[idx].dest == username ) {
 				$("#messages").append( '<tr class=\"msgItem tome\"><td><img class=mesgSymbol src=symbol/' + data[idx].symbol + '></td><td class=msgLeft>' + data[idx].username + ' &rarr; ' + data[idx].dest + '<br>' + data[idx].tactical + '</td><td class=msgCenter> ' + data[idx].message + '</td><td class=msgRight>' + ts.toLocaleString() + '</td></tr>' );
 				} else if ( $rowNum % 2 == 0 ) {
