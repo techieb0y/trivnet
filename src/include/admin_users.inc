@@ -21,15 +21,15 @@
 
 		echo "<td>";
 			if ( $who["auth"] & $FLAGS["DISABLED"] ) { echo "✅"; } else { echo "⛔️"; }
-		echo "</td>\n;
+		echo "</td>\n";
 
 		echo "<td>";
 			if ( $who["auth"] & $FLAGS["BATCH"] ) { echo "✅"; } else { echo "⛔️"; }
-		echo "</td>\n;
+		echo "</td>\n";
 
 		echo "<td>";
 			if ( $who["auth"] & $FLAGS["ADMIN"] ) { echo "✅"; } else { echo "⛔️"; }
-		echo "</td>\n;
+		echo "</td>\n";
 
 		echo "</tr>\n";
 	} // end foreach
