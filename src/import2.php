@@ -60,13 +60,13 @@ if ( $delim_pre == "0" ) {
 
 fseek($fh, 0, SEEK_SET);
 
-$firstline = fgetcsv($fh, 0, $delim);
+$firstline = fgetcsv($fh, 0, $delim, '"', "");
 $fields = count($firstline);
 $lines[] = $firstline;
 
 while ( !feof($fh) ) {
 	// do the loop, read in the next bunch.
-	$lines[] = fgetcsv($fh, 0 , $delim);
+	$lines[] = fgetcsv($fh, 0 , $delim, '"', "");
 	$line_num++;
 	if ( $line_num > 9 ) {
 		break;
