@@ -3,8 +3,6 @@
 	$display = $authdata["OIDC_CLAIM_display_name"];
 	$username = $authdata["OIDC_CLAIM_preferred_username"];
 
-	syslog(LOG_DEBUG, "1");
-
 	require_once("include/constants.inc");
 	require_once("include/db_ops.inc");
 	require_once("include/config.inc");
@@ -20,27 +18,17 @@
 		} // end while
 	}
 
-	syslog(LOG_DEBUG, "2");
-
 	if ( count($r) > 0 ) {
-		syslog(LOG_DEBUG, "3A");
-
 		// We found a user with this username, a good start.
 
 		$id = $r[0]["id"];
 		$auth = $r[0]["auth"];
 
 		if ($FLAGS["DISABLED"] & $auth) {
-			syslog(LOG_DEBUG, "3B");
-
 			header("HTTP/401 Unauthorized");
 			echo "<b>This account has been disabled.</b><br>\n";
 		} else {
-			syslog(LOG_DEBUG, "3C");
-
 			if (empty($_SESSION['token'])) {
-				syslog(LOG_DEBUG, "3D");
-
 				$token = bin2hex(random_bytes(32));
 				session_name($token);
 				session_start();
@@ -64,8 +52,6 @@
 			$rc = pg_query_params( connect(), $q3, $p4 );
 			// print_r($rc);
 
-			syslog(LOG_DEBUG, "3E");
-
 			$q4 = "INSERT INTO messages VALUES ( \$1, \$2, \$3, \$4, 'logged on', 'Sysop' );";
 
 			$p2[] = time();				// 3
@@ -76,14 +62,14 @@
 			$rc = pg_query_params( connect(), $q4, $p2 );
 			// print_r($rc);
 
-			syslog(LOG_DEBUG, "3F");
-
-			header("Location", "index.php");
+			$host  = $_SERVER['HTTP_HOST'];
+			$host  = $_SERVER['HTTP_HOST'];
+			$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+			$extra = 'index.php';
+			header( "Location: https://{$host}{$uri}/{$extra}" );
 		}
 	} else {
 		// No ID found for this username; auto-create one that's disabled
-		syslog(LOG_DEBUG, "3Y");
-
 		$q = "INSERT INTO users VALUES ( (SELECT MAX(id)+1 FROM users), \$1, \$2, \$3 )";
 
 		unset($p);
@@ -97,8 +83,5 @@
 
 		header("HTTP/401 Unauthorized");
 		echo "<br>A Trivnet user has been auto-created; contact an admin to have it enabled.\n";
-		syslog(LOG_DEBUG, "3Z");
 	}
-
-	syslog(LOG_DEBUG, "4");
 ?>
