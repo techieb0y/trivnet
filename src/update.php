@@ -3,7 +3,6 @@
 require("include/db_ops.inc");
 require("include/sessions.inc");
 
-session_start();
 $tac = $_SESSION["tactical"];
 $call = $_SESSION["username"];
 if ( strlen($tac) > 0 ) { 
@@ -12,9 +11,6 @@ if ( strlen($tac) > 0 ) {
 	$mycall = $call;
 } // end if
 
-if ( !has_session($mycall) ) {
-	exit(0);
-}
 
 $id = $_GET["id"];
 $quickmesg = $_POST["quickmesg"];
