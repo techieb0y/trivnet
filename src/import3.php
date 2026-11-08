@@ -1,5 +1,4 @@
 <?php
-
 	require_once("include/head.inc");
 
 	$delimname = $_POST["delim"];
@@ -28,10 +27,17 @@
 
 	$timestamp = time();
 
-	$q = "INSERT INTO async VALUES ( '$jobid', '$file', '$mycall', '0', '0', '$dtastring', '1', '0', $timestamp )";
-	$r = query($q);
+	// $q = "INSERT INTO async VALUES ( '$jobid', '$file', '$mycall', '0', '0', '$dtastring', '1', '0', $timestamp )";
+	$q = "INSERT INTO async VALUES ( \$1, \$2, \$3, '0', '0', \$4, '1', '0', \$5 )";
+
+	$p[] = $jobid;
+	$p[] = $file;
+	$p[] = $_SESSION["username"];
+	$p[] = $dtastring;
+	$p[] = $timestamp;
+
+	$r = pg_query_params( connect(), $q, $p );
 	
 	echo "Job submitted!";
 	echo "<a href=\"admin.php\">Back</a>";
-
 ?>	
