@@ -8,6 +8,14 @@
 
 date_default_timezone_set("America/Chicago");
 
+
+if ( !isset($_SESSION["tactical"]) ) {
+	$host  = $_SERVER['HTTP_HOST'];
+	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+	$extra = 'login.php';
+	header( "Location: https://{$host}{$uri}/{$extra}" );
+}
+
 // Trivnetdb 2.x was designed and built by KD8GBL
 
 ?>

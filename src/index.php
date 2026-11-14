@@ -9,13 +9,6 @@ $begin = 0;
 
 include("head.inc");
 
-if ( !isset($_SESSION["tactical"]) ) {
-	$host  = $_SERVER['HTTP_HOST'];
-	$uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-	$extra = 'login.php';
-	header( "Location: https://{$host}{$uri}/{$extra}" );
-}
-
 // Overall summery
 $sdt = $config["status"];
 echo "<b>Status summary</b>:<br>\n";
