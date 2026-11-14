@@ -46,7 +46,7 @@ if ( $use_file == 1 ) {
 		$fn2 = $filename . ".old";
 		if ( file_exists($fn2) ) {
 			// Old file exists, and we should diff against it
-			$buf = `diff -y --suppress-common-lines $filename $fn2 | awk '{print $1}'`;
+			$buf = shell_exec("diff -y --suppress-common-lines $filename $fn2 | awk '{print $1}'");
 			$search_keys = trim($buf);
 			echo "Pre-processing of input yielded " . strlen($search_keys) . " bytes of data\n";
 		} else {
@@ -105,7 +105,7 @@ foreach ( $types as $k => $t ) {
 	fclose($fh);
 
 	if ( $k != $msgtype ) { $data = $values[$k]; } else { $data = $mesg; }
-	$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$mycall', '$datatype', '$k', '$data', 1, 0, '" . time() . "');";
+	$q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', '$user', '$datatype', '$k', '$data', 1, 0, '" . time() . "');";
 	echo "<pre>" . $q_submit . "</pre><br>\n";
 	$r_submit = query($q_submit);
 	// FIXME: error handling goes here
