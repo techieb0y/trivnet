@@ -54,7 +54,7 @@ switch ($argv[0]) {
 		$q = "SELECT * from async WHERE jobid=$id";
 		$r = query($q);
 		$file = $r[0]["filename"];
-		$callsign = $r[0]["callsign"];
+		$username = $r[0]["username"];
 		$searchtype = $r[0]["searchtype"];
 		$updatetype = $r[0]["updatetype"];
 		$data = $r[0]["data"];
@@ -68,7 +68,7 @@ switch ($argv[0]) {
 	
 		$lines = count( file($file) );
 	
-		printf("%d: [%s] set %s to '%s' for %d %s's, submiteed by %s\n", $id, $jobstate[$state], $update, $data, $lines, $search, $callsign );
+		printf("%d: [%s] set %s to '%s' for %d %s's, submiteed by %s\n", $id, $jobstate[$state], $update, $data, $lines, $search, $username );
 	break;
 
 	case "--hold":
@@ -144,7 +144,7 @@ function runJob($jobId) {
 
 	$r = query("SELECT * from async WHERE jobid=$jobId");
 	$file = $r[0]["filename"];
-	$callsign = $r[0]["callsign"];
+	$username = $r[0]["username"];
 	$searchtype = $r[0]["searchtype"];
 	$updatetype = $r[0]["updatetype"];
 	$data = $r[0]["data"];
@@ -283,12 +283,12 @@ function runJob($jobId) {
 				$personid = $r[0]["personid"];
 				$q = "BEGIN;\n";
 
-				$_tac = query("SELECT tactical FROM sessions WHERE callsign='$callsign'");
+				$_tac = query("SELECT tactical FROM sessions WHERE username='$username'");
 				$tac = $_tac[0]["tactical"];
 
 				if ( $msg == $updatetype ) {
 					// We're updating the status message, but no actual data values
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $updatetype, '$data');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$username/$tac [B]', $updatetype, '$data');\n";
 					$q .= "COMMIT;\n";
 				} elseif ( 999 == $updatetype ) {
 
@@ -303,7 +303,7 @@ function runJob($jobId) {
 
 					$q .= "INSERT INTO latchlog VALUES ('$personid', '$data') on conflict do nothing;\n";
 					$text = "Set latch " . $latchData[0]["label"];
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$text');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$username/$tac [B]', $msg, '$text');\n";
 					$q .= "COMMIT;\n";
 				} else {
 					// We're updating a data value, and generating a status message to say we did so
@@ -315,7 +315,7 @@ function runJob($jobId) {
 						$statusText = "Set " . $_dt[0]["name"] . " to " . $data;
 					} // end if 
 					$q .= "SELECT * FROM sp_upsert_persondata('$personid', '$updatetype', '$data');\n";
-					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$callsign/$tac [B]', $msg, '$statusText');\n";
+					$q .= "INSERT INTO updatesequence VALUES ('$personid', '$now', '$username/$tac [B]', $msg, '$statusText');\n";
 					$q .= "COMMIT;\n";
 				} // end if
 

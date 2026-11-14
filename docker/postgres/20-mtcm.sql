@@ -30,8 +30,6 @@ INSERT INTO enumtypes VALUES ( 14, 0, '🚍 On SAG Bus 5');
 
 INSERT INTO enumtypes VALUES ( 15, 0, 'SAG Drop-off');
 
-INSERT INTO defaults VALUES ( 'none', 'bibnum', 'status' );
-
 INSERT INTO quickmesg VALUES ( 'Runner crossed finish line' );
 INSERT INTO quickmesg VALUES ( 'Dropped out' );
 INSERT INTO quickmesg VALUES ( 'Waiting for SAG' );

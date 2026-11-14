@@ -81,7 +81,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
         stream_copy_to_stream($tmp, $fh);
         fclose($fh);
 
-        // CREATE TABLE async ( jobid serial, filename varchar(64) not null, callsign varchar(8) not null, searchtype int REFERENCES datatypes(typeid), updatetype int, data varchar(255) not null, state int DEFAULT 0, progress int DEFAULT 0, timestamp int NOT NULL);
+        // CREATE TABLE async ( jobid serial, filename varchar(64) not null, username varchar(8) not null, searchtype int REFERENCES datatypes(typeid), updatetype int, data varchar(255) not null, state int DEFAULT 0, progress int DEFAULT 0, timestamp int NOT NULL);
         // $q_submit = "INSERT INTO async VALUES ( $jobid, '$jobfile', 'API', '" . $config["multidefault"] . "', '" . $config["message"] . "', 'Runner crossed finish line', 1, 0, '" . time() . "');";
 	    // $r_submit = query($q_submit);
 
